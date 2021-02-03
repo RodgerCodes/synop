@@ -1,6 +1,6 @@
 # synop
 
-A new Flutter project.
+Synop is a...
 
 ## Getting Started
 
