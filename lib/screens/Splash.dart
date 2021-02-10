@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -23,17 +22,13 @@ class _SplashScreeenState extends State<SplashScreeen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Image.asset('assets/logo.png', width: size.width * 2),
+      body: Container(
+        height: size.height,
+        child: Center(
+          child: Image.asset(
+            'assets/logo.png',
           ),
-          SpinKitHourGlass(
-            color: Colors.black,
-            size: 50.0,
-          )
-        ],
+        ),
       ),
     );
   }
