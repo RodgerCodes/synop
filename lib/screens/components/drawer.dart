@@ -31,7 +31,7 @@ class _drawercomponentState extends State<drawercomponent> {
     return Drawer(
         child: user != null
             ? Container(
-                color: Colors.grey[900],
+                color: Colors.blueGrey[900],
                 child: ListView(
                   children: [
                     UserAccountsDrawerHeader(
@@ -69,13 +69,15 @@ class _drawercomponentState extends State<drawercomponent> {
                         user['msg']['name'],
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        print('hello');
+                      },
                     )
                   ],
                 ),
               )
             : Container(
-                color: Colors.grey[900],
+                color: Colors.blueGrey[900],
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),

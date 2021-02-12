@@ -19,8 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     return ModalProgressHUD(
       inAsyncCall: showProgressLoading,
+      color: Colors.grey[900],
       child: Scaffold(
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Colors.blueGrey[900],
         body: SingleChildScrollView(
           child: Container(
             height: size.height,

@@ -24,11 +24,17 @@ class _SplashScreeenState extends State<SplashScreeen> {
       backgroundColor: Colors.white,
       body: Container(
         height: size.height,
+        color: Colors.blueGrey[900],
         child: Center(
-          child: Image.asset(
-            'assets/logo.png',
+            child: Text(
+          'SYNOP',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25.0,
+            letterSpacing: 11.5,
+            fontWeight: FontWeight.bold,
           ),
-        ),
+        )),
       ),
     );
   }

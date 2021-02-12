@@ -28,4 +28,20 @@ class AuthService {
     dio.options.headers['authorization'] = 'Bearer $token';
     return await dio.get('$url/code');
   }
+
+  addCode(token, code) async {
+    dio.options.headers['authorization'] = 'Bearer $token';
+    try {
+      return await dio.post(
+        '$url/code',
+        data: {"code": code},
+      );
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+          msg: "Error",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          fontSize: 16.0);
+    }
+  }
 }

@@ -11,7 +11,7 @@ Future main() async {
   Constants.prefs = await SharedPreferences.getInstance();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    // theme: ThemeData(primarySwatch: Colors.blue),
+    // theme: ThemeData(primarySwatch: Colors.grey),
     routes: {
       '/': (context) => SplashScreeen(),
       '/login': (context) =>

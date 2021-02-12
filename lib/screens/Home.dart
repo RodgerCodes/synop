@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
@@ -13,10 +14,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var tok = Constants.prefs.getString("tk");
   var code;
-  void fetchData() {
+  // ignore: non_constant_identifier_names
+  Timer timer;
+  Future fetchData() async {
     AuthService().getCode(tok).then((val) {
       code = val.data;
       setState(() {});
+      // print(code);
     });
   }
 
@@ -25,6 +29,7 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
   }
 
   @override
@@ -32,49 +37,71 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey[900],
+          backgroundColor: Colors.blueGrey[900],
           elevation: 20.6,
-          title: Text('SYNOP'),
+          title: Text(
+            'SYNOP',
+            style: TextStyle(fontSize: 20),
+          ),
           centerTitle: true,
           actions: [Logout()],
+          toolbarHeight: 70,
         ),
         body: code != null
-            ? Container(
-                color: Colors.grey[800],
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
-                      child: Container(
-                        height: size.height * 0.14,
-                        child: Card(
-                          color: Colors.grey[900],
-                          margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          elevation: 20.5,
-                          child: ListTile(
-                            title: Text(
-                              code[index]['creator']['name'],
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Text(
-                                code[index]['code'],
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
+            ? code != []
+                ? RefreshIndicator(
+                    onRefresh: fetchData,
+                    child: Container(
+                      color: Colors.blueGrey[800],
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
+                            child: Container(
+                              height: 130,
+                              decoration: BoxDecoration(),
+                              child: Card(
+                                color: Colors.blueGrey[900],
+                                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                elevation: 30.5,
+                                child: ListTile(
+                                  title: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    child: Text(
+                                      code[index]['creator']['name'],
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.blue),
+                                    ),
+                                  ),
+                                  subtitle: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 10, 0, 5),
+                                    child: Text(
+                                      code[index]['code'],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          letterSpacing: 2),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
+                        itemCount: code.length,
                       ),
-                    );
-                  },
-                  itemCount: code.length,
-                ),
-              )
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      'There is nothing inside',
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  )
             : Container(
-                color: Colors.grey[800],
+                color: Colors.blueGrey[800],
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),
