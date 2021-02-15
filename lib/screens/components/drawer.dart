@@ -16,6 +16,7 @@ class _drawercomponentState extends State<drawercomponent> {
     AuthService().getinfo(tok).then((val) {
       user = val.data;
       setState(() {});
+      // print(user);
     });
   }
 
@@ -47,9 +48,10 @@ class _drawercomponentState extends State<drawercomponent> {
                         user['msg']['email'],
                         style: TextStyle(fontSize: 17.0),
                       ),
-                      currentAccountPicture: user['msg']['url'] != null
+                      currentAccountPicture: user['msg']['profile_img'] != null
                           ? CircleAvatar(
-                              backgroundImage: NetworkImage(user['msg']['url']),
+                              backgroundImage:
+                                  NetworkImage(user['msg']['profile_img']),
                             )
                           : CircleAvatar(
                               backgroundImage: NetworkImage(placeholder),
@@ -58,7 +60,7 @@ class _drawercomponentState extends State<drawercomponent> {
                     ListTile(
                       leading: Icon(
                         Icons.person,
-                        size: 50.7,
+                        size: 30.7,
                         color: Colors.white,
                       ),
                       title: Text(
@@ -70,9 +72,44 @@ class _drawercomponentState extends State<drawercomponent> {
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () {
-                        print('hello');
+                        Navigator.pushNamed(context, '/profile');
                       },
-                    )
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      title: Text(
+                        'Settings',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ListTile(
+                        onTap: () {
+                          Constants.prefs.setBool("loggedin", false);
+                          Constants.prefs.setString("tk", null);
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        leading: Icon(
+                          Icons.logout,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ))
                   ],
                 ),
               )

@@ -35,6 +35,10 @@ class _BtnState extends State<Btn> {
                       return "Please Fill in the form";
                     }
 
+                    if (value.contains('AAXX')) {
+                      return 'Please just enter the number';
+                    }
+
                     return null;
                   },
                   onChanged: (val) {
@@ -61,7 +65,7 @@ class _BtnState extends State<Btn> {
                       setState(() {
                         showProgressLoading = true;
                       });
-                      AuthService().addCode(tok, code_field).then((val) {
+                      AuthService().addCode(tok, 'AAXX$code_field').then((val) {
                         Fluttertoast.showToast(
                             msg: "Code Submitted",
                             toastLength: Toast.LENGTH_SHORT,

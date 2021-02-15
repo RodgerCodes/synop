@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         TextFormField(
+                          enableSuggestions: true,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (val) {
                             email = val;
@@ -130,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: size.width * 0.8,
                   height: 50,
                   child: RaisedButton(
+                    disabledColor: Colors.red,
                     color: Colors.blue,
                     elevation: 10.5,
                     shape: RoundedRectangleBorder(
@@ -146,6 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           showProgressLoading = true;
                         });
                         AuthService().login(email, password).then((val) {
+                          setState(() {
+                            showProgressLoading = true;
+                          });
                           if (val.data['success']) {
                             token = val.data['token'];
                             Fluttertoast.showToast(
@@ -171,6 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 fontSize: 16.0);
+                            setState(() {
+                              showProgressLoading = false;
+                            });
                           }
 
                           setState(() {
