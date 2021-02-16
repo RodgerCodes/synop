@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:synop/utils/loader.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   var email, password, token;
   var visible = true;
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
   bool showProgressLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -144,47 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       // TOD0:Implement backend functionality
                       if (_formkey.currentState.validate()) {
-                        setState(() {
-                          showProgressLoading = true;
-                        });
-                        AuthService().login(email, password).then((val) {
-                          setState(() {
-                            showProgressLoading = true;
-                          });
-                          if (val.data['success']) {
-                            token = val.data['token'];
-                            Fluttertoast.showToast(
-                                msg: "Authenticated",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.blue,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                            Constants.prefs.setBool("loggedin", true);
-                            Constants.prefs.setString("tk", token);
-                            Navigator.pushReplacementNamed(
-                              context,
-                              "/home",
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Password incorrect",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                            setState(() {
-                              showProgressLoading = false;
-                            });
-                          }
-
-                          setState(() {
-                            showProgressLoading = false;
-                          });
-                        });
+                        _handleSubmit(context);
                       }
                     },
                   ),
@@ -204,5 +167,45 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleSubmit(BuildContext context) async {
+    try {
+      Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+      AuthService().login(email, password).then((val) {
+        if (val.data['success']) {
+          token = val.data['token'];
+          Fluttertoast.showToast(
+              msg: "Authenticated",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.blue,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          Constants.prefs.setBool("loggedin", true);
+          Constants.prefs.setString("tk", token);
+          Navigator.pushReplacementNamed(
+            context,
+            "/home",
+          );
+        } else {
+          Fluttertoast.showToast(
+              msg: "Password incorrect",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+        }
+      });
+
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+          .pop(); //close the dialoge
+    } catch (error) {
+      print(error);
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:synop/services/Auth.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:synop/utils/constants.dart';
 
 class Profile extends StatefulWidget {
@@ -22,24 +23,6 @@ class _ProfileState extends State<Profile> {
       user = val.data;
       setState(() {});
       print(user);
-    });
-  }
-
-  Future _imageFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        // _image = await MultipartFile.fromFile(pickedFile.path);
-        setState(() {});
-        AuthService()
-            .updatePic(tok, MultipartFile.fromFile(pickedFile.path))
-            .then((val) {
-          print(val);
-        });
-        print(_image);
-      } else {
-        print('No image selected.');
-      }
     });
   }
 
@@ -81,11 +64,54 @@ class _ProfileState extends State<Profile> {
                                         const EdgeInsets.fromLTRB(80, 70, 0, 5),
                                     child: FloatingActionButton(
                                       child: Icon(Icons.add_a_photo_rounded),
-                                      onPressed: () {
-                                        _imageFromGallery();
+                                      onPressed: () async {
+                                        File image;
+                                        var imagepicker =
+                                            await ImagePicker.pickImage(
+                                                source: ImageSource.gallery);
+                                        setState(() {
+                                          image = imagepicker;
+                                        });
+                                        try {
+                                          String filename =
+                                              image.path.split('/').last;
+                                          FormData formdata =
+                                              new FormData.fromMap({
+                                            "image":
+                                                await MultipartFile.fromFile(
+                                                    image.path,
+                                                    filename: filename,
+                                                    contentType: MediaType(
+                                                        "image", "png")),
+                                            "type": "image/png"
+                                          });
+                                          AuthService()
+                                              .updatePic(tok, formdata)
+                                              .then((val) {
+                                            print(val);
+                                          });
+                                        } catch (e) {}
                                       },
                                     )),
                               )),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text(
+                            "Name:",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            user['msg']['name'],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                letterSpacing: 2),
+                          ),
+                        )),
                     RaisedButton(child: Text("Update"), onPressed: () {})
                   ],
                 ),

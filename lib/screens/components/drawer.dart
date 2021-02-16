@@ -72,7 +72,7 @@ class _drawercomponentState extends State<drawercomponent> {
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, '/profile');
+                        // Navigator.pushNamed(context, '/profile');
                       },
                     ),
                     SizedBox(
