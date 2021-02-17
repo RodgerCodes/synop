@@ -96,6 +96,7 @@ class _BtnState extends State<Btn> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      elevation: 30.5,
       child: Icon(
         Icons.add,
       ),

@@ -75,12 +75,12 @@ class _HomeState extends State<Home> {
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
                             child: Container(
-                              height: MediaQuery.of(context).size.height * 0.24,
+                              height: 210,
                               width: double.infinity,
                               child: Card(
                                 color: Colors.blueGrey[900],
                                 margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                elevation: 30.5,
+                                elevation: 0.5,
                                 child: ListTile(
                                     // isThreeLine: true,
                                     key: Key(code[index]['_id']),

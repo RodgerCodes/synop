@@ -72,11 +72,31 @@ class _drawercomponentState extends State<drawercomponent> {
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () {
-                        // Navigator.pushNamed(context, '/profile');
+                        Navigator.pushNamed(context, '/profile');
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 0,
+                    ),
+                    Container(
+                      child: user['msg']['role'] == 'Admin'
+                          ? ListTile(
+                              leading: Icon(
+                                Icons.admin_panel_settings,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                              title: Text(
+                                "Create a User",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                              onTap: () {},
+                            )
+                          : null,
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     ListTile(
                       leading: Icon(

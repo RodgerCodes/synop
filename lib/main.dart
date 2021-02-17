@@ -10,7 +10,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Constants.prefs = await SharedPreferences.getInstance();
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
+    debugShowCheckedModeBanner: true,
     // theme: ThemeData(primarySwatch: Colors.grey),
     routes: {
       '/': (context) => SplashScreeen(),
