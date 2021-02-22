@@ -24,7 +24,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
       backgroundColor: Colors.white,
       body: Container(
         height: size.height,
-        color: Colors.blueGrey[900],
+        color: Colors.blueGrey[700],
         child: Center(
             child: Text(
           'SYNOP',

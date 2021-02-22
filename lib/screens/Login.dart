@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       inAsyncCall: showProgressLoading,
       color: Colors.grey[900],
       child: Scaffold(
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: Colors.blueGrey[700],
         body: SingleChildScrollView(
           child: Container(
             height: size.height,
