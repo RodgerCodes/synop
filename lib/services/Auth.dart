@@ -89,4 +89,21 @@ class AuthService {
       print(e);
     }
   }
+
+  createUser(name, email, district, password) async {
+    try {
+      return await dio.post('$url', data: {
+        "name": name,
+        "email": email,
+        "district": district,
+        "password": password
+      });
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+          msg: e.response.data,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          fontSize: 16.0);
+    }
+  }
 }

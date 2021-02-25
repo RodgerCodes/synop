@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.blue[600],
               textColor: Colors.white,
               fontSize: 16.0);
           Constants.prefs.setBool("loggedin", true);

@@ -11,7 +11,7 @@ class Wrapper extends StatelessWidget {
             'assets/tp.jpg',
             alignment: Alignment.topCenter,
             fit: BoxFit.cover,
-            color: Colors.blueGrey[700].withOpacity(0.7),
+            color: Colors.blueGrey[900].withOpacity(0.8),
             colorBlendMode: BlendMode.darken,
           ),
           Center(

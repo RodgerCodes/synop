@@ -36,7 +36,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey[800],
+        backgroundColor: Colors.blueGrey[700],
+        appBar: AppBar(backgroundColor: Colors.blueGrey[700]),
         body: user != null
             ? Container(
                 height: MediaQuery.of(context).size.height,
@@ -46,6 +47,7 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 60,
                     ),
+
                     Center(
                         child: user['msg']['profile_img'] != null
                             ? CircleAvatar(
@@ -94,8 +96,11 @@ class _ProfileState extends State<Profile> {
                                       },
                                     )),
                               )),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
                         child: ListTile(
                           title: Text(
                             "Name:",
@@ -112,7 +117,63 @@ class _ProfileState extends State<Profile> {
                                 letterSpacing: 2),
                           ),
                         )),
-                    RaisedButton(child: Text("Update"), onPressed: () {})
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+                        child: ListTile(
+                          title: Text(
+                            "Email:",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            user['msg']['email'],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                letterSpacing: 2),
+                          ),
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+                        child: ListTile(
+                          title: Text(
+                            "Role:",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            user['msg']['role'],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                letterSpacing: 2),
+                          ),
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+                        child: ListTile(
+                          title: Text(
+                            "District:",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            user['msg']['district'],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                letterSpacing: 2),
+                          ),
+                        )),
                   ],
                 ),
               )
