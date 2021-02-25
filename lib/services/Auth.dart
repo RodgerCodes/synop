@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AuthService {
   Dio dio = new Dio();
   var url = "https://blooming-earth-69373.herokuapp.com";
-  // var url = "http://127.0.0.1:5000";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   login(email, password) async {
@@ -19,8 +18,6 @@ class AuthService {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           fontSize: 16.0);
-      // print(e.response);
-
     }
   }
 

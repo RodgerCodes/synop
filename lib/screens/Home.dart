@@ -73,12 +73,6 @@ class _HomeState extends State<Home> {
     setState(() {
       allCodes.clear();
     });
-    // String tii = data;
-    // DateTime gg = DateTime.parse(data);
-    var foo = DateFormat('yyyy-MM-dd').format(data);
-
-    // print(foo);
-
     for (int i = 0; i < code.length; i++) {
       date = code[i]['createdAt'];
       DateTime tday = DateTime.parse(date);
@@ -90,7 +84,7 @@ class _HomeState extends State<Home> {
       }
     }
 
-    print(allCodes);
+    // print(allCodes);
   }
 
   onWeekSelect(data) {
@@ -169,7 +163,7 @@ class _HomeState extends State<Home> {
           style: TextStyle(fontSize: 20),
         ),
         centerTitle: true,
-        actions: [Logout()],
+        actions: [Logout(timer: timer)],
         toolbarHeight: 70,
       ),
       body: Container(
@@ -191,7 +185,7 @@ class _HomeState extends State<Home> {
             )),
             Container(
                 child: allCodes != null
-                    ? allCodes != []
+                    ? allCodes.isNotEmpty
                         ? ListView.builder(
                             controller: _controller, //new line
                             itemCount: allCodes.length,
@@ -283,11 +277,12 @@ class _HomeState extends State<Home> {
                               );
                             })
                         : Container(
-                            height: MediaQuery.of(context).size.height,
+                            height: 200,
                             child: Center(
                               child: Text(
-                                "NO Codes available",
-                                style: TextStyle(color: Colors.white),
+                                "No Codes available",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
                               ),
                             ),
                           )

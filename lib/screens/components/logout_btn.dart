@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:synop/utils/constants.dart';
 
 class Logout extends StatelessWidget {
   const Logout({
     Key key,
+    @required this.timer,
   }) : super(key: key);
+
+  final Timer timer;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class Logout extends StatelessWidget {
         onPressed: () {
           Constants.prefs.setBool("loggedin", false);
           Constants.prefs.setString("tk", null);
+          timer.cancel();
           Navigator.pushReplacementNamed(context, '/login');
         });
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';

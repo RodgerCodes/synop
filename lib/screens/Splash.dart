@@ -8,7 +8,7 @@ class SplashScreeen extends StatefulWidget {
 class _SplashScreeenState extends State<SplashScreeen> {
   void fetchData() async {
     await Future.delayed(Duration(seconds: 5),
-        () => {Navigator.pushReplacementNamed(context, '/login')});
+        () => {Navigator.pushReplacementNamed(context, '/wrapper')});
   }
 
   @override

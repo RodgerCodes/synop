@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synop/services/Auth.dart';
+import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:synop/utils/loader.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,152 +17,152 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   bool showProgressLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    CheckInternet().CheckConnection(context);
+  }
+
+  @override
+  void dispose() {
+    CheckInternet().listener.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return ModalProgressHUD(
-      inAsyncCall: showProgressLoading,
-      color: Colors.grey[900],
-      child: Scaffold(
-        backgroundColor: Colors.blueGrey[700],
-        body: SingleChildScrollView(
-          child: Container(
-            height: size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Form(
-                    key: _formkey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          enableSuggestions: true,
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (val) {
-                            email = val;
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter the requires info';
-                            }
-                            return null;
-                          },
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            labelText: "Email",
-                            labelStyle: TextStyle(color: Colors.white),
-                            hintStyle: TextStyle(color: Colors.white),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.white,
-                              ),
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[700],
+      body: SingleChildScrollView(
+        child: Container(
+          height: size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Welcome',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Form(
+                  key: _formkey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        enableSuggestions: true,
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (val) {
+                          email = val;
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the requires info';
+                          }
+                          return null;
+                        },
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Email",
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
                             ),
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            border: OutlineInputBorder(),
                           ),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
+                          border: OutlineInputBorder(),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            focusColor: Colors.white,
-                            hintStyle: TextStyle(color: Colors.white),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.lock,
-                                color: Colors.white,
-                              ),
-                            ),
-                            suffixIcon: FlatButton(
-                              child: Icon(
-                                Icons.visibility,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                visible = !visible;
-                                setState(() {});
-                              },
-                            ),
-                            labelText: "Password",
-                            labelStyle: TextStyle(color: Colors.white),
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            border: OutlineInputBorder(),
-                          ),
-                          obscureText: visible,
-                          onChanged: (val) {
-                            password = val;
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  height: 50,
-                  child: RaisedButton(
-                    disabledColor: Colors.red,
-                    color: Colors.blue,
-                    elevation: 10.5,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text('Sign In',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      // TOD0:Implement backend functionality
-                      if (_formkey.currentState.validate()) {
-                        _handleSubmit(context);
-                      }
-                    },
-                  ),
-                ),
-                FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.blue[400],
-                        fontSize: 16,
                       ),
-                    ))
-              ],
-            ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          focusColor: Colors.white,
+                          hintStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.lock,
+                              color: Colors.white,
+                            ),
+                          ),
+                          suffixIcon: FlatButton(
+                            child: Icon(
+                              Icons.visibility,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              visible = !visible;
+                              setState(() {});
+                            },
+                          ),
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.white),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
+                          border: OutlineInputBorder(),
+                        ),
+                        obscureText: visible,
+                        onChanged: (val) {
+                          password = val;
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: size.width * 0.8,
+                height: 50,
+                child: RaisedButton(
+                  disabledColor: Colors.red,
+                  color: Colors.blue,
+                  elevation: 10.5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text('Sign In',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    // TOD0:Implement backend functionality
+                    if (_formkey.currentState.validate()) {
+                      _handleSubmit(context);
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
