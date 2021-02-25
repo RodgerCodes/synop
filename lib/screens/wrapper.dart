@@ -8,7 +8,7 @@ class Wrapper extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/tp.jpg',
+            'assets/ty.jpg',
             alignment: Alignment.topCenter,
             fit: BoxFit.cover,
             color: Colors.blueGrey[900].withOpacity(0.8),

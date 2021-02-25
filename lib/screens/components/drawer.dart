@@ -115,7 +115,7 @@ class _drawercomponentState extends State<drawercomponent> {
                         onTap: () {
                           Constants.prefs.setBool("loggedin", false);
                           Constants.prefs.setString("tk", null);
-                          Navigator.pushReplacementNamed(context, '/login');
+                          Navigator.pushReplacementNamed(context, '/wrapper');
                         },
                         leading: Icon(
                           Icons.logout,

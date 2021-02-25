@@ -22,7 +22,7 @@ class Logout extends StatelessWidget {
           Constants.prefs.setBool("loggedin", false);
           Constants.prefs.setString("tk", null);
           timer.cancel();
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pushReplacementNamed(context, '/wrapper');
         });
   }
 }
