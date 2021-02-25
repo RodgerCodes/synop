@@ -52,7 +52,7 @@ class _SignupState extends State<Signup> {
                           },
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the requires info';
+                              return 'Please make sure to provide your name';
                             }
                             return null;
                           },
@@ -86,7 +86,7 @@ class _SignupState extends State<Signup> {
                           },
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the requires info';
+                              return 'Please enter your email';
                             }
                             return null;
                           },
@@ -120,7 +120,7 @@ class _SignupState extends State<Signup> {
                           },
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the requires info';
+                              return 'Please enter the your resident district';
                             }
                             return null;
                           },

@@ -105,18 +105,4 @@ class _BtnState extends State<Btn> {
       },
     );
   }
-
-  Future<void> _handleSubmit(BuildContext context) async {
-    try {
-      Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
-
-      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-          .pop(); //close the dialoge
-
-    } catch (error) {
-      print(error);
-    }
-  }
 }
-
-mixin _keyLoader {}

@@ -47,7 +47,6 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 60,
                     ),
-
                     Center(
                         child: user['msg']['profile_img'] != null
                             ? CircleAvatar(
@@ -61,40 +60,6 @@ class _ProfileState extends State<Profile> {
                                 radius:
                                     MediaQuery.of(context).size.width * 0.15,
                                 backgroundImage: NetworkImage(placeholder),
-                                child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(80, 70, 0, 5),
-                                    child: FloatingActionButton(
-                                      child: Icon(Icons.add_a_photo_rounded),
-                                      onPressed: () async {
-                                        File image;
-                                        var imagepicker =
-                                            await ImagePicker.pickImage(
-                                                source: ImageSource.gallery);
-                                        setState(() {
-                                          image = imagepicker;
-                                        });
-                                        try {
-                                          String filename =
-                                              image.path.split('/').last;
-                                          FormData formdata =
-                                              new FormData.fromMap({
-                                            "image":
-                                                await MultipartFile.fromFile(
-                                                    image.path,
-                                                    filename: filename,
-                                                    contentType: MediaType(
-                                                        "image", "png")),
-                                            "type": "image/png"
-                                          });
-                                          AuthService()
-                                              .updatePic(tok, formdata)
-                                              .then((val) {
-                                            print(val);
-                                          });
-                                        } catch (e) {}
-                                      },
-                                    )),
                               )),
                     SizedBox(
                       height: 20,
@@ -117,9 +82,6 @@ class _ProfileState extends State<Profile> {
                                 letterSpacing: 2),
                           ),
                         )),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
                     Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
                         child: ListTile(

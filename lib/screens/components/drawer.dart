@@ -22,7 +22,6 @@ class _drawercomponentState extends State<drawercomponent> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchUser();
   }

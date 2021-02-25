@@ -7,6 +7,7 @@ import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
 import 'package:synop/screens/components/logout_btn.dart';
 import 'package:synop/services/Auth.dart';
+import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
 
@@ -35,8 +36,8 @@ class _HomeState extends State<Home> {
   }
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  DateTime startDate = DateTime.now().subtract(Duration(days: 15));
-  DateTime endDate = DateTime.now().add(Duration(days: 15));
+  DateTime startDate = DateTime.now().subtract(Duration(days: 2));
+  DateTime endDate = DateTime.now().add(Duration(days: 5));
   DateTime selectedDate = DateTime.now();
   List<DateTime> markedDates = [];
   List allCodes = [];
@@ -59,6 +60,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    CheckInternet().CheckConnection(context);
     fetchData();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
@@ -66,6 +68,12 @@ class _HomeState extends State<Home> {
     super.initState();
     // get synoptic codes
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
+  }
+
+  @override
+  void dispose() {
+    CheckInternet().listener.cancel();
+    super.dispose();
   }
 
   onSelect(data) {
