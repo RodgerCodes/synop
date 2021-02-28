@@ -1,7 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:synop/services/Auth.dart';
-import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
 
@@ -14,21 +13,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   var email, password, token;
   var visible = true;
+  Dio dio = new Dio();
+  var url = "https://blooming-earth-69373.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   bool showProgressLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    CheckInternet().CheckConnection(context);
-  }
-
-  @override
-  void dispose() {
-    CheckInternet().listener.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,38 +161,34 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleSubmit(BuildContext context) async {
     try {
       Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
-      AuthService().login(email, password).then((val) {
-        if (val.data['success']) {
-          token = val.data['token'];
-          Fluttertoast.showToast(
-              msg: "Authenticated",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.TOP,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.blue[600],
-              textColor: Colors.white,
-              fontSize: 16.0);
-          Constants.prefs.setBool("loggedin", true);
-          Constants.prefs.setString("tk", token);
-          Navigator.pushReplacementNamed(
-            context,
-            "/home",
-          );
-        } else {
-          Fluttertoast.showToast(
-              msg: "Password incorrect",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.TOP,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
-        }
-      });
-
-      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-          .pop(); //close the dialoge
+      try {
+        await dio.post('$url/signin',
+            data: {"email": email, "password": password},
+            options: Options(contentType: Headers.formUrlEncodedContentType));
+        Fluttertoast.showToast(
+            msg: "Authenticated",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue[600],
+            textColor: Colors.white,
+            fontSize: 16.0);
+        Constants.prefs.setBool("loggedin", true);
+        Constants.prefs.setString("tk", token);
+        Navigator.pushReplacementNamed(context, '/home');
+      } on DioError catch (e) {
+        Fluttertoast.showToast(
+            msg: e.response.data['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue[600],
+            textColor: Colors.white,
+            fontSize: 16.0);
+        Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      }
+      // Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+      //     .pop(); //close the dialoge
     } catch (error) {
       print(error);
     }
