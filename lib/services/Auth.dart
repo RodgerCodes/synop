@@ -4,22 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
   Dio dio = new Dio();
-  var url = "https://blooming-earth-69373.herokuapp.com";
+  var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-
-  login(email, password) async {
-    try {
-      return await dio.post("$url/signin",
-          data: {"email": email, "password": password},
-          options: Options(contentType: Headers.formUrlEncodedContentType));
-    } on DioError catch (e) {
-      Fluttertoast.showToast(
-          msg: e.response.data['msg'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          fontSize: 16.0);
-    }
-  }
 
   getinfo(token) async {
     dio.options.headers['authorization'] = 'Bearer $token';
@@ -27,7 +13,7 @@ class AuthService {
       return await dio.get('$url/info');
     } on DioError catch (e) {
       Fluttertoast.showToast(
-          msg: "Network Error",
+          msg: e.response.data,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           fontSize: 16.0);
@@ -40,7 +26,7 @@ class AuthService {
       return await dio.get('$url/code');
     } on DioError catch (e) {
       Fluttertoast.showToast(
-          msg: "Network Error",
+          msg: e.response.data,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           fontSize: 16.0);

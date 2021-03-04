@@ -14,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var email, password, token;
   var visible = true;
   Dio dio = new Dio();
-  var url = "https://blooming-earth-69373.herokuapp.com";
+  var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   bool showProgressLoading = false;
@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
       try {
-        await dio.post('$url/signin',
+        token = await dio.post('$url/signin',
             data: {"email": email, "password": password},
             options: Options(contentType: Headers.formUrlEncodedContentType));
         Fluttertoast.showToast(
@@ -173,8 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.blue[600],
             textColor: Colors.white,
             fontSize: 16.0);
+        // print(token.data['token']);
         Constants.prefs.setBool("loggedin", true);
-        Constants.prefs.setString("tk", token);
+        Constants.prefs.setString("tk", token.data['token']);
         Navigator.pushReplacementNamed(context, '/home');
       } on DioError catch (e) {
         Fluttertoast.showToast(

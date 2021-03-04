@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
   }
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  DateTime startDate = DateTime.now().subtract(Duration(days: 15));
+  DateTime startDate = DateTime.now().subtract(Duration(days: 30));
   DateTime endDate = DateTime.now().add(Duration(days: 10));
   DateTime selectedDate = DateTime.now();
   List<DateTime> markedDates = [];
@@ -64,9 +64,7 @@ class _HomeState extends State<Home> {
     fetchData();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-    // TODO: implement initState
     super.initState();
-    // get synoptic codes
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
   }
 
@@ -92,8 +90,6 @@ class _HomeState extends State<Home> {
         });
       }
     }
-
-    // print(allCodes);
   }
 
   onWeekSelect(data) {
@@ -136,7 +132,7 @@ class _HomeState extends State<Home> {
         TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: fontColor);
     TextStyle selectedStyle = TextStyle(
         fontSize: 17, fontWeight: FontWeight.w800, color: Colors.black87);
-    TextStyle dayNameStyle = TextStyle(fontSize: 14.5, color: fontColor);
+    TextStyle dayNameStyle = TextStyle(fontSize: 13.5, color: fontColor);
     List<Widget> _children = [
       Text(dayName, style: dayNameStyle),
       Text(date.day.toString(),
@@ -200,6 +196,9 @@ class _HomeState extends State<Home> {
                             itemCount: allCodes.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
+                              var tday = allCodes[index]['createdAt'];
+                              var dd = DateTime.parse(tday);
+                              var formateddate = DateFormat.jms().format(dd);
                               return Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 5, 10, 2),
@@ -211,30 +210,45 @@ class _HomeState extends State<Home> {
                                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                                     elevation: 0.5,
                                     child: ListTile(
-                                        // isThreeLine: true,
-                                        key: Key(code[index]['_id']),
+                                        key: Key(allCodes[index]['_id']),
                                         title: Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               0, 10, 0, 0),
                                           child: Text(
-                                            code[index]['creator']['name'],
+                                            allCodes[index]['creator']['name'],
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.blue),
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 10, 0, 5),
-                                          child: Text(
-                                            code[index]['code'],
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                                letterSpacing: 1.3),
-                                          ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 10, 0, 10),
+                                              child: Text(
+                                                allCodes[index]['code'],
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                    letterSpacing: 1.3),
+                                              ),
+                                            ),
+                                            Text(
+                                              allCodes[index]['creator']
+                                                  ['district'],
+                                              style: TextStyle(
+                                                  color: Colors.blue[600]),
+                                            ),
+                                            Text(formateddate,
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                          ],
                                         ),
-                                        trailing: code[index]['creator']
+                                        trailing: allCodes[index]['creator']
                                                     ['_id'] ==
                                                 user['msg']['_id']
                                             ? IconButton(

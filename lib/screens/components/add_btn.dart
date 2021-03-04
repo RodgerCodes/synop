@@ -11,7 +11,6 @@ class Btn extends StatefulWidget {
 
 class _BtnState extends State<Btn> {
   var code_field, date;
-  bool showProgressLoading = false;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   var tok = Constants.prefs.getString("tk");
@@ -21,7 +20,7 @@ class _BtnState extends State<Btn> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Colors.blueGrey[900],
+            backgroundColor: Colors.blueGrey[700],
             title: Text(
               'Add New code',
               style: TextStyle(color: Colors.white),
@@ -36,7 +35,7 @@ class _BtnState extends State<Btn> {
                   }
 
                   if (value.contains('AAXX')) {
-                    return 'Please just enter the number';
+                    return 'Please just enter the numbers';
                   }
 
                   return null;
@@ -61,8 +60,6 @@ class _BtnState extends State<Btn> {
                 elevation: 30.5,
                 onPressed: () {
                   if (_key.currentState.validate()) {
-                    // backend function
-                    // _handleSubmit(context);
                     Dialogs.showLoadingDialog(
                         context, _keyLoader); //invoking login
 
