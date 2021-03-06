@@ -74,8 +74,8 @@ class _HomeState extends State<Home> {
   }
 
   onSelect(data) {
-    CheckInternet().CheckConnection(context);
-    fetchData();
+    // CheckInternet().CheckConnection(context);
+    // fetchData();
     setState(() {
       selectedDate = data;
     });

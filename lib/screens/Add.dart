@@ -21,6 +21,7 @@ class _AddState extends State<Add> {
   TextEditingController wind_direction = TextEditingController();
   TextEditingController windSpeed = TextEditingController();
   TextEditingController temperature = TextEditingController();
+  TextEditingController dewpoint = TextEditingController();
 
   var data;
   @override
@@ -80,21 +81,27 @@ class _AddState extends State<Add> {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ),
-                  DropdownButton(
-                    value: dropdownvalue,
-                    onChanged: (val) {
-                      setState(() {
-                        data = val;
-                      });
-                      print(data);
-                    },
-                    items: <String>['0', '1', '3', '4', '/']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.cyan),
+                    child: DropdownButton(
+                      value: dropdownvalue,
+                      onChanged: (val) {
+                        setState(() {
+                          data = val;
+                        });
+                        print(data);
+                      },
+                      items: <String>['0', '1', '3', '4', '/']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   )
                 ],
               ),
@@ -357,7 +364,7 @@ class _AddState extends State<Add> {
                 height: 30,
               ),
               Text(
-                'Air Temperature',
+                'Temperature',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -379,6 +386,39 @@ class _AddState extends State<Add> {
                     decoration: InputDecoration(
                       hintText: "Air temperature",
                       labelText: "Air tempearature",
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Dew point temperature',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: dewpoint,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the Temperature';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Dew point temperature",
+                      labelText: "Dew point tempearature",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
