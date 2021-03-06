@@ -26,7 +26,6 @@ class _HomeState extends State<Home> {
     AuthService().getCode(tok).then((val) {
       code = val.data;
       setState(() {});
-      // print(code);
     });
     AuthService().getinfo(tok).then((val) {
       user = val.data;
@@ -60,23 +59,26 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    CheckInternet().CheckConnection(context);
+    // CheckInternet().CheckConnection(context);
     fetchData();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
+    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
   }
 
   @override
   void dispose() {
-    CheckInternet().listener.cancel();
+    // CheckInternet().listener.cancel();
     super.dispose();
   }
 
   onSelect(data) {
     CheckInternet().CheckConnection(context);
     fetchData();
+    setState(() {
+      selectedDate = data;
+    });
     setState(() {
       allCodes.clear();
     });

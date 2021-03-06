@@ -13,7 +13,7 @@ class AuthService {
       return await dio.get('$url/info');
     } on DioError catch (e) {
       Fluttertoast.showToast(
-          msg: e.response.data,
+          msg: "Network Error",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           fontSize: 16.0);
@@ -26,7 +26,7 @@ class AuthService {
       return await dio.get('$url/code');
     } on DioError catch (e) {
       Fluttertoast.showToast(
-          msg: e.response.data,
+          msg: 'Network Error',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           fontSize: 16.0);

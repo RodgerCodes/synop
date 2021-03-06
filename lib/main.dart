@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:synop/screens/Add.dart';
 import 'package:synop/screens/Home.dart';
 import 'package:synop/screens/Login.dart';
 import 'package:synop/screens/Profile.dart';
@@ -21,7 +22,8 @@ Future main() async {
       '/login': (context) => LoginScreen(),
       '/home': (context) => Home(),
       '/profile': (context) => Profile(),
-      '/signup': (context) => Signup()
+      '/signup': (context) => Signup(),
+      '/add': (context) => Add()
     },
   ));
 }
