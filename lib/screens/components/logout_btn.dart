@@ -21,7 +21,7 @@ class Logout extends StatelessWidget {
         onPressed: () {
           Constants.prefs.setBool("loggedin", false);
           Constants.prefs.setString("tk", null);
-          timer.cancel();
+          // timer.cancel();
           Navigator.pushReplacementNamed(context, '/wrapper');
         });
   }

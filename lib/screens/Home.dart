@@ -87,8 +87,6 @@ class _HomeState extends State<Home> {
   }
 
   onSelect(data) {
-    // CheckInternet().CheckConnection(context);
-    // fetchData();
     setState(() {
       selectedDate = data;
     });
@@ -163,7 +161,7 @@ class _HomeState extends State<Home> {
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 5),
       decoration: BoxDecoration(
-        color: !isSelectedDate ? Colors.transparent : Colors.white70,
+        color: !isSelectedDate ? Colors.transparent : Colors.blue,
         borderRadius: BorderRadius.all(Radius.circular(60)),
       ),
       child: Column(

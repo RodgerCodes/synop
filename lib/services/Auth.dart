@@ -92,4 +92,17 @@ class AuthService {
           fontSize: 16.0);
     }
   }
+
+  logout(token) async {
+    dio.options.headers['authorization'] = 'Bearer $token';
+    try {
+      return await dio.post('$url/logout');
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+          msg: e.response.data,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          fontSize: 16.0);
+    }
+  }
 }
