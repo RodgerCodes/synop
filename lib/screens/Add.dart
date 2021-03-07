@@ -46,7 +46,9 @@ class _AddState extends State<Add> {
                   color: Colors.white,
                   size: 30,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ))
             ],
           ),

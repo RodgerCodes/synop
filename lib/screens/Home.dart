@@ -26,6 +26,9 @@ class _HomeState extends State<Home> {
     AuthService().getCode(tok).then((val) {
       code = val.data;
       setState(() {});
+      setState(() {
+        allCodes = [];
+      });
       for (int i = 0; i < code.length; i++) {
         var info = code[i]['createdAt'];
         DateTime tday = DateTime.parse(info);
@@ -49,7 +52,7 @@ class _HomeState extends State<Home> {
   DateTime endDate = DateTime.now().add(Duration(days: 10));
   DateTime selectedDate = DateTime.now();
   List<DateTime> markedDates = [];
-  List allCodes = [];
+  List allCodes;
   ScrollController _controller;
 
   _scrollListener() {
@@ -195,7 +198,7 @@ class _HomeState extends State<Home> {
               onDateSelected: onSelect,
               onWeekSelected: onWeekSelect,
               dateTileBuilder: dateTileBuilder,
-              iconColor: Colors.white,
+              iconColor: Colors.blue[300],
               monthNameWidget: _monthNameWidget,
               containerDecoration: BoxDecoration(color: Colors.blueGrey[700]),
               addSwipeGesture: true,
