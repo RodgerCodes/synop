@@ -26,6 +26,16 @@ class _HomeState extends State<Home> {
     AuthService().getCode(tok).then((val) {
       code = val.data;
       setState(() {});
+      for (int i = 0; i < code.length; i++) {
+        var info = code[i]['createdAt'];
+        DateTime tday = DateTime.parse(info);
+        var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+        if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
+          setState(() {
+            allCodes.add(code[i]);
+          });
+        }
+      }
     });
     AuthService().getinfo(tok).then((val) {
       user = val.data;
@@ -261,7 +271,8 @@ class _HomeState extends State<Home> {
                                                 ),
                                                 onPressed: () {
                                                   setState(() {
-                                                    del = code[index]['_id'];
+                                                    del =
+                                                        allCodes[index]['_id'];
                                                     // isSelected = true;
                                                   });
                                                   Dialogs.showLoadingDialog(

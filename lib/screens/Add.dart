@@ -11,6 +11,7 @@ class _AddState extends State<Add> {
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = '1';
   String ir = '0', ix = '1';
+  String rainfallDuration = '4';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
   TextEditingController cloud_height = TextEditingController();
@@ -22,8 +23,11 @@ class _AddState extends State<Add> {
   TextEditingController windSpeed = TextEditingController();
   TextEditingController temperature = TextEditingController();
   TextEditingController dewpoint = TextEditingController();
+  TextEditingController stationPressure = TextEditingController();
+  TextEditingController seaPressure = TextEditingController();
+  TextEditingController precipitation = TextEditingController();
 
-  var data;
+  var data = "0";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,9 +86,9 @@ class _AddState extends State<Add> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
                     child: DropdownButton(
                       value: dropdownvalue,
@@ -146,9 +150,9 @@ class _AddState extends State<Add> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
                     child: DropdownButton(
                       value: ir,
@@ -169,9 +173,10 @@ class _AddState extends State<Add> {
                   ),
                   Container(
                     // color: Colors.white,
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
                     child: DropdownButton(
                       style: TextStyle(color: Colors.black, fontSize: 20),
@@ -182,7 +187,7 @@ class _AddState extends State<Add> {
                         });
                         print(ix);
                       },
-                      items: <String>['0', '1', '2', '3']
+                      items: <String>['1', '2', '3']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -427,6 +432,140 @@ class _AddState extends State<Add> {
                       border: OutlineInputBorder(),
                     )),
               ),
+              SizedBox(
+                height: 30,
+              ),
+              Text('Pressure',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30)),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: stationPressure,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the Station pressure';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Station Pressure (hectapascals)",
+                      labelText: "Station pressure",
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Sea level pressure',
+                  style: TextStyle(
+                    color: Colors.white,
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: seaPressure,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the Temperature';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Sea level pressure (hectapascals)",
+                      labelText: "Sea level pressure",
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Precipitation',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: precipitation,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the Code figure for the rainfall';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Precipitation amount (Code figure)",
+                      labelText: "Precipitation amount",
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Rainfall duration', style: TextStyle(color: Colors.white)),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                // color: Colors.white,
+                padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.cyan),
+                child: DropdownButton(
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  value: rainfallDuration,
+                  onChanged: (val) {
+                    setState(() {
+                      rainfallDuration = val;
+                    });
+                    print(rainfallDuration);
+                  },
+                  items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              )
             ]),
           )
         ],
