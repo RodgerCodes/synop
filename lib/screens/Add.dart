@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:synop/services/Auth.dart';
+import 'package:synop/utils/constants.dart';
+import 'package:synop/utils/loader.dart';
 
 class Add extends StatefulWidget {
   @override
@@ -7,11 +11,58 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  var tok = Constants.prefs.getString('tk');
+  // dialog
+  void _showDialog(String title, String content, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content, style: TextStyle(fontSize: 23)),
+            actions: [
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () {
+                        if (_formkey.currentState.validate()) {
+                          Dialogs.showLoadingDialog(context, _keyLoader);
+                          AuthService().addCode(tok, content).then((val) {
+                            Fluttertoast.showToast(
+                                msg: "Synop added",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.blue[600],
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            Navigator.of(_keyLoader.currentContext,
+                                    rootNavigator: true)
+                                .pop();
+                            Navigator.pushReplacementNamed(context, '/home');
+                          });
+                        }
+                      },
+                      child: Text('Submit', style: TextStyle(fontSize: 20))),
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Go Back', style: TextStyle(fontSize: 20)))
+                ],
+              )
+            ],
+          );
+        });
+  }
+
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = '1';
   String ir = '0', ix = '1';
   String rainfallDuration = '4';
+  String low = '0', medium = '0', high = '0';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
   TextEditingController cloud_height = TextEditingController();
@@ -28,8 +79,9 @@ class _AddState extends State<Add> {
   TextEditingController precipitation = TextEditingController();
   TextEditingController pastWeather = TextEditingController();
   TextEditingController presentWeather = TextEditingController();
+  TextEditingController isobaric = TextEditingController();
 
-  var data = "0";
+  var data = "0", date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,25 +121,25 @@ class _AddState extends State<Add> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // FlatButton(
-                  //   onPressed: () {
-                  //     print(DateFormat('dd').format(selectedDate));
-                  //   },
-                  //   child: Text('Select Date'),
-                  // )
                   FlatButton(
                     padding: EdgeInsets.all(10),
                     color: Colors.cyan,
                     onPressed: () {
                       showTimePicker(
-                          context: context,
-                          builder: (BuildContext context, Widget child) {
-                            return MediaQuery(
-                                data: MediaQuery.of(context)
-                                    .copyWith(alwaysUse24HourFormat: true),
-                                child: child);
-                          },
-                          initialTime: TimeOfDay(hour: 06, minute: 00));
+                              context: context,
+                              builder: (BuildContext context, Widget child) {
+                                return MediaQuery(
+                                    data: MediaQuery.of(context)
+                                        .copyWith(alwaysUse24HourFormat: true),
+                                    child: child);
+                              },
+                              initialTime: TimeOfDay(hour: 06, minute: 00))
+                          .then((value) {
+                        setState(() {
+                          date = value.hour;
+                        });
+                        print(date);
+                      });
                     },
                     child: Text(
                       'Select Time',
@@ -502,6 +554,34 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
+              Text('Isobaric pressure', style: TextStyle(color: Colors.white)),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: isobaric,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the Temperature';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "isobaric (hectapascals)",
+                      labelText: "Isobaric standard",
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Text('Sea level pressure',
                   style: TextStyle(
                     color: Colors.white,
@@ -520,7 +600,7 @@ class _AddState extends State<Add> {
                     },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Sea level pressure (hectapascals)",
+                      hintText: "Sea level pressure (hectopascals)",
                       labelText: "Sea level pressure",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
@@ -689,6 +769,151 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
+              Text('Cloud group',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan),
+                    child: Column(
+                      children: [
+                        Text('Low Clouds',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        DropdownButton(
+                          value: low,
+                          onChanged: (val) {
+                            setState(() {
+                              low = val;
+                            });
+                            // print(data);
+                          },
+                          items: <String>[
+                            '0',
+                            '1',
+                            '3',
+                            '4',
+                            '5',
+                            '6',
+                            '7',
+                            '8',
+                            '9',
+                            '/'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan),
+                    child: Column(
+                      children: [
+                        Text('Medium Clouds',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        DropdownButton(
+                          value: medium,
+                          onChanged: (val) {
+                            setState(() {
+                              medium = val;
+                            });
+                            // print(data);
+                          },
+                          items: <String>[
+                            '0',
+                            '1',
+                            '3',
+                            '4',
+                            '5',
+                            '6',
+                            '7',
+                            '8',
+                            '9',
+                            '/'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 48),
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.cyan),
+                    child: Column(
+                      children: [
+                        Text('High Clouds',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        DropdownButton(
+                          value: high,
+                          onChanged: (val) {
+                            setState(() {
+                              high = val;
+                            });
+                            // print(data);
+                          },
+                          items: <String>[
+                            '0',
+                            '1',
+                            '3',
+                            '4',
+                            '5',
+                            '6',
+                            '7',
+                            '8',
+                            '9',
+                            '/'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: 50,
@@ -712,9 +937,16 @@ class _AddState extends State<Add> {
                         amount = cloud_amount.text,
                         direction = wind_direction.text,
                         speed = windSpeed.text;
-                    var sign, dewSign;
-                    var numtemp = int.parse(temperature.text);
-                    var dewPoint = int.parse(dewpoint.text);
+                    var sign, dewSign, isobaricValue;
+                    var geoHeight = seaPressure.text;
+                    var p_station = int.parse(stationPressure.text);
+                    var newPressure = (((p_station * 100) / 100) * 10).round();
+                    var iso = int.parse(isobaric.text);
+                    var numtemp = int.parse(temperature.text),
+                        rainfall = precipitation.text;
+                    var dewPoint = int.parse(dewpoint.text),
+                        present = presentWeather.text,
+                        past = pastWeather.text;
                     var newTemp = (numtemp * 10).toString();
                     var newDewPoint = (dewPoint * 10).toString();
                     // temperature sign
@@ -726,6 +958,31 @@ class _AddState extends State<Add> {
                       setState(() {
                         sign = 1;
                       });
+                    }
+
+                    // isobaric standard surface
+                    if (iso == 1000) {
+                      setState(() {
+                        isobaricValue = 1;
+                      });
+                    } else if (iso == 925) {
+                      setState(() {
+                        isobaricValue = 2;
+                      });
+                    } else if (iso == 500) {
+                      setState(() {
+                        isobaricValue = 5;
+                      });
+                    } else if (iso == 700) {
+                      setState(() {
+                        isobaricValue = 7;
+                      });
+                    } else if (iso == 850) {
+                      setState(() {
+                        isobaricValue = 8;
+                      });
+                    } else {
+                      Fluttertoast.showToast(msg: "Value does nt exit");
                     }
 
                     // dew point temperature sign
@@ -803,7 +1060,8 @@ class _AddState extends State<Add> {
                     }
                     var finalSting = 'AAXX ' +
                         info +
-                        '06$data ' +
+                        '$date' +
+                        '$data ' +
                         '67$station ' +
                         ir +
                         ix +
@@ -815,8 +1073,49 @@ class _AddState extends State<Add> {
                         newTemp +
                         ' 2$dewSign' +
                         newDewPoint +
-                        '';
-                    print(finalSting);
+                        ' 3$newPressure 4$isobaricValue' +
+                        geoHeight +
+                        ' 6$rainfall' +
+                        rainfallDuration +
+                        ' 8$amount' +
+                        low +
+                        medium +
+                        high;
+
+// second string
+                    var secondString = 'AAXX ' +
+                        info +
+                        '$date' +
+                        '$data ' +
+                        '67$station ' +
+                        ir +
+                        ix +
+                        '$cloudheight' +
+                        visible +
+                        ' $amount' +
+                        direction +
+                        '$speed 1$sign' +
+                        newTemp +
+                        ' 2$dewSign' +
+                        newDewPoint +
+                        ' 3$newPressure 4$isobaricValue' +
+                        geoHeight +
+                        ' 6$rainfall' +
+                        rainfallDuration +
+                        '7$present' +
+                        past +
+                        ' 8$amount' +
+                        low +
+                        medium +
+                        high;
+
+                    // show dialog
+                    if (ix == '1') {
+                      _showDialog("Verify Synop", secondString, context);
+                    } else {
+                      _showDialog('Verify Synop', finalSting, context);
+                      print(newPressure.round());
+                    }
                   },
                 ),
               )
