@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
     });
     for (int i = 0; i < code.length; i++) {
       date = code[i]['createdAt'];
-      print(date);
+      // print(date);
       DateTime tday = DateTime.parse(date);
       var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
       // print(formatedDate);

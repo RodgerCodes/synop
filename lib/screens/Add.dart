@@ -316,7 +316,7 @@ class _AddState extends State<Add> {
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: cloud_amount,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter the cloud amount';
@@ -325,7 +325,7 @@ class _AddState extends State<Add> {
                     },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Cloud amount ",
+                      hintText: "Cloud amount (Code figure)",
                       labelText: "cloud amount",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
@@ -707,7 +707,45 @@ class _AddState extends State<Add> {
                     // TOD0:Implement backend functionality
                     var info = DateFormat('dd').format(selectedDate);
                     var station = stationnumber.text;
-                    var cloudheight;
+                    var cloudheight,
+                        visible = visibility.text,
+                        amount = cloud_amount.text,
+                        direction = wind_direction.text,
+                        speed = windSpeed.text;
+                    var sign, dewSign;
+                    var numtemp = int.parse(temperature.text);
+                    var dewPoint = int.parse(dewpoint.text);
+                    var newTemp = (numtemp * 10).toString();
+                    var newDewPoint = (dewPoint * 10).toString();
+                    // temperature sign
+                    if (numtemp > 0 || numtemp == 0) {
+                      setState(() {
+                        sign = 0;
+                      });
+                    } else {
+                      setState(() {
+                        sign = 1;
+                      });
+                    }
+
+                    // dew point temperature sign
+                    if (dewPoint > 0 || dewPoint == 0) {
+                      setState(() {
+                        dewSign = 0;
+                      });
+                    } else {
+                      setState(() {
+                        dewSign = 1;
+                      });
+                    }
+
+                    if (dewPoint > 0 && dewPoint < 10) {
+                      setState(() {
+                        newDewPoint = '0$newDewPoint';
+                      });
+                    }
+
+                    // cloud height
                     if (int.parse(cloud_height.text) >= 0 &&
                         int.parse(cloud_height.text) < 50) {
                       setState(() {
@@ -769,7 +807,15 @@ class _AddState extends State<Add> {
                         '67$station ' +
                         ir +
                         ix +
-                        '$cloudheight';
+                        '$cloudheight' +
+                        visible +
+                        ' $amount' +
+                        direction +
+                        '$speed 1$sign' +
+                        newTemp +
+                        ' 2$dewSign' +
+                        newDewPoint +
+                        '';
                     print(finalSting);
                   },
                 ),
