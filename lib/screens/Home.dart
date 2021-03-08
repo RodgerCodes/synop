@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:calendar_strip/calendar_strip.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +8,6 @@ import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
 import 'package:synop/screens/components/logout_btn.dart';
 import 'package:synop/services/Auth.dart';
-import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
 
@@ -23,11 +23,13 @@ class _HomeState extends State<Home> {
   Timer timer;
 
   Future fetchData() async {
-    AuthService().getCode(tok).then((val) {
+    AuthService().getCode(tok).then((val) async {
       code = val.data;
       setState(() {});
-      setState(() {
-        allCodes = [];
+      await Future.delayed(Duration(seconds: 4), () {
+        setState(() {
+          allCodes = [];
+        });
       });
       for (int i = 0; i < code.length; i++) {
         var info = code[i]['createdAt'];
@@ -77,7 +79,10 @@ class _HomeState extends State<Home> {
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     super.initState();
-    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
+
+    if (formatDate(DateTime.now(), [HH, ':', nn]) == '08:10') {
+      timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
+    }
   }
 
   @override

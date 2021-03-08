@@ -13,6 +13,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var user;
+  var info;
   var tok = Constants.prefs.getString("tk");
   File _image;
   final picker = ImagePicker();
@@ -23,6 +24,22 @@ class _ProfileState extends State<Profile> {
       user = val.data;
       setState(() {});
       print(user);
+    });
+  }
+
+  Future getImage() async {
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedImage != null) {
+        info = pickedImage.path;
+        // _image = pickedImage.path;
+      } else {
+        print('NO image selected');
+      }
+    });
+
+    AuthService().updatePic(tok, info).then((val) {
+      print(val);
     });
   }
 

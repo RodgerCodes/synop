@@ -65,7 +65,7 @@ class AuthService {
   updatePic(token, _image) async {
     dio.options.headers['authorization'] = 'Bearer $token';
     try {
-      return await dio.put('$url/profile', data: {"profile_img": _image});
+      return await dio.put('$url/upload', data: {"image": _image});
     } on DioError catch (e) {
       // Fluttertoast.showToast(
       //     msg:
