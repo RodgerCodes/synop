@@ -87,6 +87,7 @@ class _HomeState extends State<Home> {
   }
 
   onSelect(data) {
+    // print(data);
     setState(() {
       selectedDate = data;
     });
@@ -95,8 +96,10 @@ class _HomeState extends State<Home> {
     });
     for (int i = 0; i < code.length; i++) {
       date = code[i]['createdAt'];
+      print(date);
       DateTime tday = DateTime.parse(date);
       var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+      // print(formatedDate);
       if (DateFormat('yyyy-MM-dd').format(data) == formatedDate) {
         setState(() {
           allCodes.add(code[i]);

@@ -26,6 +26,8 @@ class _AddState extends State<Add> {
   TextEditingController stationPressure = TextEditingController();
   TextEditingController seaPressure = TextEditingController();
   TextEditingController precipitation = TextEditingController();
+  TextEditingController pastWeather = TextEditingController();
+  TextEditingController presentWeather = TextEditingController();
 
   var data = "0";
   @override
@@ -566,6 +568,116 @@ class _AddState extends State<Add> {
                       child: Text(value),
                     );
                   }).toList(),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text('Present and Past Weather',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: ix == '1'
+                    ? TextFormField(
+                        enableSuggestions: true,
+                        controller: presentWeather,
+                        enabled: true,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Present Weather (Code figure)",
+                          labelText: "Present Weather (Code figure)",
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.blue[600]),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
+                          border: OutlineInputBorder(),
+                        ))
+                    : TextFormField(
+                        enableSuggestions: true,
+                        controller: presentWeather,
+                        enabled: false,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                            hintText: "Present Weather (Code figure)",
+                            labelText: "Present Weather (Code figure)",
+                            labelStyle: TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Colors.blue[600]),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white, width: 1.0)),
+                            border: OutlineInputBorder(),
+                            disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey)))),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                child: ix == '1'
+                    ? TextFormField(
+                        enableSuggestions: true,
+                        controller: pastWeather,
+                        enabled: true,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Past weather (Code figure)",
+                          labelText: "Past weather (Code figure)",
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.blue[600]),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
+                          border: OutlineInputBorder(),
+                        ))
+                    : TextFormField(
+                        enableSuggestions: true,
+                        controller: pastWeather,
+                        enabled: false,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                            hintText: "Past weather (Code figure)",
+                            labelText: "Past weather (Code figure)",
+                            labelStyle: TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Colors.blue[600]),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white, width: 1.0)),
+                            border: OutlineInputBorder(),
+                            disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey)))),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: 50,
+                child: RaisedButton(
+                  disabledColor: Colors.red,
+                  color: Colors.blue,
+                  elevation: 10.5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text('Submit',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    // TOD0:Implement backend functionality
+                  },
                 ),
               )
             ]),
