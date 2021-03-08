@@ -60,6 +60,9 @@ class _AddState extends State<Add> {
                 color: Colors.white,
                 fontSize: 20,
               )),
+          SizedBox(
+            height: 20,
+          ),
           Form(
             key: _formkey,
             child: Column(children: [
@@ -73,6 +76,8 @@ class _AddState extends State<Add> {
                   //   child: Text('Select Date'),
                   // )
                   FlatButton(
+                    padding: EdgeInsets.all(10),
+                    color: Colors.cyan,
                     onPressed: () {
                       showTimePicker(
                           context: context,
@@ -94,27 +99,39 @@ class _AddState extends State<Add> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
-                    child: DropdownButton(
-                      value: dropdownvalue,
-                      onChanged: (val) {
-                        setState(() {
-                          data = val;
-                        });
-                        print(data);
-                      },
-                      items: <String>['0', '1', '3', '4', '/']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    child: Column(
+                      children: [
+                        Text('Wind speed units',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        DropdownButton(
+                          value: dropdownvalue,
+                          onChanged: (val) {
+                            setState(() {
+                              data = val;
+                            });
+                            print(data);
+                          },
+                          items: <String>['0', '1', '3', '4', '/']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
                   )
                 ],
               ),
+              SizedBox(
+                height: 30,
+              ),
+              Text('Station number', style: TextStyle(color: Colors.white)),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 40, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: stationnumber,
@@ -158,21 +175,30 @@ class _AddState extends State<Add> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
-                    child: DropdownButton(
-                      value: ir,
-                      onChanged: (val) {
-                        setState(() {
-                          ir = val;
-                        });
-                        print(ir);
-                      },
-                      items: <String>['0', '1', '2', '3', '4']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    child: Column(
+                      children: [
+                        Text(
+                          'precipitation',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        DropdownButton(
+                          value: ir,
+                          onChanged: (val) {
+                            setState(() {
+                              ir = val;
+                            });
+                            print(ir);
+                          },
+                          items: <String>['0', '1', '2', '3', '4']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -182,22 +208,30 @@ class _AddState extends State<Add> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
-                    child: DropdownButton(
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                      value: ix,
-                      onChanged: (val) {
-                        setState(() {
-                          ix = val;
-                        });
-                        print(ix);
-                      },
-                      items: <String>['1', '2', '3']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    child: Column(
+                      children: [
+                        Text('Present/past weather',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        DropdownButton(
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          value: ix,
+                          onChanged: (val) {
+                            setState(() {
+                              ix = val;
+                            });
+                            print(ix);
+                          },
+                          items: <String>['1', '2', '3']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -215,12 +249,6 @@ class _AddState extends State<Add> {
                     enableSuggestions: true,
                     controller: cloud_height,
                     keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter th cloud height';
-                      }
-                      return null;
-                    },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: "Cloud height",
@@ -244,7 +272,7 @@ class _AddState extends State<Add> {
                 padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
-                    controller: cloud_height,
+                    controller: visibility,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -677,6 +705,72 @@ class _AddState extends State<Add> {
                           fontWeight: FontWeight.bold)),
                   onPressed: () {
                     // TOD0:Implement backend functionality
+                    var info = DateFormat('dd').format(selectedDate);
+                    var station = stationnumber.text;
+                    var cloudheight;
+                    if (int.parse(cloud_height.text) >= 0 &&
+                        int.parse(cloud_height.text) < 50) {
+                      setState(() {
+                        cloudheight = 0;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 50 &&
+                        int.parse(cloud_height.text) < 100) {
+                      setState(() {
+                        cloudheight = 1;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 100 &&
+                        int.parse(cloud_height.text) < 200) {
+                      setState(() {
+                        cloudheight = 2;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 200 &&
+                        int.parse(cloud_height.text) < 300) {
+                      setState(() {
+                        cloudheight = 3;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 300 &&
+                        int.parse(cloud_height.text) < 600) {
+                      setState(() {
+                        cloudheight = 4;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 600 &&
+                        int.parse(cloud_height.text) < 1000) {
+                      setState(() {
+                        cloudheight = 5;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 1000 &&
+                        int.parse(cloud_height.text) < 1500) {
+                      setState(() {
+                        cloudheight = 6;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 1500 &&
+                        int.parse(cloud_height.text) < 2000) {
+                      setState(() {
+                        cloudheight = 7;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 2000 &&
+                        int.parse(cloud_height.text) < 2500) {
+                      setState(() {
+                        cloudheight = 8;
+                      });
+                    } else if (int.parse(cloud_height.text) >= 2500 ||
+                        cloud_height.text == "no clouds") {
+                      setState(() {
+                        cloudheight = 9;
+                      });
+                    } else {
+                      setState(() {
+                        cloudheight = '/';
+                      });
+                    }
+                    var finalSting = 'AAXX ' +
+                        info +
+                        '06$data ' +
+                        '67$station ' +
+                        ir +
+                        ix +
+                        '$cloudheight';
+                    print(finalSting);
                   },
                 ),
               )
