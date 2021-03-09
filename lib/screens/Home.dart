@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     super.initState();
-
+    // print(formatDate(DateTime.now(), [HH, ':', nn]));
     if (formatDate(DateTime.now(), [HH, ':', nn]) == '08:10') {
       timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
     }

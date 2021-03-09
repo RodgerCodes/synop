@@ -10,7 +10,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:requestLegacyExternalStorage="true"
         android:label="Synop"
-        android:icon="@mipmap/logo">
+        android:icon="@mipmap/lg">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

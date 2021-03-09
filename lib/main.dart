@@ -8,10 +8,12 @@ import 'package:synop/screens/Signup.dart';
 import 'package:synop/screens/Splash.dart';
 import 'package:synop/screens/wrapper.dart';
 import 'package:synop/utils/constants.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Constants.prefs = await SharedPreferences.getInstance();
+  ResponsiveBreakpoint.autoScale(600);
   runApp(MaterialApp(
     debugShowCheckedModeBanner: true,
     // theme: ThemeData(primarySwatch: Colors.grey),
