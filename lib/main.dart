@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synop/screens/Add.dart';
 import 'package:synop/screens/Home.dart';
@@ -14,18 +15,21 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Constants.prefs = await SharedPreferences.getInstance();
   ResponsiveBreakpoint.autoScale(600);
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: true,
-    // theme: ThemeData(primarySwatch: Colors.grey),
-    routes: {
-      '/': (context) => SplashScreeen(),
-      '/wrapper': (context) =>
-          Constants.prefs.getBool("loggedin") == true ? Home() : Wrapper(),
-      '/login': (context) => LoginScreen(),
-      '/home': (context) => Home(),
-      '/profile': (context) => Profile(),
-      '/signup': (context) => Signup(),
-      '/add': (context) => Add()
-    },
-  ));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) {
+    runApp(MaterialApp(
+      debugShowCheckedModeBanner: true,
+      // theme: ThemeData(primarySwatch: Colors.grey),
+      routes: {
+        '/': (context) => SplashScreeen(),
+        '/wrapper': (context) =>
+            Constants.prefs.getBool("loggedin") == true ? Home() : Wrapper(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => Home(),
+        '/profile': (context) => Profile(),
+        '/signup': (context) => Signup(),
+        '/add': (context) => Add()
+      },
+    ));
+  });
 }

@@ -180,169 +180,366 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey[700],
-        elevation: 20.6,
-        title: Text(
-          'SYNOP',
-          style: TextStyle(fontSize: 20),
-        ),
-        centerTitle: true,
-        actions: [Logout(timer: timer)],
-        toolbarHeight: 70,
-      ),
-      body: Container(
-        color: Colors.blueGrey[700],
-        child: ListView(
-          children: [
-            Container(
-                child: CalendarStrip(
-              startDate: startDate,
-              endDate: endDate,
-              selectedDate: selectedDate,
-              onDateSelected: onSelect,
-              onWeekSelected: onWeekSelect,
-              dateTileBuilder: dateTileBuilder,
-              iconColor: Colors.blue[300],
-              monthNameWidget: _monthNameWidget,
-              containerDecoration: BoxDecoration(color: Colors.blueGrey[700]),
-              addSwipeGesture: true,
-            )),
-            Container(
-                child: allCodes != null
-                    ? allCodes.isNotEmpty
-                        ? ListView.builder(
-                            controller: _controller, //new line
-                            itemCount: allCodes.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              var tday = allCodes[index]['createdAt'];
-                              var dd = DateTime.parse(tday);
-                              var formateddate = DateFormat.jms().format(dd);
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 5, 10, 2),
-                                child: Container(
-                                  height: 210,
-                                  width: double.infinity,
-                                  child: Card(
-                                    color: Colors.blueGrey[800],
-                                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                    elevation: 0.5,
-                                    child: ListTile(
-                                        key: Key(allCodes[index]['_id']),
-                                        title: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 10, 0, 0),
-                                          child: Text(
-                                            allCodes[index]['creator']['name'],
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.blue),
-                                          ),
-                                        ),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 10, 0, 10),
-                                              child: Text(
-                                                allCodes[index]['code'],
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.white,
-                                                    letterSpacing: 1.3),
-                                              ),
-                                            ),
-                                            Text(
-                                              allCodes[index]['creator']
-                                                  ['district'],
-                                              style: TextStyle(
-                                                  color: Colors.blue[600]),
-                                            ),
-                                            Text(formateddate,
-                                                style: TextStyle(
-                                                    color: Colors.white)),
-                                          ],
-                                        ),
-                                        trailing: allCodes[index]['creator']
-                                                    ['_id'] ==
-                                                user['msg']['_id']
-                                            ? IconButton(
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  color: Colors.white,
-                                                  size: 30,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blueGrey[700],
+              elevation: 20.6,
+              title: Text(
+                'SYNOP',
+                style: TextStyle(fontSize: 25),
+              ),
+              centerTitle: true,
+              actions: [Logout(timer: timer)],
+              toolbarHeight: 70,
+            ),
+            body: Container(
+              color: Colors.blueGrey[700],
+              child: ListView(
+                children: [
+                  Container(
+                      child: CalendarStrip(
+                    startDate: startDate,
+                    endDate: endDate,
+                    selectedDate: selectedDate,
+                    onDateSelected: onSelect,
+                    onWeekSelected: onWeekSelect,
+                    dateTileBuilder: dateTileBuilder,
+                    iconColor: Colors.blue[300],
+                    monthNameWidget: _monthNameWidget,
+                    containerDecoration:
+                        BoxDecoration(color: Colors.blueGrey[700]),
+                    addSwipeGesture: true,
+                  )),
+                  Container(
+                      child: allCodes != null
+                          ? allCodes.isNotEmpty
+                              ? ListView.builder(
+                                  controller: _controller, //new line
+                                  itemCount: allCodes.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    var tday = allCodes[index]['createdAt'];
+                                    var dd = DateTime.parse(tday);
+                                    var formateddate =
+                                        DateFormat.jms().format(dd);
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 5, 10, 2),
+                                      child: Container(
+                                        height: 210,
+                                        width: double.infinity,
+                                        child: Card(
+                                          color: Colors.blueGrey[800],
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                          elevation: 0.5,
+                                          child: ListTile(
+                                              key: Key(allCodes[index]['_id']),
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 10, 0, 0),
+                                                child: Text(
+                                                  allCodes[index]['creator']
+                                                      ['name'],
+                                                  style: TextStyle(
+                                                      fontSize: 25,
+                                                      color: Colors.blue),
                                                 ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    del =
-                                                        allCodes[index]['_id'];
-                                                    // isSelected = true;
-                                                  });
-                                                  Dialogs.showLoadingDialog(
-                                                      context, _keyLoader);
-                                                  AuthService()
-                                                      .deleteCode(tok, del)
-                                                      .then((val) {
-                                                    Fluttertoast.showToast(
-                                                        msg: val.data['msg'],
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        gravity:
-                                                            ToastGravity.TOP,
-                                                        timeInSecForIosWeb: 1,
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        textColor: Colors.white,
-                                                        fontSize: 16.0);
-                                                    fetchData();
-                                                    Future.delayed(
-                                                        Duration(seconds: 3),
-                                                        () {
-                                                      Navigator.of(
-                                                              _keyLoader
-                                                                  .currentContext,
-                                                              rootNavigator:
-                                                                  true)
-                                                          .pop();
-                                                    });
-                                                  });
+                                              ),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 10, 0, 10),
+                                                    child: Text(
+                                                      allCodes[index]['code'],
+                                                      style: TextStyle(
+                                                          fontSize: 25,
+                                                          color: Colors.white,
+                                                          letterSpacing: 1.3),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    allCodes[index]['creator']
+                                                        ['district'],
+                                                    style: TextStyle(
+                                                        color: Colors.blue[600],
+                                                        fontSize: 23),
+                                                  ),
+                                                  Text(formateddate,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 19)),
+                                                ],
+                                              ),
+                                              trailing: allCodes[index]
+                                                          ['creator']['_id'] ==
+                                                      user['msg']['_id']
+                                                  ? IconButton(
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.white,
+                                                        size: 40,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          del = allCodes[index]
+                                                              ['_id'];
+                                                          // isSelected = true;
+                                                        });
+                                                        Dialogs
+                                                            .showLoadingDialog(
+                                                                context,
+                                                                _keyLoader);
+                                                        AuthService()
+                                                            .deleteCode(
+                                                                tok, del)
+                                                            .then((val) {
+                                                          Fluttertoast.showToast(
+                                                              msg: val
+                                                                  .data['msg'],
+                                                              toastLength: Toast
+                                                                  .LENGTH_SHORT,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .TOP,
+                                                              timeInSecForIosWeb:
+                                                                  1,
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                          fetchData();
+                                                          Future.delayed(
+                                                              Duration(
+                                                                  seconds: 3),
+                                                              () {
+                                                            Navigator.of(
+                                                                    _keyLoader
+                                                                        .currentContext,
+                                                                    rootNavigator:
+                                                                        true)
+                                                                .pop();
+                                                          });
+                                                        });
 
-                                                  //
-                                                },
-                                              )
-                                            : Text('')),
+                                                        //
+                                                      },
+                                                    )
+                                                  : Text('')),
+                                        ),
+                                      ),
+                                    );
+                                  })
+                              : Container(
+                                  height: 200,
+                                  child: Center(
+                                    child: Text(
+                                      "No Codes available",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
                                   ),
-                                ),
-                              );
-                            })
-                        : Container(
-                            height: 200,
-                            child: Center(
-                              child: Text(
-                                "No Codes available",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                                )
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            )),
+                ],
+              ),
+            ),
+            drawer: drawercomponent(),
+            floatingActionButton: Btn(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blueGrey[700],
+              elevation: 20.6,
+              title: Text(
+                'SYNOP',
+                style: TextStyle(fontSize: 20),
+              ),
+              centerTitle: true,
+              actions: [Logout(timer: timer)],
+              toolbarHeight: 70,
+            ),
+            body: Container(
+              color: Colors.blueGrey[700],
+              child: ListView(
+                children: [
+                  Container(
+                      child: CalendarStrip(
+                    startDate: startDate,
+                    endDate: endDate,
+                    selectedDate: selectedDate,
+                    onDateSelected: onSelect,
+                    onWeekSelected: onWeekSelect,
+                    dateTileBuilder: dateTileBuilder,
+                    iconColor: Colors.blue[300],
+                    monthNameWidget: _monthNameWidget,
+                    containerDecoration:
+                        BoxDecoration(color: Colors.blueGrey[700]),
+                    addSwipeGesture: true,
+                  )),
+                  Container(
+                      child: allCodes != null
+                          ? allCodes.isNotEmpty
+                              ? ListView.builder(
+                                  controller: _controller, //new line
+                                  itemCount: allCodes.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    var tday = allCodes[index]['createdAt'];
+                                    var dd = DateTime.parse(tday);
+                                    var formateddate =
+                                        DateFormat.jms().format(dd);
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 5, 10, 2),
+                                      child: Container(
+                                        height: 210,
+                                        width: double.infinity,
+                                        child: Card(
+                                          color: Colors.blueGrey[800],
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                          elevation: 0.5,
+                                          child: ListTile(
+                                              key: Key(allCodes[index]['_id']),
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 10, 0, 0),
+                                                child: Text(
+                                                  allCodes[index]['creator']
+                                                      ['name'],
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.blue),
+                                                ),
+                                              ),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 10, 0, 10),
+                                                    child: Text(
+                                                      allCodes[index]['code'],
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.white,
+                                                          letterSpacing: 1.3),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    allCodes[index]['creator']
+                                                        ['district'],
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.blue[600]),
+                                                  ),
+                                                  Text(formateddate,
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ],
+                                              ),
+                                              trailing: allCodes[index]
+                                                          ['creator']['_id'] ==
+                                                      user['msg']['_id']
+                                                  ? IconButton(
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.white,
+                                                        size: 30,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          del = allCodes[index]
+                                                              ['_id'];
+                                                          // isSelected = true;
+                                                        });
+                                                        Dialogs
+                                                            .showLoadingDialog(
+                                                                context,
+                                                                _keyLoader);
+                                                        AuthService()
+                                                            .deleteCode(
+                                                                tok, del)
+                                                            .then((val) {
+                                                          Fluttertoast.showToast(
+                                                              msg: val
+                                                                  .data['msg'],
+                                                              toastLength: Toast
+                                                                  .LENGTH_SHORT,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .TOP,
+                                                              timeInSecForIosWeb:
+                                                                  1,
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                          fetchData();
+                                                          Future.delayed(
+                                                              Duration(
+                                                                  seconds: 3),
+                                                              () {
+                                                            Navigator.of(
+                                                                    _keyLoader
+                                                                        .currentContext,
+                                                                    rootNavigator:
+                                                                        true)
+                                                                .pop();
+                                                          });
+                                                        });
+
+                                                        //
+                                                      },
+                                                    )
+                                                  : Text('')),
+                                        ),
+                                      ),
+                                    );
+                                  })
+                              : Container(
+                                  height: 200,
+                                  child: Center(
+                                    child: Text(
+                                      "No Codes available",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                )
+                          : Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            ),
-                          )
-                    : Container(
-                        height: MediaQuery.of(context).size.height,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )),
-          ],
-        ),
-      ),
-      drawer: drawercomponent(),
-      floatingActionButton: Btn(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                            )),
+                ],
+              ),
+            ),
+            drawer: drawercomponent(),
+            floatingActionButton: Btn(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
+        }
+      },
     );
   }
 }

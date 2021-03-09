@@ -20,7 +20,7 @@ class _AddState extends State<Add> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(title),
-            content: Text(content, style: TextStyle(fontSize: 23)),
+            content: Text(content, style: TextStyle(fontSize: 18)),
             actions: [
               Row(
                 children: [
@@ -44,12 +44,12 @@ class _AddState extends State<Add> {
                           });
                         }
                       },
-                      child: Text('Submit', style: TextStyle(fontSize: 20))),
+                      child: Text('Submit')),
                   FlatButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Go Back', style: TextStyle(fontSize: 20)))
+                      child: Text('Go Back'))
                 ],
               )
             ],
@@ -138,7 +138,7 @@ class _AddState extends State<Add> {
                         setState(() {
                           date = value.hour;
                         });
-                        print(date);
+                        // print(date);
                       });
                     },
                     child: Text(
@@ -183,7 +183,7 @@ class _AddState extends State<Add> {
               ),
               Text('Station number', style: TextStyle(color: Colors.white)),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: stationnumber,
@@ -296,7 +296,7 @@ class _AddState extends State<Add> {
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: cloud_height,
@@ -321,7 +321,7 @@ class _AddState extends State<Add> {
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: visibility,
@@ -364,7 +364,7 @@ class _AddState extends State<Add> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: cloud_amount,
@@ -395,7 +395,7 @@ class _AddState extends State<Add> {
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: wind_direction,
@@ -426,7 +426,7 @@ class _AddState extends State<Add> {
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: windSpeed,
@@ -460,7 +460,7 @@ class _AddState extends State<Add> {
                     fontSize: 30),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: temperature,
@@ -493,7 +493,7 @@ class _AddState extends State<Add> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: dewpoint,
@@ -528,7 +528,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: stationPressure,
@@ -556,7 +556,7 @@ class _AddState extends State<Add> {
               ),
               Text('Isobaric pressure', style: TextStyle(color: Colors.white)),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: isobaric,
@@ -569,7 +569,7 @@ class _AddState extends State<Add> {
                     },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "isobaric (hectapascals)",
+                      hintText: "isobaric (hectopascals)",
                       labelText: "Isobaric standard",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
@@ -582,26 +582,26 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Text('Sea level pressure',
+              Text('Geopotential height',
                   style: TextStyle(
                     color: Colors.white,
                   )),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: seaPressure,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter the Temperature';
+                        return 'Please enter the Geopotential height';
                       }
                       return null;
                     },
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Sea level pressure (hectopascals)",
-                      labelText: "Sea level pressure",
+                      hintText: "Geopotential height",
+                      labelText: "Geopotential height",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
@@ -624,7 +624,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: precipitation,
@@ -690,7 +690,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: ix == '1'
                     ? TextFormField(
                         enableSuggestions: true,
@@ -730,7 +730,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(50.0, 10, 50.0, 5),
+                padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
                 child: ix == '1'
                     ? TextFormField(
                         enableSuggestions: true,
