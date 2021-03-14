@@ -24,7 +24,7 @@ class _AddState extends State<Add> {
             actions: [
               Row(
                 children: [
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         if (_formkey.currentState.validate()) {
                           Dialogs.showLoadingDialog(context, _keyLoader);
@@ -45,7 +45,7 @@ class _AddState extends State<Add> {
                         }
                       },
                       child: Text('Submit')),
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -939,16 +939,16 @@ class _AddState extends State<Add> {
                         speed = windSpeed.text;
                     var sign, dewSign, isobaricValue;
                     var geoHeight = seaPressure.text;
-                    var p_station = int.parse(stationPressure.text);
+                    var p_station = double.parse(stationPressure.text);
                     var newPressure = (((p_station * 100) / 100) * 10).round();
                     var iso = int.parse(isobaric.text);
-                    var numtemp = int.parse(temperature.text),
+                    var numtemp = double.parse(temperature.text),
                         rainfall = precipitation.text;
-                    var dewPoint = int.parse(dewpoint.text),
+                    var dewPoint = double.parse(dewpoint.text),
                         present = presentWeather.text,
                         past = pastWeather.text;
-                    var newTemp = (numtemp * 10).toString();
-                    var newDewPoint = (dewPoint * 10).toString();
+                    var newTemp = (numtemp * 10).round().toString();
+                    var newDewPoint = (dewPoint * 10).round().toString();
                     // temperature sign
                     if (numtemp > 0 || numtemp == 0) {
                       setState(() {
@@ -1004,12 +1004,12 @@ class _AddState extends State<Add> {
 
                     // cloud height
                     if (int.parse(cloud_height.text) >= 0 &&
-                        int.parse(cloud_height.text) < 50) {
+                        double.parse(cloud_height.text) < 50) {
                       setState(() {
                         cloudheight = 0;
                       });
                     } else if (int.parse(cloud_height.text) >= 50 &&
-                        int.parse(cloud_height.text) < 100) {
+                        double.parse(cloud_height.text) < 100) {
                       setState(() {
                         cloudheight = 1;
                       });
@@ -1024,12 +1024,12 @@ class _AddState extends State<Add> {
                         cloudheight = 3;
                       });
                     } else if (int.parse(cloud_height.text) >= 300 &&
-                        int.parse(cloud_height.text) < 600) {
+                        double.parse(cloud_height.text) < 600) {
                       setState(() {
                         cloudheight = 4;
                       });
                     } else if (int.parse(cloud_height.text) >= 600 &&
-                        int.parse(cloud_height.text) < 1000) {
+                        double.parse(cloud_height.text) < 1000) {
                       setState(() {
                         cloudheight = 5;
                       });
@@ -1039,12 +1039,12 @@ class _AddState extends State<Add> {
                         cloudheight = 6;
                       });
                     } else if (int.parse(cloud_height.text) >= 1500 &&
-                        int.parse(cloud_height.text) < 2000) {
+                        double.parse(cloud_height.text) < 2000) {
                       setState(() {
                         cloudheight = 7;
                       });
                     } else if (int.parse(cloud_height.text) >= 2000 &&
-                        int.parse(cloud_height.text) < 2500) {
+                        double.parse(cloud_height.text) < 2500) {
                       setState(() {
                         cloudheight = 8;
                       });
@@ -1112,9 +1112,12 @@ class _AddState extends State<Add> {
                     // show dialog
                     if (ix == '1') {
                       _showDialog("Verify Synop", secondString, context);
+                      // print(p_station.runtimeType);
+                      // print(numtemp.runtimeType);
                     } else {
                       _showDialog('Verify Synop', finalSting, context);
-                      print(newPressure.round());
+                      // print(p_station.runtimeType);
+                      // print(numtemp.runtimeType);
                     }
                   },
                 ),
