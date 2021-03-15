@@ -122,7 +122,7 @@ class _AddState extends State<Add> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FlatButton(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(20),
                     color: Colors.cyan,
                     onPressed: () {
                       showTimePicker(
