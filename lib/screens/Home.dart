@@ -275,7 +275,7 @@ class _HomeState extends State<Home> {
                                                   Text(formateddate,
                                                       style: TextStyle(
                                                           color: Colors.white,
-                                                          fontSize: 19)),
+                                                          fontSize: 29)),
                                                 ],
                                               ),
                                               trailing: allCodes[index]
@@ -315,7 +315,7 @@ class _HomeState extends State<Home> {
                                                                   Colors.blue,
                                                               textColor:
                                                                   Colors.white,
-                                                              fontSize: 16.0);
+                                                             fontSize: 16.0);
                                                           fetchData();
                                                           Future.delayed(
                                                               Duration(

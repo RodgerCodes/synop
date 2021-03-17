@@ -6,6 +6,7 @@ class AuthService {
   Dio dio = new Dio();
   var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  // var url = "http://10.0.2.2:5000";
 
   getinfo(token) async {
     dio.options.headers['authorization'] = 'Bearer $token';

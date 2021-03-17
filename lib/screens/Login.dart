@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Dio dio = new Dio();
   var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  // var url = "http://10.0.2.2:5000";
 
   bool showProgressLoading = false;
 
@@ -23,19 +24,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blueGrey[700],
+      backgroundColor: Colors.blueGrey[900],
       body: SingleChildScrollView(
         child: Container(
           height: size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Welcome',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+              Column(
+                children: [
+                  Text(
+                    'Welcome',
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold),
+                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  Text('Login with your email and password', style: TextStyle(color: Colors.white, fontSize: 20),)
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -64,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: "Email",
                           labelStyle: TextStyle(color: Colors.white),
                           hintStyle: TextStyle(color: Colors.white),
+                          focusColor: Colors.white,
                           prefixIcon: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Icon(
@@ -71,10 +81,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.red[700], width:1.0
+                              )
+                          ),
                           enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white, width: 1.0)),
+                          focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
+
                         ),
                       ),
                       SizedBox(
@@ -91,8 +109,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           hintText: "Password",
-                          focusColor: Colors.white,
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.white),
                           hintStyle: TextStyle(color: Colors.white),
+                          focusColor: Colors.white,
                           prefixIcon: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Icon(
@@ -110,47 +130,54 @@ class _LoginScreenState extends State<LoginScreen> {
                               setState(() {});
                             },
                           ),
-                          labelText: "Password",
-                          labelStyle: TextStyle(color: Colors.white),
                           enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white, width: 1.0)),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red[700], width:1.0
+                            )
+                          ),
+                          focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
                         ),
                         obscureText: visible,
                         onChanged: (val) {
                           password = val;
                         },
-                      )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: size.width * 0.8,
+                        height: 50,
+                        child: RaisedButton(
+                          disabledColor: Colors.red,
+                          color: Colors.blue,
+                          elevation: 10.5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Text('Sign In',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
+                          onPressed: () {
+                            // TOD0:Implement backend functionality
+                            if (_formkey.currentState.validate()) {
+                              _handleSubmit(context);
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: size.width * 0.8,
-                height: 50,
-                child: RaisedButton(
-                  disabledColor: Colors.red,
-                  color: Colors.blue,
-                  elevation: 10.5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Text('Sign In',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  onPressed: () {
-                    // TOD0:Implement backend functionality
-                    if (_formkey.currentState.validate()) {
-                      _handleSubmit(context);
-                    }
-                  },
-                ),
-              ),
+
+
             ],
           ),
         ),
@@ -173,7 +200,6 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.blue[600],
             textColor: Colors.white,
             fontSize: 16.0);
-        // print(token.data['token']);
         Constants.prefs.setBool("loggedin", true);
         Constants.prefs.setString("tk", token.data['token']);
         Navigator.pushReplacementNamed(context, '/home');

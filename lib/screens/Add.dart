@@ -159,6 +159,7 @@ class _AddState extends State<Add> {
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
                           value: dropdownvalue,
+                          dropdownColor: Colors.cyan,
                           onChanged: (val) {
                             setState(() {
                               data = val;
@@ -169,7 +170,7 @@ class _AddState extends State<Add> {
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value),
+                              child: Text(value, style: TextStyle(color: Colors.white),),
                             );
                           }).toList(),
                         ),
@@ -235,6 +236,7 @@ class _AddState extends State<Add> {
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         DropdownButton(
+                          dropdownColor: Colors.cyan,
                           value: ir,
                           onChanged: (val) {
                             setState(() {
@@ -246,7 +248,7 @@ class _AddState extends State<Add> {
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value),
+                              child: Text(value, style: TextStyle(color: Colors.white),),
                             );
                           }).toList(),
                         ),
@@ -267,7 +269,8 @@ class _AddState extends State<Add> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          dropdownColor: Colors.cyan,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                           value: ix,
                           onChanged: (val) {
                             setState(() {
@@ -661,7 +664,8 @@ class _AddState extends State<Add> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.cyan),
                 child: DropdownButton(
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  dropdownColor: Colors.cyan,
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                   value: rainfallDuration,
                   onChanged: (val) {
                     setState(() {
@@ -793,6 +797,8 @@ class _AddState extends State<Add> {
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
                           value: low,
+                          dropdownColor: Colors.cyan,
+                          style: TextStyle(color:Colors.white,fontSize: 20),
                           onChanged: (val) {
                             setState(() {
                               low = val;
@@ -833,6 +839,8 @@ class _AddState extends State<Add> {
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
                           value: medium,
+                          dropdownColor: Colors.cyan,
+                          style: TextStyle(color:Colors.white,fontSize: 20),
                           onChanged: (val) {
                             setState(() {
                               medium = val;
@@ -881,6 +889,8 @@ class _AddState extends State<Add> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
+                          dropdownColor: Colors.cyan,
+                          style: TextStyle(color:Colors.white,fontSize: 20),
                           value: high,
                           onChanged: (val) {
                             setState(() {
@@ -1121,6 +1131,9 @@ class _AddState extends State<Add> {
                     }
                   },
                 ),
+              ),
+              SizedBox(
+                height: 30,
               )
             ]),
           )
