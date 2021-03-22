@@ -13,6 +13,7 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   var tok = Constants.prefs.getString('tk');
+  bool showExtraGroup = false;
   // dialog
   void _showDialog(String title, String content, BuildContext context) {
     showDialog(
@@ -26,9 +27,10 @@ class _AddState extends State<Add> {
                 children: [
                   TextButton(
                       onPressed: () {
+
                         if (_formkey.currentState.validate()) {
                           Dialogs.showLoadingDialog(context, _keyLoader);
-                          AuthService().addCode(tok, content).then((val) {
+                          AuthService().addCode(tok, content ).then((val) {
                             Fluttertoast.showToast(
                                 msg: "Synop added",
                                 toastLength: Toast.LENGTH_SHORT,
@@ -80,6 +82,7 @@ class _AddState extends State<Add> {
   TextEditingController pastWeather = TextEditingController();
   TextEditingController presentWeather = TextEditingController();
   TextEditingController isobaric = TextEditingController();
+  TextEditingController extraWind = TextEditingController();
 
   var data = "0", date;
   @override
@@ -452,6 +455,7 @@ class _AddState extends State<Add> {
                       border: OutlineInputBorder(),
                     )),
               ),
+
               SizedBox(
                 height: 30,
               ),
@@ -939,196 +943,268 @@ class _AddState extends State<Add> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   onPressed: () {
-                    // TOD0:Implement backend functionality
-                    var info = DateFormat('dd').format(selectedDate);
-                    var station = stationnumber.text;
-                    var cloudheight,
-                        visible = visibility.text,
-                        amount = cloud_amount.text,
-                        direction = wind_direction.text,
-                        speed = windSpeed.text;
-                    var sign, dewSign, isobaricValue;
-                    var geoHeight = seaPressure.text;
-                    var p_station = double.parse(stationPressure.text);
-                    var newPressure = (((p_station * 100) / 100) * 10).round();
-                    var iso = int.parse(isobaric.text);
-                    var numtemp = double.parse(temperature.text),
-                        rainfall = precipitation.text;
-                    var dewPoint = double.parse(dewpoint.text),
-                        present = presentWeather.text,
-                        past = pastWeather.text;
-                    var newTemp = (numtemp * 10).round().toString();
-                    var newDewPoint = (dewPoint * 10).round().toString();
-                    // temperature sign
-                    if (numtemp > 0 || numtemp == 0) {
-                      setState(() {
-                        sign = 0;
-                      });
-                    } else {
-                      setState(() {
-                        sign = 1;
-                      });
-                    }
+                   if(_formkey.currentState.validate()){
+                     // TOD0:Implement backend functionality
+                     var info = DateFormat('dd').format(selectedDate);
+                     var station = stationnumber.text;
+                     var cloudheight,
+                         visible = visibility.text,
+                         amount = cloud_amount.text,
+                         direction = wind_direction.text,
+                         speed = windSpeed.text;
+                     var sign, dewSign, isobaricValue;
+                     var geoHeight = seaPressure.text;
+                     var p_station = double.parse(stationPressure.text);
+                     var newPressure = (((p_station * 100) / 100) * 10).round();
+                     var iso = int.parse(isobaric.text);
+                     var numtemp = double.parse(temperature.text),
+                         rainfall = precipitation.text;
+                     var dewPoint = double.parse(dewpoint.text),
+                         present = presentWeather.text,
+                         past = pastWeather.text;
+                     var newTemp = (numtemp * 10).round().toString();
+                     var newDewPoint = (dewPoint * 10).round().toString();
+                     // temperature sign
+                     if (numtemp > 0 || numtemp == 0) {
+                       setState(() {
+                         sign = 0;
+                       });
+                     } else {
+                       setState(() {
+                         sign = 1;
+                       });
+                     }
 
-                    // isobaric standard surface
-                    if (iso == 1000) {
-                      setState(() {
-                        isobaricValue = 1;
-                      });
-                    } else if (iso == 925) {
-                      setState(() {
-                        isobaricValue = 2;
-                      });
-                    } else if (iso == 500) {
-                      setState(() {
-                        isobaricValue = 5;
-                      });
-                    } else if (iso == 700) {
-                      setState(() {
-                        isobaricValue = 7;
-                      });
-                    } else if (iso == 850) {
-                      setState(() {
-                        isobaricValue = 8;
-                      });
-                    } else {
-                      Fluttertoast.showToast(msg: "Value does nt exit");
-                    }
+                     var windData = double.parse(speed).round();
 
-                    // dew point temperature sign
-                    if (dewPoint > 0 || dewPoint == 0) {
+                     //windspeed units
+                     if(data == "3" || data == "4" && windData > 99){
                       setState(() {
-                        dewSign = 0;
-                      });
-                    } else {
-                      setState(() {
-                        dewSign = 1;
-                      });
-                    }
 
-                    if (dewPoint > 0 && dewPoint < 10) {
-                      setState(() {
-                        newDewPoint = '0$newDewPoint';
-                      });
-                    }
+                        speed = "99";
 
-                    // cloud height
-                    if (int.parse(cloud_height.text) >= 0 &&
-                        double.parse(cloud_height.text) < 50) {
-                      setState(() {
-                        cloudheight = 0;
                       });
-                    } else if (int.parse(cloud_height.text) >= 50 &&
-                        double.parse(cloud_height.text) < 100) {
-                      setState(() {
-                        cloudheight = 1;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 100 &&
-                        int.parse(cloud_height.text) < 200) {
-                      setState(() {
-                        cloudheight = 2;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 200 &&
-                        int.parse(cloud_height.text) < 300) {
-                      setState(() {
-                        cloudheight = 3;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 300 &&
-                        double.parse(cloud_height.text) < 600) {
-                      setState(() {
-                        cloudheight = 4;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 600 &&
-                        double.parse(cloud_height.text) < 1000) {
-                      setState(() {
-                        cloudheight = 5;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 1000 &&
-                        int.parse(cloud_height.text) < 1500) {
-                      setState(() {
-                        cloudheight = 6;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 1500 &&
-                        double.parse(cloud_height.text) < 2000) {
-                      setState(() {
-                        cloudheight = 7;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 2000 &&
-                        double.parse(cloud_height.text) < 2500) {
-                      setState(() {
-                        cloudheight = 8;
-                      });
-                    } else if (int.parse(cloud_height.text) >= 2500 ||
-                        cloud_height.text == "no clouds") {
-                      setState(() {
-                        cloudheight = 9;
-                      });
-                    } else {
-                      setState(() {
-                        cloudheight = '/';
-                      });
-                    }
-                    var finalSting = 'AAXX ' +
-                        info +
-                        '$date' +
-                        '$data ' +
-                        '67$station ' +
-                        ir +
-                        ix +
-                        '$cloudheight' +
-                        visible +
-                        ' $amount' +
-                        direction +
-                        '$speed 1$sign' +
-                        newTemp +
-                        ' 2$dewSign' +
-                        newDewPoint +
-                        ' 3$newPressure 4$isobaricValue' +
-                        geoHeight +
-                        ' 6$rainfall' +
-                        rainfallDuration +
-                        ' 8$amount' +
-                        low +
-                        medium +
-                        high;
+
+                     }
+
+                     // isobaric standard surface
+                     if (iso == 1000) {
+                       setState(() {
+                         isobaricValue = 1;
+                       });
+                     } else if (iso == 925) {
+                       setState(() {
+                         isobaricValue = 2;
+                       });
+                     } else if (iso == 500) {
+                       setState(() {
+                         isobaricValue = 5;
+                       });
+                     } else if (iso == 700) {
+                       setState(() {
+                         isobaricValue = 7;
+                       });
+                     } else if (iso == 850) {
+                       setState(() {
+                         isobaricValue = 8;
+                       });
+                     } else {
+                       Fluttertoast.showToast(msg: "Value does nt exit");
+                     }
+
+                     // dew point temperature sign
+                     if (dewPoint > 0 || dewPoint == 0) {
+                       setState(() {
+                         dewSign = 0;
+                       });
+                     } else {
+                       setState(() {
+                         dewSign = 1;
+                       });
+                     }
+
+                     if (dewPoint > 0 && dewPoint < 10) {
+                       setState(() {
+                         newDewPoint = '0$newDewPoint';
+                       });
+                     }
+
+                     // cloud height
+                     if (int.parse(cloud_height.text) >= 0 &&
+                         double.parse(cloud_height.text) < 50) {
+                       setState(() {
+                         cloudheight = 0;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 50 &&
+                         double.parse(cloud_height.text) < 100) {
+                       setState(() {
+                         cloudheight = 1;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 100 &&
+                         int.parse(cloud_height.text) < 200) {
+                       setState(() {
+                         cloudheight = 2;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 200 &&
+                         int.parse(cloud_height.text) < 300) {
+                       setState(() {
+                         cloudheight = 3;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 300 &&
+                         double.parse(cloud_height.text) < 600) {
+                       setState(() {
+                         cloudheight = 4;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 600 &&
+                         double.parse(cloud_height.text) < 1000) {
+                       setState(() {
+                         cloudheight = 5;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 1000 &&
+                         int.parse(cloud_height.text) < 1500) {
+                       setState(() {
+                         cloudheight = 6;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 1500 &&
+                         double.parse(cloud_height.text) < 2000) {
+                       setState(() {
+                         cloudheight = 7;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 2000 &&
+                         double.parse(cloud_height.text) < 2500) {
+                       setState(() {
+                         cloudheight = 8;
+                       });
+                     } else if (int.parse(cloud_height.text) >= 2500 ||
+                         cloud_height.text == "no clouds") {
+                       setState(() {
+                         cloudheight = 9;
+                       });
+                     } else {
+                       setState(() {
+                         cloudheight = '/';
+                       });
+                     }
+                     var finalSting = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 6$rainfall' +
+                         rainfallDuration +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
+                     var thirdString= 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 00$windData 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 6$rainfall' +
+                         rainfallDuration +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
 
 // second string
-                    var secondString = 'AAXX ' +
-                        info +
-                        '$date' +
-                        '$data ' +
-                        '67$station ' +
-                        ir +
-                        ix +
-                        '$cloudheight' +
-                        visible +
-                        ' $amount' +
-                        direction +
-                        '$speed 1$sign' +
-                        newTemp +
-                        ' 2$dewSign' +
-                        newDewPoint +
-                        ' 3$newPressure 4$isobaricValue' +
-                        geoHeight +
-                        ' 6$rainfall' +
-                        rainfallDuration +
-                        '7$present' +
-                        past +
-                        ' 8$amount' +
-                        low +
-                        medium +
-                        high;
+                     var secondString = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 6$rainfall' +
+                         rainfallDuration +
+                         '7$present' +
+                         past +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
 
-                    // show dialog
-                    if (ix == '1') {
-                      _showDialog("Verify Synop", secondString, context);
-                      // print(p_station.runtimeType);
-                      // print(numtemp.runtimeType);
-                    } else {
-                      _showDialog('Verify Synop', finalSting, context);
-                      // print(p_station.runtimeType);
-                      // print(numtemp.runtimeType);
-                    }
+                     var FourthString = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 00$windData 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 6$rainfall' +
+                         rainfallDuration +
+                         '7$present' +
+                         past +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
+                     // show dialog
+                     if (ix == '1') {
+                       if(data == "3" || data == "4" && windData > 99){
+                         _showDialog("Verify Synop", FourthString, context);
+                       } else {
+                         _showDialog("Verify Synop", secondString, context);
+                       }
+                       // print(p_station.runtimeType);
+                       // print(numtemp.runtimeType);
+                     } else {
+                       if(data == "3" || data == "4" && windData > 99){
+                         _showDialog('Verify Synop', thirdString, context);
+                       } else {
+                         _showDialog('Verify Synop', finalSting, context);
+                       }
+                       // print(p_station.runtimeType);
+                       // print(numtemp.runtimeType);
+                     }
+                   }
                   },
                 ),
               ),
