@@ -37,13 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Welcome',
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
-                        fontSize: 50,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold),
                   ),
                     SizedBox(
                       height: 10,
                     ),
-                  Text('Login with your email and password', style: TextStyle(color: Colors.white, fontSize: 20),)
+                  Text('Login with your email and password', style: TextStyle(color: Colors.white, fontSize: 17),)
                 ],
               ),
               SizedBox(
