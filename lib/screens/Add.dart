@@ -62,7 +62,7 @@ class _AddState extends State<Add> {
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = '1';
-  String ir = '0', ix = '1';
+  String ir = '1', ix = '1';
   String rainfallDuration = '4';
   String low = '0', medium = '0', high = '0';
   TextEditingController stationnumber = TextEditingController();
@@ -167,7 +167,7 @@ class _AddState extends State<Add> {
                             setState(() {
                               data = val;
                             });
-                            print(data);
+
                           },
                           items: <String>['0', '1', '3', '4', '/']
                               .map<DropdownMenuItem<String>>((String value) {
@@ -245,9 +245,9 @@ class _AddState extends State<Add> {
                             setState(() {
                               ir = val;
                             });
-                            print(ir);
+                            
                           },
-                          items: <String>['0', '1', '2', '3', '4']
+                          items: <String>[ '1', '3', '4']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -279,7 +279,6 @@ class _AddState extends State<Add> {
                             setState(() {
                               ix = val;
                             });
-                            print(ix);
                           },
                           items: <String>['1', '2', '3']
                               .map<DropdownMenuItem<String>>((String value) {
@@ -632,16 +631,12 @@ class _AddState extends State<Add> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 10, 30.0, 5),
-                child: TextFormField(
+                child: ir == '1'  ? TextFormField(
                     enableSuggestions: true,
                     controller: precipitation,
+                    enabled: true,
                     keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter the Code figure for the rainfall';
-                      }
-                      return null;
-                    },
+
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: "Precipitation amount (Code figure)",
@@ -650,7 +645,23 @@ class _AddState extends State<Add> {
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
+                          BorderSide(color: Colors.white, width: 1.0)),
+                      border: OutlineInputBorder(),
+                    ))  :TextFormField(
+                    enableSuggestions: true,
+                    controller: precipitation,
+                    enabled: false,
+                    keyboardType: TextInputType.number,
+
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+
+                      labelText: "Precipitation amount (Code figure)",
+                      labelStyle: TextStyle(color: Colors.grey),
+
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.white, width: 1.0)),
                       border: OutlineInputBorder(),
                     )),
               ),
@@ -980,9 +991,7 @@ class _AddState extends State<Add> {
                      //windspeed units
                      if(data == "3" || data == "4" && windData > 99){
                       setState(() {
-
                         speed = "99";
-
                       });
 
                      }
@@ -1028,6 +1037,7 @@ class _AddState extends State<Add> {
                          newDewPoint = '0$newDewPoint';
                        });
                      }
+
 
                      // cloud height
                      if (int.parse(cloud_height.text) >= 0 &&
@@ -1109,6 +1119,28 @@ class _AddState extends State<Add> {
                          medium +
                          high;
 
+                     var noraindata1 = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
                      var thirdString= 'AAXX ' +
                          info +
                          '$date' +
@@ -1128,6 +1160,28 @@ class _AddState extends State<Add> {
                          geoHeight +
                          ' 6$rainfall' +
                          rainfallDuration +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
+                     var noraindata2= 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 00$windData 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
                          ' 8$amount' +
                          low +
                          medium +
@@ -1153,6 +1207,30 @@ class _AddState extends State<Add> {
                          geoHeight +
                          ' 6$rainfall' +
                          rainfallDuration +
+                         '7$present' +
+                         past +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
+                     var noraindata3 = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
                          '7$present' +
                          past +
                          ' 8$amount' +
@@ -1186,23 +1264,59 @@ class _AddState extends State<Add> {
                          medium +
                          high;
 
+                     var noraindata4 = 'AAXX ' +
+                         info +
+                         '$date' +
+                         '$data ' +
+                         '67$station ' +
+                         ir +
+                         ix +
+                         '$cloudheight' +
+                         visible +
+                         ' $amount' +
+                         direction +
+                         '$speed 00$windData 1$sign' +
+                         newTemp +
+                         ' 2$dewSign' +
+                         newDewPoint +
+                         ' 3$newPressure 4$isobaricValue' +
+                         geoHeight +
+                         ' 7$present' +
+                         past +
+                         ' 8$amount' +
+                         low +
+                         medium +
+                         high;
+
                      // show dialog
                      if (ix == '1') {
                        if(data == "3" || data == "4" && windData > 99){
-                         _showDialog("Verify Synop", FourthString, context);
+                         if(ir == '3' || ir == '4'){
+                           _showDialog("Verify Synop", noraindata4, context);
+                         } else {
+                           _showDialog("Verify Synop", FourthString, context);
+                         }
                        } else {
-                         _showDialog("Verify Synop", secondString, context);
+                         if(ir == '3' || ir == '4'){
+                           _showDialog("Verify Synop", noraindata3, context);
+                         } else {
+                           _showDialog("Verify Synop", secondString, context);
+                         }
                        }
-                       // print(p_station.runtimeType);
-                       // print(numtemp.runtimeType);
                      } else {
                        if(data == "3" || data == "4" && windData > 99){
-                         _showDialog('Verify Synop', thirdString, context);
+                         if(ir == '3' || ir == '4'){
+                           _showDialog('Verify Synop', noraindata2, context);
+                         } else {
+                           _showDialog('Verify Synop', thirdString, context);
+                         }
                        } else {
-                         _showDialog('Verify Synop', finalSting, context);
+                         if(ir == '3' || ir == '4'){
+                           _showDialog('Verify Synop', noraindata1, context);
+                         } else {
+                           _showDialog('Verify Synop', finalSting, context);
+                         }
                        }
-                       // print(p_station.runtimeType);
-                       // print(numtemp.runtimeType);
                      }
                    }
                   },
