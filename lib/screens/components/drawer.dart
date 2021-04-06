@@ -16,7 +16,6 @@ class _drawercomponentState extends State<drawercomponent> {
     AuthService().getinfo(tok).then((val) {
       user = val.data;
       setState(() {});
-      // print(user);
     });
   }
 

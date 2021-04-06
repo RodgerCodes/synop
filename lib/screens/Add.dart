@@ -13,8 +13,6 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   var tok = Constants.prefs.getString('tk');
-  bool showExtraGroup = false;
-  // dialog
   void _showDialog(String title, String content, BuildContext context) {
     showDialog(
         context: context,
@@ -87,7 +85,7 @@ class _AddState extends State<Add> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[700],
+      backgroundColor: Colors.blueGrey[900],
       body: ListView(
         children: [
           SizedBox(
