@@ -14,9 +14,9 @@ class _LoginScreenState extends State<LoginScreen> {
   var email, password, token;
   var visible = true;
   Dio dio = new Dio();
-  var url = "https://whispering-shelf-45463.herokuapp.com";
+  // var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  // var url = "http://10.0.2.2:5000";
+  var url = "http://10.0.2.2:5000";
 
   bool showProgressLoading = false;
 
@@ -40,10 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 40,
                         fontWeight: FontWeight.bold),
                   ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  Text('Login with your email and password', style: TextStyle(color: Colors.white, fontSize: 17),)
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Login with your email and password',
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  )
                 ],
               ),
               SizedBox(
@@ -83,16 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Colors.red[700], width:1.0
-                              )
-                          ),
+                                  color: Colors.red[700], width: 1.0)),
                           enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.white, width: 1.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
                           focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.white, width: 1.0)),
-
                         ),
                       ),
                       SizedBox(
@@ -131,13 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.white, width: 1.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.red[700], width:1.0
-                            )
-                          ),
+                              borderSide: BorderSide(
+                                  color: Colors.red[700], width: 1.0)),
                           focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.white, width: 1.0)),
@@ -176,8 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),
@@ -214,8 +210,6 @@ class _LoginScreenState extends State<LoginScreen> {
             fontSize: 16.0);
         Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       }
-      // Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-      //     .pop(); //close the dialoge
     } catch (error) {
       print(error);
     }
