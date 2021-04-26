@@ -14,9 +14,9 @@ class _LoginScreenState extends State<LoginScreen> {
   var email, password, token;
   var visible = true;
   Dio dio = new Dio();
-  var url = "https://whispering-shelf-45463.herokuapp.com";
+  // var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  // var url = "http://10.0.2.2:5000";
+  var url = "http://10.0.2.2:5000";
 
   bool showProgressLoading = false;
 
@@ -67,6 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter the requires info';
+                          } else if (!value.contains("@")) {
+                            return "Please enter a proper email";
                           }
                           return null;
                         },
