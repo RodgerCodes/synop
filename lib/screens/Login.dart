@@ -85,14 +85,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.red[700], width: 1.0)),
+                            borderSide: BorderSide(
+                              color: Colors.red[700],
+                              width: 1.0,
+                            ),
+                          ),
                           enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
                           focusedBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(

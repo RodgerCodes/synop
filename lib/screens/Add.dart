@@ -58,7 +58,7 @@ class _AddState extends State<Add> {
 
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
-  String dropdownvalue = '1';
+  String dropdownvalue = 'm/s(anemometer)';
   String ir = '1', ix = '1';
   String rainfallDuration = '4';
   String low = '0', medium = '0', high = '0';
@@ -81,7 +81,24 @@ class _AddState extends State<Add> {
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
 
-  var data = "0", date;
+  void _showinfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog();
+      },
+    );
+  }
+
+  void initState() {
+    super.initState();
+    // if (!Constants.prefs.get("hide")) {
+    // } else {
+    //   return null;
+    // }
+  }
+
+  var data, date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,8 +182,12 @@ class _AddState extends State<Add> {
                               data = val;
                             });
                           },
-                          items: <String>['0', '1', '3', '4', '/']
-                              .map<DropdownMenuItem<String>>((String value) {
+                          items: <String>[
+                            'm/s(estimated)',
+                            'm/s(anemometer)',
+                            'knots(est)',
+                            'knots(anemometer)',
+                          ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
