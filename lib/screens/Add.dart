@@ -98,7 +98,7 @@ class _AddState extends State<Add> {
     // }
   }
 
-  var data, date;
+  var data = "m/s(anemometer)", date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,7 +153,13 @@ class _AddState extends State<Add> {
                               initialTime: TimeOfDay(hour: 06, minute: 00))
                           .then((value) {
                         setState(() {
-                          date = value.hour;
+                          // print(value.hour);
+                          if (value.hour < 10) {
+                            date = "0${value.hour}";
+                            print(date);
+                          } else {
+                            date = value.hour;
+                          }
                         });
                         // print(date);
                       });
@@ -183,7 +189,7 @@ class _AddState extends State<Add> {
                             });
                           },
                           items: <String>[
-                            'm/s(estimated)',
+                            'm/s(est)',
                             'm/s(anemometer)',
                             'knots(est)',
                             'knots(anemometer)',
@@ -1005,6 +1011,24 @@ class _AddState extends State<Add> {
                       }
 
                       var windData = double.parse(speed).round();
+
+                      if (data == "m/s(est)") {
+                        setState(() {
+                          data = "0";
+                        });
+                      } else if (data == "m/s(anemometer)") {
+                        setState(() {
+                          data = "1";
+                        });
+                      } else if (data == "knots(est)") {
+                        setState(() {
+                          data = "3";
+                        });
+                      } else if (data == "knots(anemometer)") {
+                        setState(() {
+                          data = "4";
+                        });
+                      }
 
                       //windspeed units
                       if (data == "3" || data == "4" && windData > 99) {
