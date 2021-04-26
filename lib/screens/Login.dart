@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
@@ -33,12 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Column(
                 children: [
-                  Text(
-                    'Welcome',
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
+                  SvgPicture.asset(
+                    "assets/env.svg",
+                    width: MediaQuery.of(context).size.width * 0.7,
                   ),
                   SizedBox(
                     height: 10,
