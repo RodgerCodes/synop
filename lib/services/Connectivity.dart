@@ -36,19 +36,13 @@ class CheckInternet {
         case DataConnectionStatus.connected:
           InternetStatus = "Connected to the internet";
           contentmessage = "Connected to the internet";
-          // _showDialog(InternetStatus, contentmessage, context);
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(contentmessage),
-          ));
+          _showDialog(InternetStatus, contentmessage, context);
 
           break;
         case DataConnectionStatus.disconnected:
           InternetStatus = "You are disconnected to the internet";
           contentmessage = "Please check your internet connection";
-          // _showDialog(InternetStatus, contentmessage, context);
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(contentmessage),
-          ));
+          _showDialog(InternetStatus, contentmessage, context);
           break;
       }
     });

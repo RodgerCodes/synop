@@ -10,7 +10,7 @@ class _BtnState extends State<Btn> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 60) {
+        if (constraints.maxWidth > 600) {
           return FloatingActionButton(
             elevation: 50.5,
             child: Icon(

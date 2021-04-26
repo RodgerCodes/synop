@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
@@ -33,17 +34,17 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Column(
                 children: [
-                  Text(
-                    'Welcome',
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
+                  SvgPicture.asset(
+                    "assets/env.svg",
+                    width: MediaQuery.of(context).size.width * 0.7,
                   ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  Text('Login with your email and password', style: TextStyle(color: Colors.white, fontSize: 20),)
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Login with your email and password',
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  )
                 ],
               ),
               SizedBox(
@@ -64,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter the requires info';
+                          } else if (!value.contains("@")) {
+                            return "Please enter a proper email";
                           }
                           return null;
                         },
@@ -82,17 +85,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.red[700], width:1.0
-                              )
+                            borderSide: BorderSide(
+                              color: Colors.red[700],
+                              width: 1.0,
+                            ),
                           ),
                           enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.white, width: 1.0)),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
                           focusedBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -131,13 +140,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.white, width: 1.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1.0)),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.red[700], width:1.0
-                            )
-                          ),
+                              borderSide: BorderSide(
+                                  color: Colors.red[700], width: 1.0)),
                           focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.white, width: 1.0)),
@@ -176,8 +183,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),
@@ -214,8 +219,6 @@ class _LoginScreenState extends State<LoginScreen> {
             fontSize: 16.0);
         Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       }
-      // Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-      //     .pop(); //close the dialoge
     } catch (error) {
       print(error);
     }

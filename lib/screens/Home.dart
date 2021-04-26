@@ -8,6 +8,7 @@ import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
 import 'package:synop/screens/components/logout_btn.dart';
 import 'package:synop/services/Auth.dart';
+import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
 import 'package:synop/utils/loader.dart';
 
@@ -45,13 +46,12 @@ class _HomeState extends State<Home> {
     AuthService().getinfo(tok).then((val) {
       user = val.data;
       setState(() {});
-      // print(user);
     });
   }
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  DateTime startDate = DateTime.now().subtract(Duration(days: 30));
-  DateTime endDate = DateTime.now().add(Duration(days: 10));
+  DateTime startDate = DateTime.now().subtract(Duration(days: 100));
+  DateTime endDate = DateTime.now().add(Duration(days: 100));
   DateTime selectedDate = DateTime.now();
   List<DateTime> markedDates = [];
   List allCodes;
@@ -74,12 +74,11 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // CheckInternet().CheckConnection(context);
+    CheckInternet().CheckConnection(context);
     fetchData();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     super.initState();
-    // print(formatDate(DateTime.now(), [HH, ':', nn]));
     if (formatDate(DateTime.now(), [HH, ':', nn]) == '08:10') {
       timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
     }
@@ -87,12 +86,11 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    // CheckInternet().listener.cancel();
+    CheckInternet().listener.cancel();
     super.dispose();
   }
 
   onSelect(data) {
-    // print(data);
     setState(() {
       selectedDate = data;
     });
@@ -101,10 +99,8 @@ class _HomeState extends State<Home> {
     });
     for (int i = 0; i < code.length; i++) {
       date = code[i]['createdAt'];
-      // print(date);
       DateTime tday = DateTime.parse(date);
       var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
-      // print(formatedDate);
       if (DateFormat('yyyy-MM-dd').format(data) == formatedDate) {
         setState(() {
           allCodes.add(code[i]);
@@ -315,7 +311,7 @@ class _HomeState extends State<Home> {
                                                                   Colors.blue,
                                                               textColor:
                                                                   Colors.white,
-                                                             fontSize: 16.0);
+                                                              fontSize: 16.0);
                                                           fetchData();
                                                           Future.delayed(
                                                               Duration(
