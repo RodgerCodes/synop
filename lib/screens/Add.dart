@@ -58,7 +58,7 @@ class _AddState extends State<Add> {
 
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
-  String dropdownvalue = 'm/s(anemometer)';
+  String dropdownvalue = 'm/s(est)';
   String ir = '1', ix = '1';
   String rainfallDuration = '4';
   String low = '0', medium = '0', high = '0';
@@ -98,7 +98,7 @@ class _AddState extends State<Add> {
     // }
   }
 
-  var data = "m/s(anemometer)", date;
+  var data = "m/s(est)", date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,7 +181,7 @@ class _AddState extends State<Add> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
                         DropdownButton(
-                          value: dropdownvalue,
+                          value: data,
                           dropdownColor: Colors.cyan,
                           onChanged: (val) {
                             setState(() {
@@ -220,7 +220,7 @@ class _AddState extends State<Add> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter the requires info';
+                        return 'Please enter the your station number';
                       }
                       return null;
                     },
@@ -260,7 +260,7 @@ class _AddState extends State<Add> {
                     child: Column(
                       children: [
                         Text(
-                          'precipitation',
+                          'Rainfall data',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
