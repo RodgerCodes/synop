@@ -334,8 +334,8 @@ class _AddState extends State<Add> {
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Cloud height",
-                      labelText: "Cloud height",
+                      hintText: "Cloud height (m)",
+                      labelText: "Cloud height (m)",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
@@ -389,7 +389,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Text(
-                'Cloud amount(eigth)',
+                'Cloud amount(code figure)',
                 style: TextStyle(
                   color: Colors.white,
                 ),
