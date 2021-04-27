@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/utils/loader.dart';
 
@@ -12,6 +14,39 @@ class _SignupState extends State<Signup> {
   var name, email, password, district;
   final _formkey = GlobalKey<FormState>();
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
+  Future _getCurrentPosition() {
+    Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+      forceAndroidLocationManager: true,
+    ).then((Position position) {
+      setState(() {
+        district = position;
+        _getFromLatLang();
+      });
+      print(district);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  Future _getFromLatLang() async {
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(district.latitude, district.longitude);
+
+      Placemark place = placemarks[0];
+      print('${place.locality}');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
