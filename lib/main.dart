@@ -19,6 +19,9 @@ Future main() async {
       .then((value) {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: true,
+      theme: ThemeData(
+        canvasColor: Colors.transparent,
+      ),
       routes: {
         '/': (context) => SplashScreeen(),
         '/wrapper': (context) =>

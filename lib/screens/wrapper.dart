@@ -5,6 +5,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        alignment: Alignment.center,
         fit: StackFit.expand,
         children: [
           Image.asset(
@@ -14,9 +15,13 @@ class Wrapper extends StatelessWidget {
             color: Colors.blueGrey[900].withOpacity(0.8),
             colorBlendMode: BlendMode.darken,
           ),
-          Center(
+          Container(
+            margin: EdgeInsets.only(
+              top: 100,
+            ),
             child: Text(
               'SYNOP',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -35,7 +40,25 @@ class Wrapper extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(
+                                  50,
+                                ),
+                                topRight: Radius.circular(
+                                  50,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -50,16 +73,43 @@ class Wrapper extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.8),
+                                offset: Offset(0.5, 0.5),
+                                blurRadius: 20.9,
+                              )
+                            ],
+                            color: Colors.blueGrey[800],
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                50,
+                              ),
+                              topRight: Radius.circular(
+                                50,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
                         'Sign Up',
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
