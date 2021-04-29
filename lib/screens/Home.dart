@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
-import 'package:synop/screens/components/logout_btn.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
@@ -197,6 +196,23 @@ class _HomeState extends State<Home> {
                         child: Text(value),
                       );
                     }).toList();
+                  },
+                  onSelected: (String choice) {
+                    if (choice == "About App") {
+                      showAboutDialog(
+                          context: context,
+                          applicationName: "Synop",
+                          applicationVersion: "2.2.4",
+                          children: [
+                            Text(
+                              'This app was designed and built by Rodger Kumwanje',
+                            ),
+                          ]);
+                    } else {
+                      Constants.prefs.setBool("loggedin", false);
+                      Constants.prefs.setString("tk", null);
+                      Navigator.pushReplacementNamed(context, '/wrapper');
+                    }
                   },
                 ),
               ],
