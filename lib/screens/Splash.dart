@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -25,16 +26,27 @@ class _SplashScreeenState extends State<SplashScreeen> {
       body: Container(
         height: size.height,
         color: Colors.blueGrey[700],
-        child: Center(
-            child: Text(
-          'SYNOP',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25.0,
-            letterSpacing: 11.5,
-            fontWeight: FontWeight.bold,
-          ),
-        )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'SYNOP',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+                letterSpacing: 11.5,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SpinKitThreeBounce(
+              size: 25.0,
+              color: Colors.white,
+            )
+          ],
+        ),
       ),
     );
   }

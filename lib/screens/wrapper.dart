@@ -55,25 +55,7 @@ class _WrapperState extends State<Wrapper> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
                     onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(
-                                  50,
-                                ),
-                                topRight: Radius.circular(
-                                  50,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      Navigator.pushNamed(context, '/login');
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
