@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
@@ -34,3 +35,7 @@ List<String> districts = [
   "Thyolo",
   "Zomba"
 ];
+
+List<String> options = ['About App', 'Logout'];
+
+// List<Icon> icons = [Icon(Icons.about)];

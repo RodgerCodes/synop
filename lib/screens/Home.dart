@@ -188,7 +188,18 @@ class _HomeState extends State<Home> {
                 style: TextStyle(fontSize: 25),
               ),
               centerTitle: true,
-              actions: [Logout(timer: timer)],
+              actions: [
+                PopupMenuButton<String>(
+                  itemBuilder: (context) {
+                    return options.map((String value) {
+                      return PopupMenuItem(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList();
+                  },
+                ),
+              ],
               toolbarHeight: 70,
             ),
             body: Container(
@@ -365,7 +376,35 @@ class _HomeState extends State<Home> {
                 style: TextStyle(fontSize: 20),
               ),
               centerTitle: true,
-              actions: [Logout(timer: timer)],
+              actions: [
+                PopupMenuButton<String>(
+                  itemBuilder: (context) {
+                    return options.map((String value) {
+                      return PopupMenuItem(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList();
+                  },
+                  onSelected: (String choice) {
+                    if (choice == "About App") {
+                      showAboutDialog(
+                          context: context,
+                          applicationName: "Synop",
+                          applicationVersion: "2.2.4",
+                          children: [
+                            Text(
+                              'This app was designed and built by Rodger Kumwanje',
+                            ),
+                          ]);
+                    } else {
+                      Constants.prefs.setBool("loggedin", false);
+                      Constants.prefs.setString("tk", null);
+                      Navigator.pushReplacementNamed(context, '/wrapper');
+                    }
+                  },
+                ),
+              ],
               toolbarHeight: 70,
             ),
             body: Container(
