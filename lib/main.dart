@@ -5,7 +5,6 @@ import 'package:synop/screens/Add.dart';
 import 'package:synop/screens/Home.dart';
 import 'package:synop/screens/Login.dart';
 import 'package:synop/screens/Profile.dart';
-import 'package:synop/screens/Signup.dart';
 import 'package:synop/screens/Splash.dart';
 import 'package:synop/screens/wrapper.dart';
 import 'package:synop/utils/constants.dart';
@@ -29,7 +28,6 @@ Future main() async {
         '/login': (context) => LoginScreen(),
         '/home': (context) => Home(),
         '/profile': (context) => Profile(),
-        '/signup': (context) => Signup(),
         '/add': (context) => Add()
       },
     ));
