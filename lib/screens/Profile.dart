@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:synop/services/Auth.dart';
@@ -12,6 +14,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   var user;
   var info;
+
   var tok = Constants.prefs.getString("tk");
   File _image;
   final picker = ImagePicker();
@@ -27,18 +30,23 @@ class _ProfileState extends State<Profile> {
 
   Future getImage() async {
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    File _image;
     setState(() {
       if (pickedImage != null) {
-        info = pickedImage.path;
-        // _image = pickedImage.path;
+        // inf = pickedImage.path;
+        _image = File(pickedImage.path);
       } else {
         print('NO image selected');
       }
     });
+    String base65Image =
+        base64Encode(_image.readAsBytesSync()).substring(0, 100);
+    String filename = _image.path.split("/").last;
+    print(filename);
 
-    AuthService().updatePic(tok, info).then((val) {
-      print(val);
-    });
+    // AuthService().updatePic(tok, base65Image).then((val) {
+    //   print(val);
+    // });
   }
 
   @override
@@ -70,6 +78,14 @@ class _ProfileState extends State<Profile> {
                                 backgroundImage: NetworkImage(
                                     user['msg']['profile_img'],
                                     scale: 10),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    getImage();
+                                  },
+                                  child: Icon(
+                                    Icons.camera_alt_outlined,
+                                  ),
+                                ),
                               )
                             : CircleAvatar(
                                 radius:
