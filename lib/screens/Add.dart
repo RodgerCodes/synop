@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -26,21 +28,65 @@ class _AddState extends State<Add> {
                   TextButton(
                       onPressed: () {
                         if (_formkey.currentState.validate()) {
-                          Dialogs.showLoadingDialog(context, _keyLoader);
-                          AuthService().addCode(tok, content).then((val) {
-                            Fluttertoast.showToast(
+                          try {
+                            Dialogs.showLoadingDialog(context, _keyLoader);
+                            AuthService().addCode(tok, content).then((val) {
+                              Fluttertoast.showToast(
                                 msg: "Synop added",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.blue[600],
                                 textColor: Colors.white,
-                                fontSize: 16.0);
+                                fontSize: 16.0,
+                              );
+                              Navigator.of(_keyLoader.currentContext,
+                                      rootNavigator: true)
+                                  .pop();
+                              Navigator.pushReplacementNamed(context, '/home');
+                            });
+                          } on SocketException {
                             Navigator.of(_keyLoader.currentContext,
                                     rootNavigator: true)
                                 .pop();
-                            Navigator.pushReplacementNamed(context, '/home');
-                          });
+                            Fluttertoast.showToast(
+                              msg: "No internet connection",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.blue[600],
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          } on HttpException {
+                            Navigator.of(
+                              _keyLoader.currentContext,
+                              rootNavigator: true,
+                            ).pop();
+                            Fluttertoast.showToast(
+                              msg: "internal server error",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.blue[600],
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          } catch (e) {
+                            Navigator.of(
+                              _keyLoader.currentContext,
+                              rootNavigator: true,
+                            ).pop();
+                            Fluttertoast.showToast(
+                              msg: "Oops! something went wrong",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.blue[600],
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
                         }
                       },
                       child: Text('Submit')),
