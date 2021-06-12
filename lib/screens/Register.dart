@@ -288,7 +288,16 @@ class _RegisterState extends State<Register> {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)
           .pop(); //close the dialoge
     } catch (error) {
-      print(error);
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      Fluttertoast.showToast(
+        msg: "Oops! something went Wrong",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.blue[600],
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 }
