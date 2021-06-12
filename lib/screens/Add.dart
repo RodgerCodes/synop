@@ -216,7 +216,7 @@ class _AddState extends State<Add> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                    padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.cyan),
