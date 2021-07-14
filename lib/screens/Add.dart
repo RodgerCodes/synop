@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -64,7 +63,7 @@ class _AddState extends State<Add> {
                               rootNavigator: true,
                             ).pop();
                             Fluttertoast.showToast(
-                              msg: "internal server error",
+                              msg: "Internal server error",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 1,
@@ -127,23 +126,6 @@ class _AddState extends State<Add> {
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
 
-  void _showinfo(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog();
-      },
-    );
-  }
-
-  void initState() {
-    super.initState();
-    // if (!Constants.prefs.get("hide")) {
-    // } else {
-    //   return null;
-    // }
-  }
-
   var data = "m/s(est)", date;
   @override
   Widget build(BuildContext context) {
@@ -180,7 +162,8 @@ class _AddState extends State<Add> {
           ),
           Form(
             key: _formkey,
-            child: Column(children: [
+            child: Column(
+                children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -194,20 +177,18 @@ class _AddState extends State<Add> {
                                 return MediaQuery(
                                     data: MediaQuery.of(context)
                                         .copyWith(alwaysUse24HourFormat: true),
-                                    child: child);
+                                    child: child,
+                                );
                               },
                               initialTime: TimeOfDay(hour: 06, minute: 00))
                           .then((value) {
                         setState(() {
-                          // print(value.hour);
                           if (value.hour < 10) {
                             date = "0${value.hour}";
-                            print(date);
                           } else {
                             date = value.hour;
                           }
                         });
-                        // print(date);
                       });
                     },
                     child: Text(
@@ -226,28 +207,31 @@ class _AddState extends State<Add> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
-                        DropdownButton(
-                          value: data,
-                          dropdownColor: Colors.cyan,
-                          onChanged: (val) {
-                            setState(() {
-                              data = val;
-                            });
-                          },
-                          items: <String>[
-                            'm/s(est)',
-                            'm/s(anemometer)',
-                            'knots(est)',
-                            'knots(anemometer)',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
-                          }).toList(),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: DropdownButton(
+                            value: data,
+                            dropdownColor: Colors.cyan,
+                            onChanged: (val) {
+                              setState(() {
+                                data = val;
+                              });
+                            },
+                            items: <String>[
+                              'm/s(est)',
+                              'm/s(anemometer)',
+                              'knots(est)',
+                              'knots(anemometer)',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -553,7 +537,7 @@ class _AddState extends State<Add> {
                       hintText: "Air temperature",
                       labelText: "Air tempearature",
                       labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      hintStyle: TextStyle(color: Colors.blue[600],),
                       enabledBorder: const OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.white, width: 1.0)),

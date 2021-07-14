@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'dart:async';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:synop/services/Auth.dart';
@@ -14,6 +16,26 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   var user;
   var info;
+  var token = Constants.prefs.getString('tk');
+
+  Future<Response> sendForm(
+      String url, Map<String, dynamic> data,  Map<String, File>files
+      ) async {
+    Map<String, MultipartFile> fileMap = {};
+    for(MapEntry fileEntry in files.entries){
+      File file = fileEntry.value;
+      String fileName = basename(file.path);
+      fileMap[fileEntry.key] = MultipartFile(file.openRead(), await file.length(), filename:fileName
+      );
+    }
+    data.addAll(fileMap);
+    var formData = FormData.fromMap(data);
+    Dio dio = new Dio();
+    return await dio.post(url, data:formData, options: Options(contentType:
+    'multipart/form-data', headers: {
+      'authorization':'Bearer $token'
+    }));
+  }
 
   var tok = Constants.prefs.getString("tk");
   File _image;
@@ -29,24 +51,19 @@ class _ProfileState extends State<Profile> {
   }
 
   Future getImage() async {
-    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     File _image;
+
+    var res1 = await sendForm('http://10.0.2.2:5000/upload', {"image":pickedImage},
+        {"image":pickedImage});
+    print(res1);
     setState(() {
       if (pickedImage != null) {
-        // inf = pickedImage.path;
-        _image = File(pickedImage.path);
+        _image = pickedImage;
       } else {
         print('NO image selected');
       }
     });
-    String base65Image =
-        base64Encode(_image.readAsBytesSync()).substring(0, 100);
-    String filename = _image.path.split("/").last;
-    print(filename);
-
-    // AuthService().updatePic(tok, base65Image).then((val) {
-    //   print(val);
-    // });
   }
 
   @override

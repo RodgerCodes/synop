@@ -202,7 +202,7 @@ class _HomeState extends State<Home> {
                       showAboutDialog(
                           context: context,
                           applicationName: "Synop",
-                          applicationVersion: "2.2.4",
+                          applicationVersion: "1.2.2",
                           children: [
                             Text(
                               'This app was designed and built by Rodger Kumwanje',

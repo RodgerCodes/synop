@@ -246,7 +246,7 @@ class _RegisterState extends State<Register> {
                   elevation: 10.5,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  child: Text('Sign In',
+                  child: Text('Sign Up',
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,

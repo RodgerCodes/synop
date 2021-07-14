@@ -1,14 +1,13 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
   Dio dio = new Dio();
-  var url = "https://whispering-shelf-45463.herokuapp.com";
+  // var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  // var url = "http://10.0.2.2:5000";
+  var url = "http://10.0.2.2:5000";
 
   getinfo(token) async {
     dio.options.headers['authorization'] = 'Bearer $token';
@@ -63,22 +62,6 @@ class AuthService {
         gravity: ToastGravity.TOP,
         fontSize: 16.0,
       );
-    }
-  }
-
-  updatePic(token, image) async {
-    dio.options.headers['authorization'] = 'Bearer $token';
-    try {
-      return await dio.put('$url/upload', data: {
-        "image": jsonEncode(image),
-      });
-    } on DioError catch (e) {
-      // Fluttertoast.showToast(
-      //     msg:
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     gravity: ToastGravity.TOP,
-      //     fontSize: 16.0);
-      print(e);
     }
   }
 

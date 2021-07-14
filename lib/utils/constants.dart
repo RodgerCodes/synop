@@ -37,4 +37,3 @@ List<String> districts = [
 
 List<String> options = ['About App', 'Logout'];
 
-// List<Icon> icons = [Icon(Icons.about)];
