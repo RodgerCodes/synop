@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
     final pickedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     File _image;
 
-    var res1 = await sendForm('http://10.0.2.2:5000/upload', {"image":pickedImage},
+    var res1 = await sendForm('https://whispering-shelf-45463.herokuapp.com/upload', {"image":pickedImage},
         {"image":pickedImage});
     print(res1);
     setState(() {
