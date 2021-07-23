@@ -52,7 +52,7 @@ class _drawercomponentState extends State<drawercomponent> {
                                   NetworkImage(user['msg']['profile_img']),
                             )
                           : CircleAvatar(
-                              backgroundImage: NetworkImage(placeholder),
+                              // backgroundImage: AssetImage('assets/user.png'),
                             ),
                     ),
                     ListTile(

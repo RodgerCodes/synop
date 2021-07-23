@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/utils/constants.dart';
+import 'package:synop/utils/loader.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -17,6 +19,8 @@ class _ProfileState extends State<Profile> {
   var user;
   var info;
   var token = Constants.prefs.getString('tk');
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
 
   Future<Response> sendForm(
       String url, Map<String, dynamic> data,  Map<String, File>files
@@ -40,30 +44,75 @@ class _ProfileState extends State<Profile> {
   var tok = Constants.prefs.getString("tk");
   File _image;
   final picker = ImagePicker();
-  var placeholder =
-      'https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg';
+
   void fetchUser() {
     AuthService().getinfo(tok).then((val) {
       user = val.data;
       setState(() {});
-      print(user);
     });
   }
 
-  Future getImage() async {
+  Future getImage(BuildContext context) async {
     final pickedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-    File _image;
+    Dialogs.showLoadingDialog(context, _keyLoader);
+    try{
+       await sendForm('https://whispering-shelf-45463.herokuapp.com/upload', {"image":pickedImage},
+          {"image":pickedImage});
+       Fluttertoast.showToast(
+           msg:"Image updated successfully",
+           toastLength: Toast.LENGTH_SHORT,
+           gravity: ToastGravity.TOP,
+           timeInSecForIosWeb: 1,
+           backgroundColor: Colors.blue[600],
+           textColor: Colors.white,
+           fontSize: 16.0
+       );
+       fetchUser();
+       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+       setState(() {
+        if (pickedImage != null) {
+          print('successfully updated your profile picture');
+        } else {
+          print('NO image selected');
+        }
+      });
+    }on HttpException{
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      Fluttertoast.showToast(
+        msg:"HTTP ERROR",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue[600],
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    } on SocketException{
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      Fluttertoast.showToast(
+          msg:"Check your network connection",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue[600],
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
-    var res1 = await sendForm('https://whispering-shelf-45463.herokuapp.com/upload', {"image":pickedImage},
-        {"image":pickedImage});
-    print(res1);
-    setState(() {
-      if (pickedImage != null) {
-        _image = pickedImage;
-      } else {
-        print('NO image selected');
-      }
-    });
+    } on DioError catch (e){
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      Fluttertoast.showToast(
+          msg:"Oops! something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue[600],
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
+
   }
 
   @override
@@ -97,7 +146,7 @@ class _ProfileState extends State<Profile> {
                                     scale: 10),
                                 child: GestureDetector(
                                   onTap: () {
-                                    getImage();
+                                    getImage(context);
                                   },
                                   child: Icon(
                                     Icons.camera_alt_outlined,
@@ -107,7 +156,7 @@ class _ProfileState extends State<Profile> {
                             : CircleAvatar(
                                 radius:
                                     MediaQuery.of(context).size.width * 0.15,
-                                backgroundImage: NetworkImage(placeholder),
+                                backgroundImage: AssetImage('assets/user.png'),
                               )),
                     SizedBox(
                       height: 20,
