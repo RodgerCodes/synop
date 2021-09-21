@@ -101,5 +101,55 @@ String visibility(double value) {
     return '49';
   } else if (value == 5000) {
     return '50';
+  } else if (value >= 6000 && value < 7000) {
+    return '56';
+  } else if (value >= 7000 && value < 8000) {
+    return '57';
+  } else if (value >= 8000 && value < 9000) {
+    return '58';
+  } else if (value >= 9000 && value < 10000) {
+    return '59';
+  } else if (value >= 10000 && value < 11000) {
+    return '60';
+  } else if (value >= 11000 && value < 12000) {
+    return '61';
+  } else if (value >= 12000 && value < 13000) {
+    return '62';
+  } else if (value >= 13000 && value < 14000) {
+    return '63';
+  } else if (value >= 14000 && value < 15000) {
+    return '64';
+  } else if (value >= 15000 && value < 16000) {
+    return '65';
+  } else if (value >= 16000 && value < 17000) {
+    return '66';
+  } else if (value >= 17000 && value < 18000) {
+    return '67';
+  } else if (value >= 18000 && value < 19000) {
+    return '68';
+  } else if (value >= 19000 && value < 20000) {
+    return '69';
+  } else if (value >= 20000 && value < 21000) {
+    return '70';
+  } else if (value >= 21000 && value < 22000) {
+    return '71';
+  } else if (value >= 22000 && value < 23000) {
+    return '72';
+  } else if (value >= 23000 && value < 24000) {
+    return '73';
+  } else if (value >= 24000 && value < 25000) {
+    return '74';
+  } else if (value >= 25000 && value < 26000) {
+    return '75';
+  } else if (value >= 26000 && value < 27000) {
+    return '76';
+  } else if (value >= 27000 && value < 28000) {
+    return '77';
+  } else if (value >= 28000 && value < 29000) {
+    return '78';
+  } else if (value >= 29000 && value < 30000) {
+    return '79';
+  } else if (value >= 30000 && value < 31000) {
+    return '80';
   }
 }
