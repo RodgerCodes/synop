@@ -104,7 +104,7 @@ class _AddState extends State<Add> {
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = 'm/s(est)';
-  String ir = '1', ix = '1';
+  String ir = "Data included", ix = 'Data included';
   String rainfallDuration = '4';
   String low = '0', medium = '0', high = '0';
   TextEditingController stationnumber = TextEditingController();
@@ -162,8 +162,7 @@ class _AddState extends State<Add> {
           ),
           Form(
             key: _formkey,
-            child: Column(
-                children: [
+            child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -175,9 +174,9 @@ class _AddState extends State<Add> {
                               context: context,
                               builder: (BuildContext context, Widget child) {
                                 return MediaQuery(
-                                    data: MediaQuery.of(context)
-                                        .copyWith(alwaysUse24HourFormat: true),
-                                    child: child,
+                                  data: MediaQuery.of(context)
+                                      .copyWith(alwaysUse24HourFormat: true),
+                                  child: child,
                                 );
                               },
                               initialTime: TimeOfDay(hour: 06, minute: 00))
@@ -279,75 +278,91 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Rainfall data',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        DropdownButton(
-                          dropdownColor: Colors.cyan,
-                          value: ir,
-                          onChanged: (val) {
-                            setState(() {
-                              ir = val;
-                            });
-                          },
-                          items: <String>['1', '3', '4']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.cyan,
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
-                    child: Column(
-                      children: [
-                        Text('Present/past weather',
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Rainfall data Availability',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      DropdownButton(
+                        dropdownColor: Colors.cyan,
+                        value: ir,
+                        onChanged: (val) {
+                          setState(() {
+                            ir = val;
+                          });
+                        },
+                        items: rain_data_availability
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.cyan),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text('Present/past weather Inclusion',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
-                        DropdownButton(
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                          value: ix,
-                          onChanged: (val) {
-                            setState(() {
-                              ix = val;
-                            });
-                          },
-                          items: <String>['1', '2', '3']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                      ),
+                      DropdownButton(
+                        dropdownColor: Colors.cyan,
+                        style: TextStyle(color: Colors.white),
+                        value: ix,
+                        onChanged: (val) {
+                          setState(() {
+                            ix = val;
+                          });
+                        },
+                        items: present_past_data
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -537,7 +552,9 @@ class _AddState extends State<Add> {
                       hintText: "Air temperature",
                       labelText: "Air tempearature",
                       labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.blue[600],),
+                      hintStyle: TextStyle(
+                        color: Colors.blue[600],
+                      ),
                       enabledBorder: const OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.white, width: 1.0)),
@@ -783,60 +800,49 @@ class _AddState extends State<Add> {
                     : TextFormField(
                         enableSuggestions: true,
                         controller: presentWeather,
-                        enabled: false,
+                        enabled: ix == 'Data  included' ? true : false,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                            hintText: "Present Weather (Code figure)",
-                            labelText: "Present Weather (Code figure)",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            hintStyle: TextStyle(color: Colors.blue[600]),
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            border: OutlineInputBorder(),
-                            disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)))),
+                          hintText: "Present Weather",
+                          labelText: "Present Weather",
+                          labelStyle: TextStyle(color: Colors.grey),
+                          hintStyle: TextStyle(color: Colors.blue[600]),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
+                          border: OutlineInputBorder(),
+                          disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
               ),
               SizedBox(
                 height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
-                child: ix == '1'
-                    ? TextFormField(
-                        enableSuggestions: true,
-                        controller: pastWeather,
-                        enabled: true,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: "Past weather (Code figure)",
-                          labelText: "Past weather (Code figure)",
-                          labelStyle: TextStyle(color: Colors.white),
-                          hintStyle: TextStyle(color: Colors.blue[600]),
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
-                        ))
-                    : TextFormField(
-                        enableSuggestions: true,
-                        controller: pastWeather,
-                        enabled: false,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            hintText: "Past weather (Code figure)",
-                            labelText: "Past weather (Code figure)",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            hintStyle: TextStyle(color: Colors.blue[600]),
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white, width: 1.0)),
-                            border: OutlineInputBorder(),
-                            disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)))),
+                child: TextFormField(
+                    enableSuggestions: true,
+                    controller: pastWeather,
+                    enabled: false,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        hintText: "Past weather (Code figure)",
+                        labelText: "Past weather (Code figure)",
+                        labelStyle: TextStyle(color: Colors.grey),
+                        hintStyle: TextStyle(color: Colors.blue[600]),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1.0)),
+                        border: OutlineInputBorder(),
+                        disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey)))),
               ),
               SizedBox(
                 height: 20,
@@ -1001,15 +1007,18 @@ class _AddState extends State<Add> {
                   elevation: 10.5,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  child: Text('Submit',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
-                      // TOD0:Implement backend functionality
                       var info = DateFormat('dd').format(selectedDate);
+
                       var station = stationnumber.text;
                       var cloudheight,
                           visible = visibility.text,
@@ -1029,19 +1038,10 @@ class _AddState extends State<Add> {
                           past = pastWeather.text;
                       var newTemp = (numtemp * 10).round().toString();
                       var newDewPoint = (dewPoint * 10).round().toString();
-                      // temperature sign
-                      if (numtemp > 0 || numtemp == 0) {
-                        setState(() {
-                          sign = 0;
-                        });
-                      } else {
-                        setState(() {
-                          sign = 1;
-                        });
-                      }
 
                       var windData = double.parse(speed).round();
 
+                      // wind units
                       if (data == "m/s(est)") {
                         setState(() {
                           data = "0";
@@ -1067,48 +1067,33 @@ class _AddState extends State<Add> {
                         });
                       }
 
-                      // isobaric standard surface
-                      if (iso == 1000) {
+                      //  rainfall data availability
+                      if (ir == 'Data included') {
                         setState(() {
-                          isobaricValue = 1;
+                          ir = '1';
                         });
-                      } else if (iso == 925) {
+                      } else if (ir == 'Precipitation equals 0') {
                         setState(() {
-                          isobaricValue = 2;
-                        });
-                      } else if (iso == 500) {
-                        setState(() {
-                          isobaricValue = 5;
-                        });
-                      } else if (iso == 700) {
-                        setState(() {
-                          isobaricValue = 7;
-                        });
-                      } else if (iso == 850) {
-                        setState(() {
-                          isobaricValue = 8;
+                          ir = '3';
                         });
                       } else {
                         setState(() {
-                          isobaricValue = '/';
+                          ir = "4";
                         });
-                        Fluttertoast.showToast(msg: "Value does not exit");
                       }
 
-                      // dew point temperature sign
-                      if (dewPoint > 0 || dewPoint == 0) {
+                      // present and past weather data inclusion
+                      if (ix == 'Data included') {
                         setState(() {
-                          dewSign = 0;
+                          ix = '1';
+                        });
+                      } else if (ix == 'No significant Phenomena') {
+                        setState(() {
+                          ix = '2';
                         });
                       } else {
                         setState(() {
-                          dewSign = 1;
-                        });
-                      }
-
-                      if (dewPoint > 0 && dewPoint < 10) {
-                        setState(() {
-                          newDewPoint = '0$newDewPoint';
+                          ix = '3';
                         });
                       }
 
@@ -1168,6 +1153,63 @@ class _AddState extends State<Add> {
                           cloudheight = '/';
                         });
                       }
+
+                      // temperature sign
+                      if (numtemp > 0 || numtemp == 0) {
+                        setState(() {
+                          sign = 0;
+                        });
+                      } else {
+                        setState(() {
+                          sign = 1;
+                        });
+                      }
+
+                      // isobaric standard surface
+                      if (iso == 1000) {
+                        setState(() {
+                          isobaricValue = 1;
+                        });
+                      } else if (iso == 925) {
+                        setState(() {
+                          isobaricValue = 2;
+                        });
+                      } else if (iso == 500) {
+                        setState(() {
+                          isobaricValue = 5;
+                        });
+                      } else if (iso == 700) {
+                        setState(() {
+                          isobaricValue = 7;
+                        });
+                      } else if (iso == 850) {
+                        setState(() {
+                          isobaricValue = 8;
+                        });
+                      } else {
+                        setState(() {
+                          isobaricValue = '/';
+                        });
+                        Fluttertoast.showToast(msg: "Value does not exit");
+                      }
+
+                      // dew point temperature sign
+                      if (dewPoint > 0 || dewPoint == 0) {
+                        setState(() {
+                          dewSign = 0;
+                        });
+                      } else {
+                        setState(() {
+                          dewSign = 1;
+                        });
+                      }
+
+                      if (dewPoint > 0 && dewPoint < 10) {
+                        setState(() {
+                          newDewPoint = '0$newDewPoint';
+                        });
+                      }
+
                       var finalSting = 'AAXX ' +
                           info +
                           '$date' +

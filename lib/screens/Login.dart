@@ -15,9 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
   var email, password, token;
   var visible = true;
   Dio dio = new Dio();
-  var url = "https://whispering-shelf-45463.herokuapp.com";
+  // var url = "https://whispering-shelf-45463.herokuapp.com";
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  // var url = "http://10.0.2.2:5000";
+  var url = "http://10.0.2.2:5000";
 
   bool showProgressLoading = false;
 
@@ -220,6 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       }
     } catch (error) {
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       print(error);
     }
   }
