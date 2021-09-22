@@ -106,7 +106,7 @@ class _AddState extends State<Add> {
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = 'm/s(est)';
   String ir = "Data included", ix = 'Data included';
-  String rainfallDuration = '4';
+  String rainfallDuration = '6 hours preceding observation';
   String low = '0', medium = '0', high = '0';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
@@ -699,7 +699,7 @@ class _AddState extends State<Add> {
                     });
                     print(rainfallDuration);
                   },
-                  items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9']
+                  items: rainDuration
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -720,48 +720,23 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
-                child: ix == '1'
-                    ? TextFormField(
-                        enableSuggestions: true,
-                        controller: presentWeather,
-                        enabled: true,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: "Present Weather (Code figure)",
-                          labelText: "Present Weather (Code figure)",
-                          labelStyle: TextStyle(color: Colors.white),
-                          hintStyle: TextStyle(color: Colors.blue[600]),
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
-                        ))
-                    : TextFormField(
-                        enableSuggestions: true,
-                        controller: presentWeather,
-                        enabled: ix == 'Data  included' ? true : false,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: "Present Weather",
-                          labelText: "Present Weather",
-                          labelStyle: TextStyle(color: Colors.grey),
-                          hintStyle: TextStyle(color: Colors.blue[600]),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.0,
-                            ),
-                          ),
-                          border: OutlineInputBorder(),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
+                  child: TextFormField(
+                      enableSuggestions: true,
+                      controller: presentWeather,
+                      enabled: ix == 'Data included' ? true : false,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: "Present Weather (Code figure)",
+                        labelText: "Present Weather (Code figure)",
+                        labelStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.blue[600]),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1.0)),
+                        border: OutlineInputBorder(),
+                      ))),
               SizedBox(
                 height: 20,
               ),
@@ -770,7 +745,7 @@ class _AddState extends State<Add> {
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: pastWeather,
-                    enabled: false,
+                    enabled: ix == 'Data included' ? true : false,
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(

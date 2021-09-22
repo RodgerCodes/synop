@@ -16,6 +16,13 @@ List<String> present_past_data = [
   'Not available'
 ];
 
+List<String> rainDuration = [
+  '6 hours preceding observation',
+  '12 hours preceding observation',
+  '18 hours preceding observation',
+  '24 hours preceding observation'
+];
+
 List<String> districts = [
   "Balaka",
   "Blantyre",
