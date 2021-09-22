@@ -396,11 +396,17 @@ class _AddState extends State<Add> {
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: visibility,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please fill in this form';
+                      }
+                      return null;
+                    },
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Visibility (enter code figure)",
-                      labelText: "Visibility (code figure)",
+                      hintText: "Visibility (in Meters)",
+                      labelText: "Visibility (Meters)",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
@@ -415,9 +421,10 @@ class _AddState extends State<Add> {
               Text(
                 'Cloud Cover and wind',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -433,11 +440,17 @@ class _AddState extends State<Add> {
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: cloud_amount,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please fill this form';
+                      }
+                      return null;
+                    },
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Cloud amount (Code figure)",
-                      labelText: "cloud amount",
+                      hintText: "Cloud amount (Oktas or eigths) e.g.. 1, /, 0",
+                      labelText: "cloud amount (Oktas or eights)",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
                       enabledBorder: const OutlineInputBorder(
@@ -450,26 +463,27 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Text(
-                'Wind direction (code figure)',
+                'Wind direction (Degrees)',
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
                 child: TextFormField(
-                    enableSuggestions: true,
-                    controller: wind_direction,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: "Wind Direction (enter code figure)",
-                      labelText: "Wind Direction (code figure)",
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.blue[600]),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
-                      border: OutlineInputBorder(),
-                    )),
+                  enableSuggestions: true,
+                  controller: wind_direction,
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Wind Direction (in degrees)",
+                    labelText: "Wind Direction (in degrees)",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.blue[600]),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,

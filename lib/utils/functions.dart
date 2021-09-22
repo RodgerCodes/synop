@@ -1,3 +1,51 @@
+class WindData {
+  static String windDirection(dynamic value) {
+    if (value == 'calm') {
+      return '00';
+    } else if (value >= 5 && value <= 14) {
+      return '01';
+    } else if (value >= 15 && value <= 24) {
+      return '02';
+    } else if (value >= 25 && value <= 34) {
+      return '03';
+    } else if (value >= 35 && value <= 44) {
+      return '04';
+    } else if (value >= 45 && value <= 54) {
+      return '05';
+    } else if (value >= 55 && value <= 64) {
+      return '06';
+    } else if (value >= 65 && value <= 74) {
+      return '07';
+    } else if (value >= 75 && value <= 84) {
+      return '08';
+    } else if (value >= 85 && value <= 94) {
+      return '09';
+    } else if (value >= 95 && value <= 104) {
+      return '10';
+    } else if (value >= 105 && value <= 114) {
+      return '11';
+    } else if (value >= 115 && value <= 124) {
+      return '12';
+    } else if (value >= 125 && value <= 134) {
+      return '13';
+    } else if (value >= 135 && value <= 144) {
+      return '14';
+    } else if (value >= 145 && value <= 154) {
+      return '15';
+    } else if (value >= 155 && value <= 164) {
+      return '16';
+    } else if (value >= 165 && value <= 174) {
+      return '17';
+    } else if (value >= 175 && value <= 184) {
+      return '18';
+    } else if (value >= 185 && value <= 194) {
+      return '19';
+    } else if (value >= 195 && value <= 204) {
+      return '20';
+    }
+  }
+}
+
 class visibilityinfo {
   static String visibilityData(int value) {
     if (value < 100) {
