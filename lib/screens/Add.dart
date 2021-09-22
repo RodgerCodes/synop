@@ -658,37 +658,23 @@ class _AddState extends State<Add> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
-                child: ir == '1'
-                    ? TextFormField(
-                        enableSuggestions: true,
-                        controller: precipitation,
-                        enabled: true,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: "Precipitation amount (Code figure)",
-                          labelText: "Precipitation amount",
-                          labelStyle: TextStyle(color: Colors.white),
-                          hintStyle: TextStyle(color: Colors.blue[600]),
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
-                        ))
-                    : TextFormField(
-                        enableSuggestions: true,
-                        controller: precipitation,
-                        enabled: false,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          labelText: "Precipitation amount (Code figure)",
-                          labelStyle: TextStyle(color: Colors.grey),
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-                          border: OutlineInputBorder(),
-                        )),
+                child: TextFormField(
+                  enableSuggestions: true,
+                  controller: precipitation,
+                  enabled: ir == 'Data included' ? true : false,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Precipitation amount (Code figure)",
+                    labelText: "Precipitation amount",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.blue[600]),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
