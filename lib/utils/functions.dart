@@ -42,6 +42,45 @@ class WindData {
       return '19';
     } else if (value >= 195 && value <= 204) {
       return '20';
+    } else if (value >= 205 && value <= 214) {
+      return '21';
+    } else if (value >= 215 && value <= 224) {
+      return '22';
+    } else if (value >= 225 && value <= 234) {
+      return '23';
+    } else if (value >= 235 && value <= 244) {
+      return '24';
+    } else if (value >= 245 && value <= 254) {
+      return '25';
+    } else if (value >= 255 && value <= 264) {
+      return '26';
+    } else if (value >= 265 && value <= 274) {
+      return '27';
+    } else if (value >= 275 && value <= 284) {
+      return '28';
+    } else if (value >= 285 && value <= 294) {
+      return '29';
+    } else if (value >= 295 && value <= 304) {
+      return '30';
+    } else if (value >= 305 && value <= 314) {
+      return '31';
+    } else if (value >= 315 && value <= 324) {
+      return '32';
+    } else if (value >= 325 && value <= 334) {
+      return '33';
+    } else if (value >= 335 && value <= 344) {
+      return '34';
+    } else if (value >= 345 && value <= 354) {
+      return '35';
+    } else if (value >= 355 || value <= 4) {
+      return '36';
+    } else if (value == 'variable' ||
+        value == 'unknown' ||
+        value == 'direction indeterminate' ||
+        value == 'all directions') {
+      return '99';
+    } else {
+      return '99';
     }
   }
 }

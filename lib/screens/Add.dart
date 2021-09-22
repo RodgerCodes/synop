@@ -1169,6 +1169,9 @@ class _AddState extends State<Add> {
                           visibilityinfo.visibilityData(int.parse(visible));
                       print(visibility_data);
 
+                      // wind direction data
+                      var windDirection = WindData.windDirection(direction);
+
 //                       var finalSting = 'AAXX ' +
 //                           info +
 //                           '$date' +
@@ -1177,9 +1180,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1201,9 +1204,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1223,9 +1226,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 00$windData 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
