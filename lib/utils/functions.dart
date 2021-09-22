@@ -151,5 +151,25 @@ String visibility(double value) {
     return '79';
   } else if (value >= 30000 && value < 31000) {
     return '80';
+  } else if (value >= 31000 && value < 35000) {
+    return '81';
+  } else if (value >= 35000 && value < 40000) {
+    return '81';
+  } else if (value >= 40000 && value < 45000) {
+    return '82';
+  } else if (value >= 45000 && value < 50000) {
+    return '83';
+  } else if (value >= 50000 && value < 55000) {
+    return '84';
+  } else if (value >= 55000 && value < 60000) {
+    return '85';
+  } else if (value >= 60000 && value < 65000) {
+    return '86';
+  } else if (value >= 65000 && value < 70000) {
+    return '87';
+  } else if (value >= 70000 && value < 75000) {
+    return '88';
+  } else {
+    return '89';
   }
 }
