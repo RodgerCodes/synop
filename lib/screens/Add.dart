@@ -1250,9 +1250,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 00$windData 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1273,9 +1273,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1299,9 +1299,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1323,9 +1323,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 00$windData 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
@@ -1349,9 +1349,9 @@ class _AddState extends State<Add> {
 //                           ir +
 //                           ix +
 //                           '$cloudheight' +
-//                           visible +
+//                           visibility_data +
 //                           ' $amount' +
-//                           direction +
+//                           windDirection +
 //                           '$speed 00$windData 1$sign' +
 //                           newTemp +
 //                           ' 2$dewSign' +
