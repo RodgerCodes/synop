@@ -1133,6 +1133,9 @@ class _AddState extends State<Add> {
                       // wind direction data
                       var windDirection = WindData.windDirection(direction);
 
+                      // rainfall duration
+                      var duration = RainDuration.rain(rainfallDuration);
+
 //                       var finalSting = 'AAXX ' +
 //                           info +
 //                           '$date' +
