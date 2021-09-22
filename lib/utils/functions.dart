@@ -1,3 +1,17 @@
+class RainDuration {
+  static int rain(String value) {
+    if (value == '6 hours preceding observation') {
+      return 1;
+    } else if (value == '12 hours preceding observation') {
+      return 2;
+    } else if (value == '18 hours preceding observation') {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+}
+
 class WindData {
   static String windDirection(dynamic value) {
     if (value == 'calm') {
