@@ -23,6 +23,19 @@ List<String> rainDuration = [
   '24 hours preceding observation'
 ];
 
+List<String> pastWeather = [
+  'Cloud cover 4 oktas or less',
+  'Cloud cover more than 4 oktas (part of period)',
+  'Cloud cover more than 4 oktas (whole period)',
+  'Sandstorm, duststorm or blowing snow',
+  'Fog or thick haze, visibility below 1000m',
+  'Drizzle',
+  'Rain',
+  'Snow/rain and snow mixed',
+  'Shower(s)',
+  'Thunderstorm(s) with/without precipitation'
+];
+
 List<String> districts = [
   "Balaka",
   "Blantyre",

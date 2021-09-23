@@ -711,11 +711,14 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 30,
               ),
-              Text('Present and Past Weather',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold)),
+              Text(
+                'Present and Past Weather',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -743,22 +746,25 @@ class _AddState extends State<Add> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
                 child: TextFormField(
-                    enableSuggestions: true,
-                    controller: pastWeather,
-                    enabled: ix == 'Data included' ? true : false,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                        hintText: "Past weather (Code figure)",
-                        labelText: "Past weather (Code figure)",
-                        labelStyle: TextStyle(color: Colors.grey),
-                        hintStyle: TextStyle(color: Colors.blue[600]),
-                        enabledBorder: const OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
-                        border: OutlineInputBorder(),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey)))),
+                  enableSuggestions: true,
+                  controller: pastWeather,
+                  enabled: ix == 'Data included' ? true : false,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Past weather (Code figure)",
+                    labelText: "Past weather (Code figure)",
+                    labelStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: Colors.blue[600]),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    border: OutlineInputBorder(),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -1154,7 +1160,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 6$rainfall' +
-//                           rainfallDuration +
+//                           duration +
 //                           ' 8$amount' +
 //                           low +
 //                           medium +
@@ -1200,7 +1206,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 6$rainfall' +
-//                           rainfallDuration +
+//                           duration +
 //                           ' 8$amount' +
 //                           low +
 //                           medium +
@@ -1247,7 +1253,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 6$rainfall' +
-//                           rainfallDuration +
+//                           duration +
 //                           '7$present' +
 //                           past +
 //                           ' 8$amount' +
@@ -1297,7 +1303,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 6$rainfall' +
-//                           rainfallDuration +
+//                           duration +
 //                           '7$present' +
 //                           past +
 //                           ' 8$amount' +
