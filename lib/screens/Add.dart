@@ -1156,6 +1156,9 @@ class _AddState extends State<Add> {
                       // rainfall duration
                       var duration = RainDuration.rain(rainfallDuration);
 
+                      var past_weather_data =
+                          PastweatherData.PastWeatherChecker(pastweather);
+
 //                       var finalSting = 'AAXX ' +
 //                           info +
 //                           '$date' +
