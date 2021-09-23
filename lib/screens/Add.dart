@@ -107,7 +107,7 @@ class _AddState extends State<Add> {
   String dropdownvalue = 'm/s(est)';
   String ir = "Data included", ix = 'Data included';
   String rainfallDuration = '6 hours preceding observation';
-  String low = '0', medium = '0', high = '0';
+  String low = 'No clouds', medium = '0', high = '0';
   String pastweather = 'Cloud cover 4 oktas or less';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
@@ -791,94 +791,91 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
-                    child: Column(
-                      children: [
-                        Text('Low Clouds',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                        DropdownButton(
-                          value: low,
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                          onChanged: (val) {
-                            setState(() {
-                              low = val;
-                            });
-                            // print(data);
-                          },
-                          items: <String>[
-                            '0',
-                            '1',
-                            '3',
-                            '4',
-                            '5',
-                            '6',
-                            '7',
-                            '8',
-                            '9',
-                            '/'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.cyan),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text(
+                          'Low Clouds',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      DropdownButton(
+                        value: low,
+                        dropdownColor: Colors.cyan,
+                        style: TextStyle(color: Colors.white),
+                        onChanged: (val) {
+                          setState(() {
+                            low = val;
+                          });
+                          // print(data);
+                        },
+                        items: lowCloudsOptions
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
-                    child: Column(
-                      children: [
-                        Text('Medium Clouds',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                        DropdownButton(
-                          value: medium,
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                          onChanged: (val) {
-                            setState(() {
-                              medium = val;
-                            });
-                            // print(data);
-                          },
-                          items: <String>[
-                            '0',
-                            '1',
-                            '3',
-                            '4',
-                            '5',
-                            '6',
-                            '7',
-                            '8',
-                            '9',
-                            '/'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.cyan),
+                child: Column(
+                  children: [
+                    Text('Medium Clouds',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    DropdownButton(
+                      value: medium,
+                      dropdownColor: Colors.cyan,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      onChanged: (val) {
+                        setState(() {
+                          medium = val;
+                        });
+                        // print(data);
+                      },
+                      items: <String>[
+                        '0',
+                        '1',
+                        '3',
+                        '4',
+                        '5',
+                        '6',
+                        '7',
+                        '8',
+                        '9',
+                        '/'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 20,

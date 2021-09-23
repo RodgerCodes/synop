@@ -10,6 +10,19 @@ List<String> rain_data_availability = [
   'Not reported'
 ];
 
+List<String> lowCloudsOptions = [
+  'No clouds',
+  'Cu with little vertical extent/ ragged Cu',
+  'Moderate/large Cu with/without Sc',
+  'Cb without anvil shaped ',
+  'SC formed by Spreading of Cu',
+  'St more/less Continuous layer',
+  'Ragged shreds of Cu/St of bad weather',
+  'Cu & Sc;bases at different levels',
+  'Cb;top culiform and anvil shaped',
+  'Sc,St,Cu,Cb invisible owing to darkness'
+];
+
 List<String> present_past_data = [
   'Data included',
   'No significant Phenomena',
