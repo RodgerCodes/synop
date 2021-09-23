@@ -12,6 +12,32 @@ class RainDuration {
   }
 }
 
+class PastweatherData {
+  static int PastWeatherChecker(String value) {
+    if (value == 'Cloud cover 4 oktas or less') {
+      return 0;
+    } else if (value == 'Cloud cover more than 4 oktas (part of period)') {
+      return 1;
+    } else if (value == 'Cloud cover more than 4 oktas (whole period)') {
+      return 2;
+    } else if (value == 'Sandstorm, duststorm or blowing snow') {
+      return 3;
+    } else if (value == 'Fog or thick haze, visibility below 1000m') {
+      return 4;
+    } else if (value == 'Drizzle') {
+      return 5;
+    } else if (value == 'Rain') {
+      return 6;
+    } else if (value == 'Snow/rain and snow mixed') {
+      return 7;
+    } else if (value == 'Shower(s)') {
+      return 8;
+    } else if (value == 'Thunderstorm(s) with/without precipitation') {
+      return 9;
+    }
+  }
+}
+
 class WindData {
   static String windDirection(dynamic value) {
     if (value == 'calm') {

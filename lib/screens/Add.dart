@@ -108,6 +108,7 @@ class _AddState extends State<Add> {
   String ir = "Data included", ix = 'Data included';
   String rainfallDuration = '6 hours preceding observation';
   String low = '0', medium = '0', high = '0';
+  String pastweather = 'Cloud cover 4 oktas or less';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
   TextEditingController cloud_height = TextEditingController();
@@ -122,7 +123,6 @@ class _AddState extends State<Add> {
   TextEditingController stationPressure = TextEditingController();
   TextEditingController seaPressure = TextEditingController();
   TextEditingController precipitation = TextEditingController();
-  TextEditingController pastWeather = TextEditingController();
   TextEditingController presentWeather = TextEditingController();
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
@@ -744,25 +744,39 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
-                child: TextFormField(
-                  enableSuggestions: true,
-                  controller: pastWeather,
-                  enabled: ix == 'Data included' ? true : false,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: "Past weather (Code figure)",
-                    labelText: "Past weather (Code figure)",
-                    labelStyle: TextStyle(color: Colors.grey),
-                    hintStyle: TextStyle(color: Colors.blue[600]),
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.white, width: 1.0)),
-                    border: OutlineInputBorder(),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.cyan),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text('Present/past weather Inclusion',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      DropdownButton(
+                        dropdownColor: Colors.cyan,
+                        style: TextStyle(color: Colors.white),
+                        value: pastweather,
+                        onChanged: (val) {
+                          setState(() {
+                            pastweather = val;
+                          });
+                        },
+                        items: pastWeather
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
                 ),
               ),
