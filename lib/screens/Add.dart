@@ -819,7 +819,6 @@ class _AddState extends State<Add> {
                           setState(() {
                             low = val;
                           });
-                          // print(data);
                         },
                         items: lowCloudsOptions
                             .map<DropdownMenuItem<String>>((String value) {
