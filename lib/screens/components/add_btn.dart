@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:synop/utils/constants.dart';
 
 class Btn extends StatefulWidget {
   @override
@@ -16,8 +17,9 @@ class _BtnState extends State<Btn> {
             child: Icon(
               Icons.add,
               size: 40,
+              color: textColor,
             ),
-            backgroundColor: Colors.blue[600],
+            backgroundColor: bgColorSecondary,
             onPressed: () {
               Navigator.pushNamed(context, '/add');
             },
@@ -27,8 +29,9 @@ class _BtnState extends State<Btn> {
             elevation: 50.5,
             child: Icon(
               Icons.add,
+              color: textColor,
             ),
-            backgroundColor: Colors.blue[600],
+            backgroundColor: bgColorSecondary,
             onPressed: () {
               Navigator.pushNamed(context, '/add');
             },

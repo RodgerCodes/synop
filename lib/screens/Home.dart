@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
   }
 
   onWeekSelect(data) {
-    print("Selected week starting at -> $data");
+    // print("Selected week starting at -> $data");
   }
 
   _monthNameWidget(monthName) {
@@ -135,7 +135,8 @@ class _HomeState extends State<Home> {
       Container(
         width: 7,
         height: 7,
-        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+        decoration:
+            BoxDecoration(shape: BoxShape.circle, color: bgColorSecondary),
       )
     ]);
   }
@@ -164,7 +165,7 @@ class _HomeState extends State<Home> {
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 5),
       decoration: BoxDecoration(
-        color: !isSelectedDate ? Colors.transparent : Colors.blue,
+        color: !isSelectedDate ? Colors.transparent : bgColorSecondary,
         borderRadius: BorderRadius.all(Radius.circular(60)),
       ),
       child: Column(
@@ -223,19 +224,21 @@ class _HomeState extends State<Home> {
               child: ListView(
                 children: [
                   Container(
-                      child: CalendarStrip(
-                    startDate: startDate,
-                    endDate: endDate,
-                    selectedDate: selectedDate,
-                    onDateSelected: onSelect,
-                    onWeekSelected: onWeekSelect,
-                    dateTileBuilder: dateTileBuilder,
-                    iconColor: Colors.blue[300],
-                    monthNameWidget: _monthNameWidget,
-                    containerDecoration:
-                        BoxDecoration(color: Colors.blueGrey[700]),
-                    addSwipeGesture: true,
-                  )),
+                    child: CalendarStrip(
+                      startDate: startDate,
+                      endDate: endDate,
+                      selectedDate: selectedDate,
+                      onDateSelected: onSelect,
+                      onWeekSelected: onWeekSelect,
+                      dateTileBuilder: dateTileBuilder,
+                      iconColor: bgColorSecondary,
+                      monthNameWidget: _monthNameWidget,
+                      containerDecoration: BoxDecoration(
+                        color: Colors.blueGrey[700],
+                      ),
+                      addSwipeGesture: true,
+                    ),
+                  ),
                   Container(
                       child: allCodes != null
                           ? allCodes.isNotEmpty

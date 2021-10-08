@@ -1,8 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static SharedPreferences prefs;
 }
+
+// colors
+Color bgColorSecondary = Colors.blue;
+Color textColor = Colors.white;
+Color bgPrimary = Colors.white;
 
 List<String> rain_data_availability = [
   'Data included',
@@ -36,6 +42,8 @@ List<String> middleclouds = [
   'Altocumulus of chaotic sky',
   'clouds invisible'
 ];
+
+List<String> highclouds = ['No clouds', ''];
 
 List<String> present_past_data = [
   'Data included',

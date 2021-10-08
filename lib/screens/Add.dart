@@ -143,7 +143,7 @@ class _AddState extends State<Add> {
                   child: IconButton(
                 icon: Icon(
                   Icons.arrow_back_outlined,
-                  color: Colors.white,
+                  color: textColor,
                   size: 30,
                 ),
                 onPressed: () {
@@ -155,7 +155,7 @@ class _AddState extends State<Add> {
           Text('Add Code',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white,
+                color: textColor,
                 fontSize: 20,
               )),
           SizedBox(
@@ -169,7 +169,7 @@ class _AddState extends State<Add> {
                 children: [
                   FlatButton(
                     padding: EdgeInsets.all(20),
-                    color: Colors.cyan,
+                    color: bgColorSecondary,
                     onPressed: () {
                       showTimePicker(
                               context: context,
@@ -193,25 +193,32 @@ class _AddState extends State<Add> {
                     },
                     child: Text(
                       'Select Time',
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
+                      borderRadius: BorderRadius.circular(10),
+                      color: bgColorSecondary,
+                    ),
                     child: Column(
                       children: [
-                        Text('Wind speed units',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                        Text(
+                          'Wind speed units',
+                          style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: DropdownButton(
                             value: data,
-                            dropdownColor: Colors.cyan,
+                            dropdownColor: bgColorSecondary,
                             onChanged: (val) {
                               setState(() {
                                 data = val;
@@ -227,7 +234,9 @@ class _AddState extends State<Add> {
                                 value: value,
                                 child: Text(
                                   value,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                    color: textColor,
+                                  ),
                                 ),
                               );
                             }).toList(),
@@ -241,22 +250,30 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 30,
               ),
-              Text('Station number', style: TextStyle(color: Colors.white)),
+              Text(
+                'Station number',
+                style: TextStyle(color: Colors.white),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
                 child: TextFormField(
                     enableSuggestions: true,
                     controller: stationnumber,
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                     decoration: InputDecoration(
                       hintText: "Station number",
                       labelText: "Station number",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.white),
                       enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 1.0,
+                        ),
+                      ),
                       border: OutlineInputBorder(),
                     )),
               ),
@@ -280,7 +297,7 @@ class _AddState extends State<Add> {
                   margin: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.cyan,
+                    color: bgColorSecondary,
                   ),
                   child: Column(
                     children: [
@@ -289,14 +306,14 @@ class _AddState extends State<Add> {
                         child: Text(
                           'Rainfall data Availability',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: textColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
                       ),
                       DropdownButton(
-                        dropdownColor: Colors.cyan,
+                        dropdownColor: bgColorSecondary,
                         value: ir,
                         onChanged: (val) {
                           setState(() {
@@ -310,7 +327,9 @@ class _AddState extends State<Add> {
                             child: Text(
                               value,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: textColor,
+                              ),
                             ),
                           );
                         }).toList(),
@@ -327,20 +346,26 @@ class _AddState extends State<Add> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan),
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 10),
-                        child: Text('Present/past weather Inclusion',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                        child: Text(
+                          'Present/past weather Inclusion',
+                          style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                       DropdownButton(
-                        dropdownColor: Colors.cyan,
-                        style: TextStyle(color: Colors.white),
+                        dropdownColor: bgColorSecondary,
+                        style: TextStyle(
+                          color: textColor,
+                        ),
                         value: ix,
                         onChanged: (val) {
                           setState(() {
@@ -668,7 +693,7 @@ class _AddState extends State<Add> {
                     hintText: "Precipitation amount (Code figure)",
                     labelText: "Precipitation amount",
                     labelStyle: TextStyle(color: Colors.white),
-                    hintStyle: TextStyle(color: Colors.blue[600]),
+                    hintStyle: TextStyle(color: bgColorSecondary),
                     enabledBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.white, width: 1.0)),
@@ -694,12 +719,13 @@ class _AddState extends State<Add> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan),
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
                   child: Center(
                     child: DropdownButton(
-                      dropdownColor: Colors.cyan,
-                      style: TextStyle(color: Colors.white),
+                      dropdownColor: bgColorSecondary,
+                      style: TextStyle(color: textColor),
                       value: rainfallDuration,
                       onChanged: (val) {
                         setState(() {
@@ -766,15 +792,18 @@ class _AddState extends State<Add> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan),
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 8, bottom: 8),
                         child: DropdownButton(
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white),
+                          dropdownColor: bgColorSecondary,
+                          style: TextStyle(
+                            color: textColor,
+                          ),
                           value: pastweather,
                           onChanged: (val) {
                             setState(() {
@@ -820,8 +849,9 @@ class _AddState extends State<Add> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan),
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
                   child: Column(
                     children: [
                       Padding(
@@ -829,8 +859,8 @@ class _AddState extends State<Add> {
                         child: Center(
                           child: DropdownButton(
                             value: low,
-                            dropdownColor: Colors.cyan,
-                            style: TextStyle(color: Colors.white),
+                            dropdownColor: bgColorSecondary,
+                            style: TextStyle(color: textColor),
                             onChanged: (val) {
                               setState(() {
                                 low = val;
@@ -865,19 +895,19 @@ class _AddState extends State<Add> {
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 child: Container(
-                  // padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan),
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 8, bottom: 8),
                         child: DropdownButton(
                           value: medium,
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white),
+                          dropdownColor: bgColorSecondary,
+                          style: TextStyle(color: textColor),
                           onChanged: (val) {
                             setState(() {
                               medium = val;
@@ -900,53 +930,50 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 48),
-                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.cyan),
-                    child: Column(
-                      children: [
-                        Text('High Clouds',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                        DropdownButton(
-                          dropdownColor: Colors.cyan,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                          value: high,
-                          onChanged: (val) {
-                            setState(() {
-                              high = val;
-                            });
-                            // print(data);
-                          },
-                          items: <String>[
-                            '0',
-                            '1',
-                            '3',
-                            '4',
-                            '5',
-                            '6',
-                            '7',
-                            '8',
-                            '9',
-                            '/'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+              Text(
+                'High Clouds',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 48),
+                padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: bgColorSecondary,
+                ),
+                child: DropdownButton(
+                  dropdownColor: bgColorSecondary,
+                  style: TextStyle(color: textColor, fontSize: 20),
+                  value: high,
+                  onChanged: (val) {
+                    setState(() {
+                      high = val;
+                    });
+                    // print(data);
+                  },
+                  items: <String>[
+                    '0',
+                    '1',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '/'
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
               ),
               SizedBox(
                 height: 30,
@@ -956,7 +983,7 @@ class _AddState extends State<Add> {
                 height: 50,
                 child: RaisedButton(
                   disabledColor: Colors.red,
-                  color: Colors.blue,
+                  color: bgColorSecondary,
                   elevation: 10.5,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
