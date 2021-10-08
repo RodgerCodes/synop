@@ -23,6 +23,20 @@ List<String> lowCloudsOptions = [
   'Sc,St,Cu,Cb invisible owing to darkness'
 ];
 
+List<String> middleclouds = [
+  'No clouds',
+  'Altostratus translucidus',
+  'Altostratus opacus/nimbostratus',
+  'translucidus single level',
+  'patches of altocumulus',
+  'Altocumulus translucidus bands',
+  'Altocumulus from spreadind cumulus',
+  'Altocumulus with altostratus & ns',
+  'Altocumulus floccus',
+  'Altocumulus of chaotic sky',
+  'clouds invisible'
+];
+
 List<String> present_past_data = [
   'Data included',
   'No significant Phenomena',
