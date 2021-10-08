@@ -679,33 +679,42 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Text('Rainfall duration', style: TextStyle(color: Colors.white)),
+              Text(
+                'Rainfall duration',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                // color: Colors.white,
-                padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.cyan),
-                child: DropdownButton(
-                  dropdownColor: Colors.cyan,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                  value: rainfallDuration,
-                  onChanged: (val) {
-                    setState(() {
-                      rainfallDuration = val;
-                    });
-                    print(rainfallDuration);
-                  },
-                  items: rainDuration
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.cyan),
+                  child: Center(
+                    child: DropdownButton(
+                      dropdownColor: Colors.cyan,
+                      style: TextStyle(color: Colors.white),
+                      value: rainfallDuration,
+                      onChanged: (val) {
+                        setState(() {
+                          rainfallDuration = val;
+                        });
+                      },
+                      items: rainDuration
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -743,6 +752,15 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
+              Text(
+                'Past weather',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 child: Container(
@@ -753,28 +771,24 @@ class _AddState extends State<Add> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text('Present/past weather Inclusion',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      DropdownButton(
-                        dropdownColor: Colors.cyan,
-                        style: TextStyle(color: Colors.white),
-                        value: pastweather,
-                        onChanged: (val) {
-                          setState(() {
-                            pastweather = val;
-                          });
-                        },
-                        items: pastWeather
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        child: DropdownButton(
+                          dropdownColor: Colors.cyan,
+                          style: TextStyle(color: Colors.white),
+                          value: pastweather,
+                          onChanged: (val) {
+                            setState(() {
+                              pastweather = val;
+                            });
+                          },
+                          items: pastWeather
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ],
                   ),
@@ -783,13 +797,22 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
-              Text('Cloud group',
+              Text('Cloud groups',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 20,
+              ),
+              Text(
+                'Low clouds',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
@@ -802,31 +825,26 @@ class _AddState extends State<Add> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text(
-                          'Low Clouds',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        child: Center(
+                          child: DropdownButton(
+                            value: low,
+                            dropdownColor: Colors.cyan,
+                            style: TextStyle(color: Colors.white),
+                            onChanged: (val) {
+                              setState(() {
+                                low = val;
+                              });
+                            },
+                            items: lowCloudsOptions
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
                         ),
-                      ),
-                      DropdownButton(
-                        value: low,
-                        dropdownColor: Colors.cyan,
-                        style: TextStyle(color: Colors.white),
-                        onChanged: (val) {
-                          setState(() {
-                            low = val;
-                          });
-                        },
-                        items: lowCloudsOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
                       ),
                     ],
                   ),
@@ -1292,7 +1310,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           '7$present' +
-//                           past +
+//                           past_weather_data +
 //                           ' 8$amount' +
 //                           low +
 //                           medium +
@@ -1318,7 +1336,7 @@ class _AddState extends State<Add> {
 //                           ' 6$rainfall' +
 //                           duration +
 //                           '7$present' +
-//                           past +
+//                           past_weather_data +
 //                           ' 8$amount' +
 //                           low +
 //                           medium +
@@ -1342,7 +1360,7 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 7$present' +
-//                           past +
+//                           past_weather_data +
 //                           ' 8$amount' +
 //                           low +
 //                           medium +
