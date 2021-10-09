@@ -167,54 +167,64 @@ class _AddState extends State<Add> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FlatButton(
-                    padding: EdgeInsets.all(20),
-                    color: bgColorSecondary,
-                    onPressed: () {
-                      showTimePicker(
-                              context: context,
-                              builder: (BuildContext context, Widget child) {
-                                return MediaQuery(
-                                  data: MediaQuery.of(context)
-                                      .copyWith(alwaysUse24HourFormat: true),
-                                  child: child,
-                                );
-                              },
-                              initialTime: TimeOfDay(hour: 06, minute: 00))
-                          .then((value) {
-                        setState(() {
-                          if (value.hour < 10) {
-                            date = "0${value.hour}";
-                          } else {
-                            date = value.hour;
-                          }
-                        });
-                      });
-                    },
-                    child: Text(
-                      'Select Time',
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 17,
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 22,
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: bgColorSecondary,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Wind speed units',
+                      FlatButton(
+                        padding: EdgeInsets.all(20),
+                        color: bgColorSecondary,
+                        onPressed: () {
+                          showTimePicker(
+                                  context: context,
+                                  builder:
+                                      (BuildContext context, Widget child) {
+                                    return MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                          alwaysUse24HourFormat: true),
+                                      child: child,
+                                    );
+                                  },
+                                  initialTime: TimeOfDay(hour: 06, minute: 00))
+                              .then((value) {
+                            setState(() {
+                              if (value.hour < 10) {
+                                date = "0${value.hour}";
+                              } else {
+                                date = value.hour;
+                              }
+                            });
+                          });
+                        },
+                        child: Text(
+                          'Select Time',
                           style: TextStyle(
                             color: textColor,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
                           ),
                         ),
-                        Padding(
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Wind speed units',
+                        style: TextStyle(
+                          color: textColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: bgColorSecondary,
+                        ),
+                        child: Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: DropdownButton(
                             value: data,
@@ -242,8 +252,8 @@ class _AddState extends State<Add> {
                             }).toList(),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -556,9 +566,11 @@ class _AddState extends State<Add> {
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Air temperature",
+                      hintText: "Air temperature ",
                       labelText: "Air tempearature",
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
                       hintStyle: TextStyle(
                         color: Colors.blue[600],
                       ),
@@ -614,7 +626,7 @@ class _AddState extends State<Add> {
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: "Station Pressure (hectapascals)",
+                      hintText: "Station Pressure (hectopascals)",
                       labelText: "Station pressure",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(color: Colors.blue[600]),
@@ -801,7 +813,7 @@ class _AddState extends State<Add> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: DropdownButton(
                           dropdownColor: bgColorSecondary,
                           style: TextStyle(
@@ -858,7 +870,7 @@ class _AddState extends State<Add> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: Center(
                           child: DropdownButton(
                             value: low,
@@ -906,7 +918,7 @@ class _AddState extends State<Add> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: DropdownButton(
                           value: medium,
                           dropdownColor: bgColorSecondary,
