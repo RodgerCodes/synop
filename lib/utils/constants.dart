@@ -43,7 +43,12 @@ List<String> middleclouds = [
   'clouds invisible'
 ];
 
-List<String> highclouds = ['No clouds', ''];
+List<String> highclouds = [
+  'No clouds',
+  'Cirrus fibratus',
+  'Cirrus spissatus in patches',
+  'Cirrus spissatus cululonimbogenitus',
+];
 
 List<String> present_past_data = [
   'Data included',

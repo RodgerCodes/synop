@@ -290,6 +290,16 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 20,
               ),
+              Text(
+                'Rainfall data Availability',
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 child: Container(
@@ -299,20 +309,13 @@ class _AddState extends State<Add> {
                     borderRadius: BorderRadius.circular(10),
                     color: bgColorSecondary,
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          'Rainfall data Availability',
-                          style: TextStyle(
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      DropdownButton(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 6,
+                      bottom: 6,
+                    ),
+                    child: Center(
+                      child: DropdownButton(
                         dropdownColor: bgColorSecondary,
                         value: ir,
                         onChanged: (val) {
@@ -334,12 +337,21 @@ class _AddState extends State<Add> {
                           );
                         }).toList(),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 15,
+              ),
+              Text(
+                'Present/past weather Inclusion',
+                style: TextStyle(
+                  color: textColor,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
@@ -349,19 +361,10 @@ class _AddState extends State<Add> {
                     borderRadius: BorderRadius.circular(10),
                     color: bgColorSecondary,
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          'Present/past weather Inclusion',
-                          style: TextStyle(
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      DropdownButton(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    child: Center(
+                      child: DropdownButton(
                         dropdownColor: bgColorSecondary,
                         style: TextStyle(
                           color: textColor,
@@ -380,7 +383,7 @@ class _AddState extends State<Add> {
                           );
                         }).toList(),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
