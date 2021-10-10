@@ -11,15 +11,8 @@ class AuthService {
 
   getinfo(token) async {
     dio.options.headers['authorization'] = 'Bearer $token';
-    try {
-      return await dio.get('$url/info');
-    } on DioError catch (e) {
-      Fluttertoast.showToast(
-          msg: "Network Error",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          fontSize: 16.0);
-    }
+
+    return await dio.get('$url/info');
   }
 
   getCode(token) async {

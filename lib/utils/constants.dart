@@ -8,7 +8,7 @@ class Constants {
 // colors
 Color bgColorSecondary = Colors.blue;
 Color textColor = Colors.white;
-Color bgPrimary = Colors.white;
+Color bgPrimary = Colors.blueGrey[700];
 
 List<String> rain_data_availability = [
   'Data included',

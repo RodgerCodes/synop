@@ -5,6 +5,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:dio/dio.dart';
 import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
 import 'package:synop/screens/components/popmenu.dart';
@@ -20,37 +21,59 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var tok = Constants.prefs.getString("tk");
-  var code, del, user;
+  var del, user, rebuild;
   bool networkError = false;
   String date, tk;
   Timer timer;
+  List code;
+  Dio dio = new Dio();
+  var url = "http://10.0.2.2:5000/code";
 
   Future fetchData() async {
     try {
-      AuthService().getCode(tok).then((val) async {
-        code = val.data;
-        setState(() {});
-        await Future.delayed(Duration(seconds: 4), () {
-          setState(() {
-            allCodes = [];
-          });
-        });
-        for (int i = 0; i < code.length; i++) {
-          var info = code[i]['createdAt'];
-          DateTime tday = DateTime.parse(info);
-          var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
-          if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
-            setState(() {
-              allCodes.add(code[i]);
-            });
-          }
-        }
+      // dio.options.headers['authorization'] = 'Bearer $tok';
+      // AuthService().getCode(tok).then((val) async {
+      //   code = val.data;
+      //   setState(() {});
+      //   await Future.delayed(Duration(seconds: 4), () {
+      //     setState(() {
+      //       allCodes = [];
+      //     });
+      //   });
+      //   for (int i = 0; i < code.length; i++) {
+      //     var info = code[i]['createdAt'];
+      //     DateTime tday = DateTime.parse(info);
+      //     var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+      //     if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
+      //       setState(() {
+      //         allCodes.add(code[i]);
+      //       });
+      //     }
+      //   }
+      // });
+      var data = await dio.get(url);
+      setState(() {
+        code = data.data;
       });
+
+      setState(() {
+        allCodes = [];
+      });
+      for (int i = 0; i < code.length; i++) {
+        var info = code[i]['createdAt'];
+        DateTime tday = DateTime.parse(info);
+        var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+        if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
+          setState(() {
+            allCodes.add(code[i]);
+          });
+        }
+      }
       AuthService().getinfo(tok).then((val) {
         user = val.data;
         setState(() {});
       });
-    } on SocketException {
+    } on DioError catch (e) {
       setState(() {
         networkError = true;
       });
@@ -99,21 +122,27 @@ class _HomeState extends State<Home> {
   }
 
   onSelect(data) {
-    setState(() {
-      selectedDate = data;
-    });
-    setState(() {
-      allCodes.clear();
-    });
-    for (int i = 0; i < code.length; i++) {
-      date = code[i]['createdAt'];
-      DateTime tday = DateTime.parse(date);
-      var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
-      if (DateFormat('yyyy-MM-dd').format(data) == formatedDate) {
-        setState(() {
-          allCodes.add(code[i]);
-        });
+    try {
+      setState(() {
+        selectedDate = data;
+      });
+      setState(() {
+        allCodes.clear();
+      });
+      for (int i = 0; i < code.length; i++) {
+        date = code[i]['createdAt'];
+        DateTime tday = DateTime.parse(date);
+        var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+        if (DateFormat('yyyy-MM-dd').format(data) == formatedDate) {
+          setState(() {
+            allCodes.add(code[i]);
+          });
+        }
       }
+    } on SocketException {
+      setState(() {
+        networkError = true;
+      });
     }
   }
 
@@ -185,409 +214,191 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blueGrey[700],
-              elevation: 20.6,
-              title: Text(
-                'SYNOP',
-                style: TextStyle(fontSize: 25),
-              ),
-              centerTitle: true,
-              actions: [
-                Popmenubtn(),
-              ],
-              toolbarHeight: 70,
-            ),
-            body: Container(
-              color: Colors.blueGrey[700],
-              child: ListView(
-                children: [
-                  Container(
-                    child: CalendarStrip(
-                      startDate: startDate,
-                      endDate: endDate,
-                      selectedDate: selectedDate,
-                      onDateSelected: onSelect,
-                      onWeekSelected: onWeekSelect,
-                      dateTileBuilder: dateTileBuilder,
-                      iconColor: bgColorSecondary,
-                      monthNameWidget: _monthNameWidget,
-                      containerDecoration: BoxDecoration(
-                        color: Colors.blueGrey[700],
-                      ),
-                      addSwipeGesture: true,
-                    ),
-                  ),
-                  Container(
-                    child: networkError
-                        ? Center(
-                            //TODO: display a network disconnection svg
-                            )
-                        : allCodes != null
-                            ? allCodes.isNotEmpty
-                                ? ListView.builder(
-                                    controller: _controller, //new line
-                                    itemCount: allCodes.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      var tday = allCodes[index]['createdAt'];
-                                      var dd = DateTime.parse(tday);
-                                      var formateddate =
-                                          DateFormat.jms().format(dd);
-                                      return Padding(
+    return Scaffold(
+      key: ValueKey<Object>(rebuild),
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey[700],
+        elevation: 20.6,
+        title: Text(
+          'SYNOP',
+          style: TextStyle(fontSize: 20),
+        ),
+        centerTitle: true,
+        actions: [
+          Popmenubtn(),
+        ],
+        toolbarHeight: 70,
+      ),
+      body: Container(
+        child: ListView(
+          children: [
+            Container(
+                child: CalendarStrip(
+              startDate: startDate,
+              endDate: endDate,
+              selectedDate: selectedDate,
+              onDateSelected: onSelect,
+              onWeekSelected: onWeekSelect,
+              dateTileBuilder: dateTileBuilder,
+              iconColor: Colors.blue[300],
+              monthNameWidget: _monthNameWidget,
+              containerDecoration: BoxDecoration(color: Colors.blueGrey[700]),
+              addSwipeGesture: true,
+            )),
+            Container(
+              child: allCodes != null
+                  ? allCodes.isNotEmpty
+                      ? ListView.builder(
+                          controller: _controller, //new line
+                          itemCount: allCodes.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            var tday = allCodes[index]['createdAt'];
+                            var dd = DateTime.parse(tday);
+                            var formateddate = DateFormat.jms().format(dd);
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
+                              child: Container(
+                                height: 210,
+                                width: double.infinity,
+                                child: Card(
+                                  color: Colors.blueGrey[800],
+                                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                  elevation: 0.5,
+                                  child: ListTile(
+                                      key: Key(allCodes[index]['_id']),
+                                      title: Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            10, 5, 10, 2),
-                                        child: Container(
-                                          height: 210,
-                                          width: double.infinity,
-                                          child: Card(
-                                            color: Colors.blueGrey[800],
-                                            margin: EdgeInsets.fromLTRB(
-                                                0, 20, 0, 0),
-                                            elevation: 0.5,
-                                            child: ListTile(
-                                                key:
-                                                    Key(allCodes[index]['_id']),
-                                                title: Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 10, 0, 0),
-                                                  child: Text(
-                                                    allCodes[index]['creator']
-                                                        ['name'],
-                                                    style: TextStyle(
-                                                        fontSize: 25,
-                                                        color: Colors.blue),
-                                                  ),
-                                                ),
-                                                subtitle: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 10, 0, 10),
-                                                      child: Text(
-                                                        allCodes[index]['code'],
-                                                        style: TextStyle(
-                                                            fontSize: 25,
-                                                            color: Colors.white,
-                                                            letterSpacing: 1.3),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      allCodes[index]['creator']
-                                                          ['district'],
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.blue[600],
-                                                          fontSize: 23),
-                                                    ),
-                                                    Text(formateddate,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 29)),
-                                                  ],
-                                                ),
-                                                trailing: allCodes[index]
-                                                                ['creator']
-                                                            ['_id'] ==
-                                                        user['msg']['_id']
-                                                    ? IconButton(
-                                                        icon: Icon(
-                                                          Icons.delete,
-                                                          color: Colors.white,
-                                                          size: 40,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            del =
-                                                                allCodes[index]
-                                                                    ['_id'];
-                                                            // isSelected = true;
-                                                          });
-                                                          Dialogs
-                                                              .showLoadingDialog(
-                                                                  context,
-                                                                  _keyLoader);
-                                                          AuthService()
-                                                              .deleteCode(
-                                                                  tok, del)
-                                                              .then((val) {
-                                                            Fluttertoast.showToast(
-                                                                msg: val.data[
-                                                                    'msg'],
-                                                                toastLength: Toast
-                                                                    .LENGTH_SHORT,
-                                                                gravity:
-                                                                    ToastGravity
-                                                                        .TOP,
-                                                                timeInSecForIosWeb:
-                                                                    1,
-                                                                backgroundColor:
-                                                                    Colors.blue,
-                                                                textColor:
-                                                                    Colors
-                                                                        .white,
-                                                                fontSize: 16.0);
-                                                            fetchData();
-                                                            Future.delayed(
-                                                                Duration(
-                                                                    seconds: 3),
-                                                                () {
-                                                              Navigator.of(
-                                                                      _keyLoader
-                                                                          .currentContext,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .pop();
-                                                            });
-                                                          });
-
-                                                          //
-                                                        },
-                                                      )
-                                                    : Text('')),
+                                            0, 10, 0, 0),
+                                        child: Text(
+                                          allCodes[index]['creator']['name'],
+                                          style: TextStyle(
+                                              fontSize: 20, color: Colors.blue),
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 10, 0, 10),
+                                            child: Text(
+                                              allCodes[index]['code'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                  letterSpacing: 1.3),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    })
-                                : Container(
-                                    height: 200,
-                                    child: Center(
-                                      child: Text(
-                                        "No Codes available",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
+                                          Text(
+                                            allCodes[index]['creator']
+                                                ['district'],
+                                            style: TextStyle(
+                                                color: Colors.blue[600]),
+                                          ),
+                                          Text(formateddate,
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                        ],
                                       ),
-                                    ),
-                                  )
-                            : Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                  ),
-                ],
-              ),
-            ),
-            drawer: drawercomponent(),
-            floatingActionButton: Btn(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blueGrey[700],
-              elevation: 20.6,
-              title: Text(
-                'SYNOP',
-                style: TextStyle(fontSize: 20),
-              ),
-              centerTitle: true,
-              actions: [
-                PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return options.map((String value) {
-                      return PopupMenuItem(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList();
-                  },
-                  onSelected: (String choice) {
-                    if (choice == "About App") {
-                      showAboutDialog(
-                          context: context,
-                          applicationName: "Synop",
-                          applicationVersion: "2.2.4",
-                          children: [
-                            Text(
-                              'This app was designed and built by Rodger Kumwanje',
-                            ),
-                          ]);
-                    } else {
-                      Constants.prefs.setBool("loggedin", false);
-                      Constants.prefs.setString("tk", null);
-                      Navigator.pushReplacementNamed(context, '/wrapper');
-                    }
-                  },
-                ),
-              ],
-              toolbarHeight: 70,
-            ),
-            body: Container(
-              color: Colors.blueGrey[700],
-              child: ListView(
-                children: [
-                  Container(
-                      child: CalendarStrip(
-                    startDate: startDate,
-                    endDate: endDate,
-                    selectedDate: selectedDate,
-                    onDateSelected: onSelect,
-                    onWeekSelected: onWeekSelect,
-                    dateTileBuilder: dateTileBuilder,
-                    iconColor: Colors.blue[300],
-                    monthNameWidget: _monthNameWidget,
-                    containerDecoration:
-                        BoxDecoration(color: Colors.blueGrey[700]),
-                    addSwipeGesture: true,
-                  )),
-                  Container(
-                      child: allCodes != null
-                          ? allCodes.isNotEmpty
-                              ? ListView.builder(
-                                  controller: _controller, //new line
-                                  itemCount: allCodes.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    var tday = allCodes[index]['createdAt'];
-                                    var dd = DateTime.parse(tday);
-                                    var formateddate =
-                                        DateFormat.jms().format(dd);
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 5, 10, 2),
-                                      child: Container(
-                                        height: 210,
-                                        width: double.infinity,
-                                        child: Card(
-                                          color: Colors.blueGrey[800],
-                                          margin:
-                                              EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                          elevation: 0.5,
-                                          child: ListTile(
-                                              key: Key(allCodes[index]['_id']),
-                                              title: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
-                                                child: Text(
-                                                  allCodes[index]['creator']
-                                                      ['name'],
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.blue),
-                                                ),
+                                      trailing: allCodes[index]['creator']
+                                                  ['_id'] ==
+                                              user['msg']['_id']
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                                size: 30,
                                               ),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 10, 0, 10),
-                                                    child: Text(
-                                                      allCodes[index]['code'],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.white,
-                                                          letterSpacing: 1.3),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    allCodes[index]['creator']
-                                                        ['district'],
-                                                    style: TextStyle(
-                                                        color:
-                                                            Colors.blue[600]),
-                                                  ),
-                                                  Text(formateddate,
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ],
-                                              ),
-                                              trailing: allCodes[index]
-                                                          ['creator']['_id'] ==
-                                                      user['msg']['_id']
-                                                  ? IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.white,
-                                                        size: 30,
-                                                      ),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          del = allCodes[index]
-                                                              ['_id'];
-                                                          // isSelected = true;
-                                                        });
-                                                        Dialogs
-                                                            .showLoadingDialog(
-                                                                context,
-                                                                _keyLoader);
-                                                        AuthService()
-                                                            .deleteCode(
-                                                                tok, del)
-                                                            .then((val) {
-                                                          Fluttertoast.showToast(
-                                                              msg: val
-                                                                  .data['msg'],
-                                                              toastLength: Toast
-                                                                  .LENGTH_SHORT,
-                                                              gravity:
-                                                                  ToastGravity
-                                                                      .TOP,
-                                                              timeInSecForIosWeb:
-                                                                  1,
-                                                              backgroundColor:
-                                                                  Colors.blue,
-                                                              textColor:
-                                                                  Colors.white,
-                                                              fontSize: 16.0);
-                                                          fetchData();
-                                                          Future.delayed(
-                                                              Duration(
-                                                                  seconds: 3),
-                                                              () {
-                                                            Navigator.of(
-                                                                    _keyLoader
-                                                                        .currentContext,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
-                                                          });
-                                                        });
+                                              onPressed: () {
+                                                setState(() {
+                                                  del = allCodes[index]['_id'];
+                                                  // isSelected = true;
+                                                });
+                                                Dialogs.showLoadingDialog(
+                                                    context, _keyLoader);
+                                                AuthService()
+                                                    .deleteCode(tok, del)
+                                                    .then((val) {
+                                                  Fluttertoast.showToast(
+                                                      msg: val.data['msg'],
+                                                      toastLength:
+                                                          Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.TOP,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor:
+                                                          Colors.blue,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0);
+                                                  fetchData();
+                                                  Future.delayed(
+                                                      Duration(seconds: 3), () {
+                                                    Navigator.of(
+                                                            _keyLoader
+                                                                .currentContext,
+                                                            rootNavigator: true)
+                                                        .pop();
+                                                  });
+                                                });
 
-                                                        //
-                                                      },
-                                                    )
-                                                  : Text('')),
-                                        ),
-                                      ),
-                                    );
-                                  })
-                              : Container(
-                                  height: 200,
-                                  child: Center(
-                                    child: Text(
-                                      "No Codes available",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                    ),
-                                  ),
-                                )
-                          : Container(
-                              height: MediaQuery.of(context).size.height,
-                              child: Center(
-                                child: CircularProgressIndicator(),
+                                                //
+                                              },
+                                            )
+                                          : Text('')),
+                                ),
                               ),
-                            )),
-                ],
-              ),
+                            );
+                          })
+                      : Container(
+                          height: 200,
+                          child: Center(
+                            child: Text(
+                              "No Codes available",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        )
+                  : networkError == true
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.wifi_off,
+                                size: 130,
+                                color: textColor,
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text('Check your internet connection'),
+                              FlatButton(
+                                onPressed: () {
+                                  fetchData();
+                                  setState(() {
+                                    rebuild = Object();
+                                  });
+                                },
+                                child: Text('Refresh'),
+                              )
+                            ],
+                          ),
+                        )
+                      : Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
             ),
-            drawer: drawercomponent(),
-            floatingActionButton: Btn(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
-        }
-      },
+          ],
+        ),
+      ),
+      drawer: drawercomponent(),
+      floatingActionButton: Btn(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

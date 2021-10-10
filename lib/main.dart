@@ -21,6 +21,8 @@ Future main() async {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         canvasColor: Colors.transparent,
+        scaffoldBackgroundColor: bgPrimary,
+        primaryColor: bgPrimary,
       ),
       routes: {
         '/': (context) => SplashScreeen(),
