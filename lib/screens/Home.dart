@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:calendar_strip/calendar_strip.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
+import 'package:synop/screens/components/popmenu.dart';
 import 'package:synop/services/Auth.dart';
 import 'package:synop/services/Connectivity.dart';
 import 'package:synop/utils/constants.dart';
@@ -19,33 +21,40 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var tok = Constants.prefs.getString("tk");
   var code, del, user;
+  bool networkError = false;
   String date, tk;
   Timer timer;
 
   Future fetchData() async {
-    AuthService().getCode(tok).then((val) async {
-      code = val.data;
-      setState(() {});
-      await Future.delayed(Duration(seconds: 4), () {
-        setState(() {
-          allCodes = [];
-        });
-      });
-      for (int i = 0; i < code.length; i++) {
-        var info = code[i]['createdAt'];
-        DateTime tday = DateTime.parse(info);
-        var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
-        if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
+    try {
+      AuthService().getCode(tok).then((val) async {
+        code = val.data;
+        setState(() {});
+        await Future.delayed(Duration(seconds: 4), () {
           setState(() {
-            allCodes.add(code[i]);
+            allCodes = [];
           });
+        });
+        for (int i = 0; i < code.length; i++) {
+          var info = code[i]['createdAt'];
+          DateTime tday = DateTime.parse(info);
+          var formatedDate = DateFormat('yyyy-MM-dd').format(tday);
+          if (DateFormat('yyyy-MM-dd').format(DateTime.now()) == formatedDate) {
+            setState(() {
+              allCodes.add(code[i]);
+            });
+          }
         }
-      }
-    });
-    AuthService().getinfo(tok).then((val) {
-      user = val.data;
-      setState(() {});
-    });
+      });
+      AuthService().getinfo(tok).then((val) {
+        user = val.data;
+        setState(() {});
+      });
+    } on SocketException {
+      setState(() {
+        networkError = true;
+      });
+    }
   }
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
@@ -189,33 +198,7 @@ class _HomeState extends State<Home> {
               ),
               centerTitle: true,
               actions: [
-                PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return options.map((String value) {
-                      return PopupMenuItem(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList();
-                  },
-                  onSelected: (String choice) {
-                    if (choice == "About App") {
-                      showAboutDialog(
-                          context: context,
-                          applicationName: "Synop",
-                          applicationVersion: "1.2.2",
-                          children: [
-                            Text(
-                              'This app was designed and built by Rodger Kumwanje',
-                            ),
-                          ]);
-                    } else {
-                      Constants.prefs.setBool("loggedin", false);
-                      Constants.prefs.setString("tk", null);
-                      Navigator.pushReplacementNamed(context, '/wrapper');
-                    }
-                  },
-                ),
+                Popmenubtn(),
               ],
               toolbarHeight: 70,
             ),
@@ -240,143 +223,154 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Container(
-                      child: allCodes != null
-                          ? allCodes.isNotEmpty
-                              ? ListView.builder(
-                                  controller: _controller, //new line
-                                  itemCount: allCodes.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    var tday = allCodes[index]['createdAt'];
-                                    var dd = DateTime.parse(tday);
-                                    var formateddate =
-                                        DateFormat.jms().format(dd);
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 5, 10, 2),
-                                      child: Container(
-                                        height: 210,
-                                        width: double.infinity,
-                                        child: Card(
-                                          color: Colors.blueGrey[800],
-                                          margin:
-                                              EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                          elevation: 0.5,
-                                          child: ListTile(
-                                              key: Key(allCodes[index]['_id']),
-                                              title: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
-                                                child: Text(
-                                                  allCodes[index]['creator']
-                                                      ['name'],
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Colors.blue),
-                                                ),
-                                              ),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 10, 0, 10),
-                                                    child: Text(
-                                                      allCodes[index]['code'],
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color: Colors.white,
-                                                          letterSpacing: 1.3),
-                                                    ),
-                                                  ),
-                                                  Text(
+                    child: networkError
+                        ? Center(
+                            //TODO: display a network disconnection svg
+                            )
+                        : allCodes != null
+                            ? allCodes.isNotEmpty
+                                ? ListView.builder(
+                                    controller: _controller, //new line
+                                    itemCount: allCodes.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      var tday = allCodes[index]['createdAt'];
+                                      var dd = DateTime.parse(tday);
+                                      var formateddate =
+                                          DateFormat.jms().format(dd);
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 5, 10, 2),
+                                        child: Container(
+                                          height: 210,
+                                          width: double.infinity,
+                                          child: Card(
+                                            color: Colors.blueGrey[800],
+                                            margin: EdgeInsets.fromLTRB(
+                                                0, 20, 0, 0),
+                                            elevation: 0.5,
+                                            child: ListTile(
+                                                key:
+                                                    Key(allCodes[index]['_id']),
+                                                title: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 10, 0, 0),
+                                                  child: Text(
                                                     allCodes[index]['creator']
-                                                        ['district'],
+                                                        ['name'],
                                                     style: TextStyle(
-                                                        color: Colors.blue[600],
-                                                        fontSize: 23),
+                                                        fontSize: 25,
+                                                        color: Colors.blue),
                                                   ),
-                                                  Text(formateddate,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 29)),
-                                                ],
-                                              ),
-                                              trailing: allCodes[index]
-                                                          ['creator']['_id'] ==
-                                                      user['msg']['_id']
-                                                  ? IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.white,
-                                                        size: 40,
+                                                ),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0, 10, 0, 10),
+                                                      child: Text(
+                                                        allCodes[index]['code'],
+                                                        style: TextStyle(
+                                                            fontSize: 25,
+                                                            color: Colors.white,
+                                                            letterSpacing: 1.3),
                                                       ),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          del = allCodes[index]
-                                                              ['_id'];
-                                                          // isSelected = true;
-                                                        });
-                                                        Dialogs
-                                                            .showLoadingDialog(
-                                                                context,
-                                                                _keyLoader);
-                                                        AuthService()
-                                                            .deleteCode(
-                                                                tok, del)
-                                                            .then((val) {
-                                                          Fluttertoast.showToast(
-                                                              msg: val
-                                                                  .data['msg'],
-                                                              toastLength: Toast
-                                                                  .LENGTH_SHORT,
-                                                              gravity:
-                                                                  ToastGravity
-                                                                      .TOP,
-                                                              timeInSecForIosWeb:
-                                                                  1,
-                                                              backgroundColor:
-                                                                  Colors.blue,
-                                                              textColor:
-                                                                  Colors.white,
-                                                              fontSize: 16.0);
-                                                          fetchData();
-                                                          Future.delayed(
-                                                              Duration(
-                                                                  seconds: 3),
-                                                              () {
-                                                            Navigator.of(
-                                                                    _keyLoader
-                                                                        .currentContext,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
+                                                    ),
+                                                    Text(
+                                                      allCodes[index]['creator']
+                                                          ['district'],
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.blue[600],
+                                                          fontSize: 23),
+                                                    ),
+                                                    Text(formateddate,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 29)),
+                                                  ],
+                                                ),
+                                                trailing: allCodes[index]
+                                                                ['creator']
+                                                            ['_id'] ==
+                                                        user['msg']['_id']
+                                                    ? IconButton(
+                                                        icon: Icon(
+                                                          Icons.delete,
+                                                          color: Colors.white,
+                                                          size: 40,
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            del =
+                                                                allCodes[index]
+                                                                    ['_id'];
+                                                            // isSelected = true;
                                                           });
-                                                        });
+                                                          Dialogs
+                                                              .showLoadingDialog(
+                                                                  context,
+                                                                  _keyLoader);
+                                                          AuthService()
+                                                              .deleteCode(
+                                                                  tok, del)
+                                                              .then((val) {
+                                                            Fluttertoast.showToast(
+                                                                msg: val.data[
+                                                                    'msg'],
+                                                                toastLength: Toast
+                                                                    .LENGTH_SHORT,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .TOP,
+                                                                timeInSecForIosWeb:
+                                                                    1,
+                                                                backgroundColor:
+                                                                    Colors.blue,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 16.0);
+                                                            fetchData();
+                                                            Future.delayed(
+                                                                Duration(
+                                                                    seconds: 3),
+                                                                () {
+                                                              Navigator.of(
+                                                                      _keyLoader
+                                                                          .currentContext,
+                                                                      rootNavigator:
+                                                                          true)
+                                                                  .pop();
+                                                            });
+                                                          });
 
-                                                        //
-                                                      },
-                                                    )
-                                                  : Text('')),
+                                                          //
+                                                        },
+                                                      )
+                                                    : Text('')),
+                                          ),
                                         ),
+                                      );
+                                    })
+                                : Container(
+                                    height: 200,
+                                    child: Center(
+                                      child: Text(
+                                        "No Codes available",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
                                       ),
-                                    );
-                                  })
-                              : Container(
-                                  height: 200,
-                                  child: Center(
-                                    child: Text(
-                                      "No Codes available",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
                                     ),
-                                  ),
-                                )
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            )),
+                                  )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                  ),
                 ],
               ),
             ),

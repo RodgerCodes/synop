@@ -15,7 +15,8 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   var tok = Constants.prefs.getString('tk');
-  void _showDialog(String title, String content, BuildContext context) {
+  Future<void> _showDialog(
+      String title, String content, BuildContext context) async {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -629,7 +630,9 @@ class _AddState extends State<Add> {
                       hintText: "Station Pressure (hectopascals)",
                       labelText: "Station pressure",
                       labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.blue[600]),
+                      hintStyle: TextStyle(
+                        color: Colors.blue[600],
+                      ),
                       enabledBorder: const OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.white, width: 1.0)),

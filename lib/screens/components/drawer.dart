@@ -53,7 +53,7 @@ class _drawercomponentState extends State<drawercomponent> {
                             )
                           : CircleAvatar(
                               // backgroundImage: AssetImage('assets/user.png'),
-                            ),
+                              ),
                     ),
                     ListTile(
                       leading: Icon(
