@@ -23,6 +23,8 @@ Future main() async {
         canvasColor: Colors.transparent,
         scaffoldBackgroundColor: bgPrimary,
         primaryColor: bgPrimary,
+        accentColor: textColor,
+        brightness: Brightness.dark,
       ),
       routes: {
         '/': (context) => SplashScreeen(),

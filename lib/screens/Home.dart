@@ -361,29 +361,40 @@ class _HomeState extends State<Home> {
                           ),
                         )
                   : networkError == true
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.wifi_off,
-                                size: 130,
-                                color: textColor,
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text('Check your internet connection'),
-                              FlatButton(
-                                onPressed: () {
-                                  fetchData();
-                                  setState(() {
-                                    rebuild = Object();
-                                  });
-                                },
-                                child: Text('Refresh'),
-                              )
-                            ],
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.6,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.wifi_off,
+                                  size: MediaQuery.of(context).size.width * 0.6,
+                                  color: textColor,
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  'Check your internet connection',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                RaisedButton(
+                                  onPressed: () {
+                                    fetchData();
+                                    setState(() {
+                                      rebuild = Object();
+                                    });
+                                  },
+                                  child: Text('Refresh'),
+                                )
+                              ],
+                            ),
                           ),
                         )
                       : Container(
