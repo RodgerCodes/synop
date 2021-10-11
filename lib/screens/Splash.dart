@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:synop/utils/constants.dart';
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
       backgroundColor: Colors.white,
       body: Container(
         height: size.height,
-        color: Colors.blueGrey[700],
+        color: bgPrimary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

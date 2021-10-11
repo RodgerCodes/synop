@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
+import 'package:synop/screens/components/Indicator.dart';
 import 'package:synop/screens/components/add_btn.dart';
 import 'package:synop/screens/components/drawer.dart';
 import 'package:synop/screens/components/popmenu.dart';
@@ -217,7 +218,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: ValueKey<Object>(rebuild),
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey[700],
+        backgroundColor: bgPrimary,
         elevation: 20.6,
         title: Text(
           'SYNOP',
@@ -242,7 +243,7 @@ class _HomeState extends State<Home> {
               dateTileBuilder: dateTileBuilder,
               iconColor: Colors.blue[300],
               monthNameWidget: _monthNameWidget,
-              containerDecoration: BoxDecoration(color: Colors.blueGrey[700]),
+              containerDecoration: BoxDecoration(color: bgPrimary),
               addSwipeGesture: true,
             )),
             Container(
@@ -397,12 +398,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         )
-                      : Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
+                      : Indicator(),
             ),
           ],
         ),
