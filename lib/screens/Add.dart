@@ -108,7 +108,7 @@ class _AddState extends State<Add> {
   String dropdownvalue = 'm/s(est)';
   String ir = "Data included", ix = 'Data included';
   String rainfallDuration = '6 hours preceding observation';
-  String low = 'No clouds', medium = 'No clouds', high = '0';
+  String low = 'No clouds', medium = 'No clouds', high = 'No clouds';
   String pastweather = 'Cloud cover 4 oktas or less';
   TextEditingController stationnumber = TextEditingController();
   // ignore: non_constant_identifier_names
@@ -227,30 +227,32 @@ class _AddState extends State<Add> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: DropdownButton(
-                            value: data,
-                            dropdownColor: bgColorSecondary,
-                            onChanged: (val) {
-                              setState(() {
-                                data = val;
-                              });
-                            },
-                            items: <String>[
-                              'm/s(est)',
-                              'm/s(anemometer)',
-                              'knots(est)',
-                              'knots(anemometer)',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    color: textColor,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: data,
+                              dropdownColor: bgColorSecondary,
+                              onChanged: (val) {
+                                setState(() {
+                                  data = val;
+                                });
+                              },
+                              items: <String>[
+                                'm/s(est)',
+                                'm/s(anemometer)',
+                                'knots(est)',
+                                'knots(anemometer)',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      color: textColor,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                       ),
@@ -326,27 +328,29 @@ class _AddState extends State<Add> {
                       bottom: 6,
                     ),
                     child: Center(
-                      child: DropdownButton(
-                        dropdownColor: bgColorSecondary,
-                        value: ir,
-                        onChanged: (val) {
-                          setState(() {
-                            ir = val;
-                          });
-                        },
-                        items: rain_data_availability
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: textColor,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: bgColorSecondary,
+                          value: ir,
+                          onChanged: (val) {
+                            setState(() {
+                              ir = val;
+                            });
+                          },
+                          items: rain_data_availability
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: textColor,
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                   ),
@@ -375,24 +379,26 @@ class _AddState extends State<Add> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 5, bottom: 5),
                     child: Center(
-                      child: DropdownButton(
-                        dropdownColor: bgColorSecondary,
-                        style: TextStyle(
-                          color: textColor,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: bgColorSecondary,
+                          style: TextStyle(
+                            color: textColor,
+                          ),
+                          value: ix,
+                          onChanged: (val) {
+                            setState(() {
+                              ix = val;
+                            });
+                          },
+                          items: present_past_data
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
-                        value: ix,
-                        onChanged: (val) {
-                          setState(() {
-                            ix = val;
-                          });
-                        },
-                        items: present_past_data
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
                       ),
                     ),
                   ),
@@ -741,22 +747,24 @@ class _AddState extends State<Add> {
                     color: bgColorSecondary,
                   ),
                   child: Center(
-                    child: DropdownButton(
-                      dropdownColor: bgColorSecondary,
-                      style: TextStyle(color: textColor),
-                      value: rainfallDuration,
-                      onChanged: (val) {
-                        setState(() {
-                          rainfallDuration = val;
-                        });
-                      },
-                      items: rainDuration
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        dropdownColor: bgColorSecondary,
+                        style: TextStyle(color: textColor),
+                        value: rainfallDuration,
+                        onChanged: (val) {
+                          setState(() {
+                            rainfallDuration = val;
+                          });
+                        },
+                        items: rainDuration
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),
@@ -817,24 +825,26 @@ class _AddState extends State<Add> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: DropdownButton(
-                          dropdownColor: bgColorSecondary,
-                          style: TextStyle(
-                            color: textColor,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            dropdownColor: bgColorSecondary,
+                            style: TextStyle(
+                              color: textColor,
+                            ),
+                            value: pastweather,
+                            onChanged: (val) {
+                              setState(() {
+                                pastweather = val;
+                              });
+                            },
+                            items: pastWeather
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
-                          value: pastweather,
-                          onChanged: (val) {
-                            setState(() {
-                              pastweather = val;
-                            });
-                          },
-                          items: pastWeather
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
                         ),
                       ),
                     ],
@@ -875,22 +885,25 @@ class _AddState extends State<Add> {
                       Padding(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: Center(
-                          child: DropdownButton(
-                            value: low,
-                            dropdownColor: bgColorSecondary,
-                            style: TextStyle(color: textColor),
-                            onChanged: (val) {
-                              setState(() {
-                                low = val;
-                              });
-                            },
-                            items: lowCloudsOptions
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: low,
+                              dropdownColor: bgColorSecondary,
+                              style: TextStyle(color: textColor),
+                              onChanged: (val) {
+                                setState(() {
+                                  low = val;
+                                });
+                              },
+                              items: lowCloudsOptions
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                       ),
@@ -922,23 +935,25 @@ class _AddState extends State<Add> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: DropdownButton(
-                          value: medium,
-                          dropdownColor: bgColorSecondary,
-                          style: TextStyle(color: textColor),
-                          onChanged: (val) {
-                            setState(() {
-                              medium = val;
-                            });
-                            // print(data);
-                          },
-                          items: middleclouds
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            value: medium,
+                            dropdownColor: bgColorSecondary,
+                            style: TextStyle(color: textColor),
+                            onChanged: (val) {
+                              setState(() {
+                                medium = val;
+                              });
+                              // print(data);
+                            },
+                            items: middleclouds
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     ],
@@ -957,40 +972,39 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                margin: EdgeInsets.only(left: 48),
-                padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: bgColorSecondary,
-                ),
-                child: DropdownButton(
-                  dropdownColor: bgColorSecondary,
-                  style: TextStyle(color: textColor, fontSize: 20),
-                  value: high,
-                  onChanged: (val) {
-                    setState(() {
-                      high = val;
-                    });
-                    // print(data);
-                  },
-                  items: <String>[
-                    '0',
-                    '1',
-                    '3',
-                    '4',
-                    '5',
-                    '6',
-                    '7',
-                    '8',
-                    '9',
-                    '/'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 5),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: bgColorSecondary,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: Center(
+                      child: DropdownButton(
+                        dropdownColor: bgColorSecondary,
+                        style: TextStyle(
+                          color: textColor,
+                        ),
+                        value: high,
+                        onChanged: (val) {
+                          setState(() {
+                            high = val;
+                          });
+                          // print(data);
+                        },
+                        items: highclouds
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(

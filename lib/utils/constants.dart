@@ -48,6 +48,13 @@ List<String> highclouds = [
   'Cirrus fibratus',
   'Cirrus spissatus in patches',
   'Cirrus spissatus cululonimbogenitus',
+  'Cirrus uncinus/fibratus or both',
+  'Cirrus & Cirrostratus veil < 45',
+  'Cirrus & Cirrostratus veil > 45',
+  'Cirrostratus covering sky',
+  'Cirrostratus not invading sky',
+  'Cirrocumulus alone/ dominant',
+  'High cloud invisible'
 ];
 
 List<String> present_past_data = [
