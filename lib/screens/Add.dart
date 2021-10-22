@@ -475,7 +475,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Text(
-                'Cloud amount(code figure)',
+                'Cloud amount',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -508,7 +508,7 @@ class _AddState extends State<Add> {
                 height: 20,
               ),
               Text(
-                'Wind direction (Degrees)',
+                'Wind direction',
                 style: TextStyle(color: Colors.white),
               ),
               Padding(
@@ -568,24 +568,25 @@ class _AddState extends State<Add> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
                 child: TextFormField(
-                    enableSuggestions: true,
-                    controller: temperature,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: "Air temperature ",
-                      labelText: "Air tempearature",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.blue[600],
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
-                      border: OutlineInputBorder(),
-                    )),
+                  enableSuggestions: true,
+                  controller: temperature,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Air temperature ",
+                    labelText: "Air temperature",
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.blue[600],
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -1234,6 +1235,9 @@ class _AddState extends State<Add> {
 
                       var past_weather_data =
                           PastweatherData.PastWeatherChecker(pastweather);
+
+                      var lowClouds = LowClouds.Low(low);
+                      var middleClouds = MiddleClouds.Middle(medium);
 
 //                       var finalSting = 'AAXX ' +
 //                           info +

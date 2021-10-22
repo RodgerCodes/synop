@@ -302,3 +302,87 @@ class visibilityinfo {
     }
   }
 }
+
+class LowClouds {
+  static String Low(String option) {
+    if (option == 'No clouds') {
+      return "0";
+    } else if (option == 'Cu with little vertical extent/ ragged Cu') {
+      return "1";
+    } else if (option == 'Moderate/large Cu with/without Sc') {
+      return "2";
+    } else if (option == 'Cb without anvil shaped') {
+      return "3";
+    } else if (option == 'SC formed by Spreading of Cu') {
+      return "4";
+    } else if (option == 'Sc not formed by spreading') {
+      return "5";
+    } else if (option == 'St more/less Continuous layer') {
+      return "6";
+    } else if (option == 'Ragged shreds of Cu/St of bad weather') {
+      return "7";
+    } else if (option == 'Cu & Sc;bases at different levels') {
+      return "8";
+    } else if (option == 'Cb;top culiform and anvil shaped') {
+      return "9";
+    } else {
+      return "/";
+    }
+  }
+}
+
+class MiddleClouds {
+  static String Middle(String option) {
+    if (option == 'No clouds') {
+      return '0';
+    } else if (option == 'Altostratus translucidus') {
+      return "1";
+    } else if (option == 'Altostratus opacus/nimbostratus') {
+      return "2";
+    } else if (option == 'translucidus single level') {
+      return "3";
+    } else if (option == 'patches of altocumulus') {
+      return "4";
+    } else if (option == 'Altocumulus translucidus bands') {
+      return "5";
+    } else if (option == 'Altocumulus from spreadind cumulus') {
+      return "6";
+    } else if (option == 'Altocumulus with altostratus & ns') {
+      return "7";
+    } else if (option == 'Altocumulus floccus') {
+      return "8";
+    } else if (option == 'Altocumulus of chaotic sky') {
+      return "9";
+    } else {
+      return "/";
+    }
+  }
+}
+
+class HighClouds {
+  static String High(String option) {
+    if (option == 'No clouds') {
+      return "0";
+    } else if (option == 'Cirrus fibratus') {
+      return "1";
+    } else if (option == 'Cirrus spissatus in patches') {
+      return "2";
+    } else if (option == 'Cirrus spissatus cululonimbogenitus') {
+      return "3";
+    } else if (option == 'Cirrus uncinus/fibratus or both') {
+      return "4";
+    } else if (option == 'Cirrus & Cirrostratus veil < 45') {
+      return "5";
+    } else if (option == 'Cirrus & Cirrostratus veil > 45') {
+      return "6";
+    } else if (option == 'Cirrostratus covering sky') {
+      return "7";
+    } else if (option == 'Cirrostratus not invading sky') {
+      return "8";
+    } else if (option == 'Cirrocumulus alone/ dominant') {
+      return "9";
+    } else {
+      return "/";
+    }
+  }
+}
