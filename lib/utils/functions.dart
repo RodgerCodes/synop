@@ -397,3 +397,31 @@ Color ColorChanger(String option, Color primary, Color secondary) {
     return secondary;
   }
 }
+
+String RainfallAmount(double value) {
+  if (value < 10 && value >= 1) {
+    return '00' + value.toString();
+  } else if (value < 100 && value >= 10) {
+    return '0' + value.toString();
+  } else if (value == 0.1) {
+    return '991';
+  } else if (value == 0.2) {
+    return '992';
+  } else if (value == 0.3) {
+    return '993';
+  } else if (value == 0.4) {
+    return '994';
+  } else if (value == 0.5) {
+    return '995';
+  } else if (value == 0.6) {
+    return '996';
+  } else if (value == 0.7) {
+    return '997';
+  } else if (value == 0.8) {
+    return '998';
+  } else if (value == 0.9) {
+    return '999';
+  } else {
+    return value.toString();
+  }
+}

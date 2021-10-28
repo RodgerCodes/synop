@@ -716,13 +716,13 @@ class _AddState extends State<Add> {
                   keyboardType: TextInputType.number,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    hintText: "Precipitation amount (Code figure)",
-                    labelText: "Precipitation amount",
+                    hintText: "Precipitation amount (in millimeters)",
+                    labelText: "Precipitation amount (mm)",
                     labelStyle: TextStyle(color: Colors.white),
                     hintStyle: TextStyle(color: bgColorSecondary),
                     enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.white, width: 1.0)),
+                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    ),
                     border: OutlineInputBorder(),
                   ),
                 ),
