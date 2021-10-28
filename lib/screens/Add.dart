@@ -1041,15 +1041,15 @@ class _AddState extends State<Add> {
                           visible = visibility.text,
                           amount = cloud_amount.text,
                           direction = wind_direction.text,
-                          speed = windSpeed.text;
+                          speed = windSpeed.text,
+                          rainfall = double.parse(precipitation.text);
                       var sign, dewSign, isobaricValue;
                       var geoHeight = seaPressure.text;
                       // var p_station = double.parse(stationPressure.text);
                       // var newPressure =
                       //     (((p_station * 100) / 100) * 10).round();
                       // var iso = int.parse(isobaric.text);
-                      // var numtemp = double.parse(temperature.text),
-                      //     rainfall = precipitation.text;
+                      // var numtemp = double.parse(temperature.text);
                       // var dewPoint = double.parse(dewpoint.text),
                       //     present = presentWeather.text,
                       //     past = pastWeather.text;
@@ -1243,6 +1243,7 @@ class _AddState extends State<Add> {
                       var lowClouds = LowClouds.Low(low);
                       var middleClouds = MiddleClouds.Middle(medium);
                       var highClouds = HighClouds.High(high);
+                      var rainfalldata = RainfallAmount(rainfall);
 
 //                       var finalSting = 'AAXX ' +
 //                           info +
