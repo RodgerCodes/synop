@@ -1,3 +1,5 @@
+import 'package:flutter/painting.dart';
+
 class RainDuration {
   static int rain(String value) {
     if (value == '6 hours preceding observation') {
@@ -384,5 +386,14 @@ class HighClouds {
     } else {
       return "/";
     }
+  }
+}
+
+// colorC
+Color ColorChanger(String option, Color primary, Color secondary) {
+  if (option == "Data included") {
+    return primary;
+  } else {
+    return secondary;
   }
 }

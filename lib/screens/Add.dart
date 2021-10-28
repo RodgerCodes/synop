@@ -635,7 +635,7 @@ class _AddState extends State<Add> {
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: "Station Pressure (hectopascals)",
-                      labelText: "Station pressure",
+                      labelText: "Station pressure (hectopascals)",
                       labelStyle: TextStyle(color: Colors.white),
                       hintStyle: TextStyle(
                         color: Colors.blue[600],
@@ -653,20 +653,21 @@ class _AddState extends State<Add> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 5),
                 child: TextFormField(
-                    enableSuggestions: true,
-                    controller: isobaric,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: "isobaric (hectopascals)",
-                      labelText: "Isobaric standard",
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.blue[600]),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
-                      border: OutlineInputBorder(),
-                    )),
+                  enableSuggestions: true,
+                  controller: isobaric,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "isobaric (hectopascals)",
+                    labelText: "Isobaric standard (hectopascals)",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.blue[600]),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -738,33 +739,36 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: bgColorSecondary,
-                  ),
-                  child: Center(
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        dropdownColor: bgColorSecondary,
-                        style: TextStyle(color: textColor),
-                        value: rainfallDuration,
-                        onChanged: (val) {
-                          setState(() {
-                            rainfallDuration = val;
-                          });
-                        },
-                        items: rainDuration
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+              IgnorePointer(
+                ignoring: ir == 'Data included' ? false : true,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.fromLTRB(20.0, 2, 20.0, 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorChanger(ir, bgColorSecondary, disabledBtn),
+                    ),
+                    child: Center(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: bgColorSecondary,
+                          style: TextStyle(color: textColor),
+                          value: rainfallDuration,
+                          onChanged: (val) {
+                            setState(() {
+                              rainfallDuration = val;
+                            });
+                          },
+                          items: rainDuration
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                   ),
@@ -814,17 +818,18 @@ class _AddState extends State<Add> {
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: bgColorSecondary,
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
+              IgnorePointer(
+                ignoring: ix == 'Data included' ? false : true,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorChanger(ix, bgColorSecondary, disabledBtn),
+                    ),
+                    child: Center(
+                      child: Padding(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
@@ -848,7 +853,7 @@ class _AddState extends State<Add> {
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -1031,7 +1036,6 @@ class _AddState extends State<Add> {
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
                       var info = DateFormat('dd').format(selectedDate);
-
                       var station = stationnumber.text;
                       var cloudheight,
                           visible = visibility.text,
@@ -1238,6 +1242,7 @@ class _AddState extends State<Add> {
 
                       var lowClouds = LowClouds.Low(low);
                       var middleClouds = MiddleClouds.Middle(medium);
+                      var highClouds = HighClouds.High(high);
 
 //                       var finalSting = 'AAXX ' +
 //                           info +
@@ -1259,9 +1264,9 @@ class _AddState extends State<Add> {
 //                           ' 6$rainfall' +
 //                           duration +
 //                           ' 8$amount' +
-//                           low +
-//                           medium +
-//                           high;
+//                           lowClouds +
+//                           middleClouds +
+//                           highClouds;
 
 //                       var noraindata1 = 'AAXX ' +
 //                           info +
@@ -1281,9 +1286,9 @@ class _AddState extends State<Add> {
 //                           ' 3$newPressure 4$isobaricValue' +
 //                           geoHeight +
 //                           ' 8$amount' +
-//                           low +
-//                           medium +
-//                           high;
+//                           lowClouds +
+//                           middleClouds +
+//                           highClouds;
 
 //                       var thirdString = 'AAXX ' +
 //                           info +
