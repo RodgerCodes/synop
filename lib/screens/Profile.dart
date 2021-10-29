@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,24 +20,24 @@ class _ProfileState extends State<Profile> {
   var token = Constants.prefs.getString('tk');
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
-
   Future<Response> sendForm(
-      String url, Map<String, dynamic> data,  Map<String, File>files
-      ) async {
+      String url, Map<String, dynamic> data, Map<String, File> files) async {
     Map<String, MultipartFile> fileMap = {};
-    for(MapEntry fileEntry in files.entries){
+    for (MapEntry fileEntry in files.entries) {
       File file = fileEntry.value;
       String fileName = basename(file.path);
-      fileMap[fileEntry.key] = MultipartFile(file.openRead(), await file.length(), filename:fileName
-      );
+      fileMap[fileEntry.key] = MultipartFile(
+          file.openRead(), await file.length(),
+          filename: fileName);
     }
     data.addAll(fileMap);
     var formData = FormData.fromMap(data);
     Dio dio = new Dio();
-    return await dio.post(url, data:formData, options: Options(contentType:
-    'multipart/form-data', headers: {
-      'authorization':'Bearer $token'
-    }));
+    return await dio.post(url,
+        data: formData,
+        options: Options(
+            contentType: 'multipart/form-data',
+            headers: {'authorization': 'Bearer $token'}));
   }
 
   var tok = Constants.prefs.getString("tk");
@@ -53,71 +52,64 @@ class _ProfileState extends State<Profile> {
   }
 
   Future getImage(BuildContext context) async {
-    final pickedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final pickedImage =
+        await ImagePicker.pickImage(source: ImageSource.gallery);
     Dialogs.showLoadingDialog(context, _keyLoader);
-    try{
-       await sendForm('https://whispering-shelf-45463.herokuapp.com/upload', {"image":pickedImage},
-          {"image":pickedImage});
-       Fluttertoast.showToast(
-           msg:"Image updated successfully",
-           toastLength: Toast.LENGTH_SHORT,
-           gravity: ToastGravity.TOP,
-           timeInSecForIosWeb: 1,
-           backgroundColor: Colors.blue[600],
-           textColor: Colors.white,
-           fontSize: 16.0
-       );
-       fetchUser();
-       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
-       setState(() {
+    try {
+      await sendForm('https://whispering-shelf-45463.herokuapp.com/upload',
+          {"image": pickedImage}, {"image": pickedImage});
+      Fluttertoast.showToast(
+          msg: "Image updated successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue[600],
+          textColor: Colors.white,
+          fontSize: 16.0);
+      fetchUser();
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+      setState(() {
         if (pickedImage != null) {
           print('successfully updated your profile picture');
         } else {
           print('NO image selected');
         }
       });
-    }on HttpException{
+    } on HttpException {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       Fluttertoast.showToast(
-        msg:"HTTP ERROR",
+          msg: "HTTP ERROR",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.blue[600],
           textColor: Colors.white,
-          fontSize: 16.0
-      );
-    } on SocketException{
+          fontSize: 16.0);
+    } on SocketException {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       Fluttertoast.showToast(
-          msg:"Check your network connection",
+          msg: "Check your network connection",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.blue[600],
           textColor: Colors.white,
-          fontSize: 16.0
-      );
-
-    } on DioError catch (e){
+          fontSize: 16.0);
+    } on DioError catch (e) {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
       Fluttertoast.showToast(
-          msg:"Oops! something went wrong",
+          msg: "Oops! something went wrong",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.blue[600],
           textColor: Colors.white,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
     }
-
-
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchUser();
   }

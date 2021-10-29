@@ -11,6 +11,10 @@ Color textColor = Colors.white;
 Color bgPrimary = Colors.blueGrey[900];
 Color disabledBtn = Colors.grey[900];
 
+// textstyles
+TextStyle headline =
+    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30);
+
 List<String> rain_data_availability = [
   'Data included',
   'Precipitation equals 0',
