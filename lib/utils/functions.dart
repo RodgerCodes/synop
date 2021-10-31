@@ -116,10 +116,7 @@ class WindData {
       return '35';
     } else if (value >= 355 || value <= 4) {
       return '36';
-    } else if (value == 'variable' ||
-        value == 'unknown' ||
-        value == 'direction indeterminate' ||
-        value == 'all directions') {
+    } else if (value == 999) {
       return '99';
     } else {
       return '99';
@@ -423,5 +420,13 @@ String RainfallAmount(double value) {
     return '999';
   } else {
     return value.toString();
+  }
+}
+
+int Tempsign(double temp) {
+  if (temp > 0 || temp == 0) {
+    return 0;
+  } else {
+    return 1;
   }
 }

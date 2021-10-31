@@ -128,7 +128,7 @@ class _AddState extends State<Add> {
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
 
-  var data = "m/s(est)", date;
+  var data = "m/s(est)", date, past_weather_data;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1143,15 +1143,7 @@ class _AddState extends State<Add> {
                         }
 
                         // temperature sign
-                        if (numtemp > 0 || numtemp == 0) {
-                          setState(() {
-                            sign = 0;
-                          });
-                        } else {
-                          setState(() {
-                            sign = 1;
-                          });
-                        }
+                        sign = Tempsign(numtemp);
 
                         // isobaric standard surface
                         if (iso == 1000) {
@@ -1182,15 +1174,7 @@ class _AddState extends State<Add> {
                         }
 
                         // dew point temperature sign
-                        if (dewPoint > 0 || dewPoint == 0) {
-                          setState(() {
-                            dewSign = 0;
-                          });
-                        } else {
-                          setState(() {
-                            dewSign = 1;
-                          });
-                        }
+                        dewSign = Tempsign(dewPoint);
 
                         if (dewPoint > 0 && dewPoint < 10) {
                           setState(() {
@@ -1201,17 +1185,31 @@ class _AddState extends State<Add> {
                         var visibility_data =
                             visibilityinfo.visibilityData(int.parse(visible));
                         // print(visibility_data);
+                        //                 value == 'variable' ||
+                        // value == 'unknown' ||
+                        // value == 'direction indeterminate' ||
+                        // value == 'all directions'
+                        // if (direction.toLowerCase() == 'variable' ||
+                        //     direction.toLowerCase() == 'unknown' ||
+                        //     direction.toLowerCase() ==
+                        //         'direction indeterminate' ||
+                        //     direction.toLowerCase() == 'all directions') {
+
+                        // }
 
                         // wind direction data
+
                         var windDirection = WindData.windDirection(direction);
 
                         // rainfall duration
                         var duration =
                             RainDuration.rain(rainfallDuration).toString();
 
-                        var past_weather_data =
-                            PastweatherData.PastWeatherChecker(pastweather)
-                                .toString();
+                        if (ix == 'Data included') {
+                          past_weather_data =
+                              PastweatherData.PastWeatherChecker(pastweather)
+                                  .toString();
+                        }
 
                         var lowClouds = LowClouds.Low(low);
                         var middleClouds = MiddleClouds.Middle(medium);
@@ -1237,7 +1235,7 @@ class _AddState extends State<Add> {
                             newDewPoint +
                             ' 3$newPressure 4$isobaricValue' +
                             geoHeight +
-                            ' 6$rainfall' +
+                            ' 6$rainfalldata' +
                             duration +
                             ' 8$amount' +
                             lowClouds +
@@ -1285,7 +1283,7 @@ class _AddState extends State<Add> {
                             newDewPoint +
                             ' 3$newPressure 4$isobaricValue' +
                             geoHeight +
-                            ' 6$rainfall' +
+                            ' 6$rainfalldata' +
                             duration +
                             ' 8$amount' +
                             lowClouds +
@@ -1332,7 +1330,7 @@ class _AddState extends State<Add> {
                             newDewPoint +
                             ' 3$newPressure 4$isobaricValue' +
                             geoHeight +
-                            ' 6$rainfall' +
+                            ' 6$rainfalldata' +
                             duration +
                             '7$present' +
                             past_weather_data +
@@ -1382,7 +1380,7 @@ class _AddState extends State<Add> {
                             newDewPoint +
                             ' 3$newPressure 4$isobaricValue' +
                             geoHeight +
-                            ' 6$rainfall' +
+                            ' 6$rainfalldata' +
                             duration +
                             '7$present' +
                             past_weather_data +
@@ -1416,8 +1414,11 @@ class _AddState extends State<Add> {
                             highClouds;
 
                         // show dialog
+                        // checking for availability of past and present weather
                         if (ix == '1') {
+                          //  checking wind speed units
                           if (data == "3" || data == "4" && windData > 99) {
+                            // checking if raindata is included
                             if (ir == '3' || ir == '4') {
                               _showDialog("Verify Synop", noraindata4, context);
                             } else {
@@ -1425,6 +1426,7 @@ class _AddState extends State<Add> {
                                   "Verify Synop", FourthString, context);
                             }
                           } else {
+                            // units in m/s either estimated or observed
                             if (ir == '3' || ir == '4') {
                               _showDialog("Verify Synop", noraindata3, context);
                             } else {
@@ -1432,6 +1434,7 @@ class _AddState extends State<Add> {
                                   "Verify Synop", secondString, context);
                             }
                           }
+                          // present and past weather not available
                         } else {
                           if (data == "3" || data == "4" && windData > 99) {
                             if (ir == '3' || ir == '4') {
