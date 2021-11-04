@@ -1218,200 +1218,7 @@ class _AddState extends State<Add> {
 
                         // TODO:Research how they calculate ten day rainfall total
 
-                        var finalSting = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 6$rainfalldata' +
-                            duration +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds +
-                            '555 +1$sign' +
-                            newTemp;
-
-                        var noraindata1 = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
-                        var thirdString = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 00$windData 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 6$rainfalldata' +
-                            duration +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
-                        var noraindata2 = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 00$windData 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
 // second string
-                        var secondString = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 6$rainfalldata' +
-                            duration +
-                            '7$present' +
-                            past_weather_data +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
-                        var noraindata3 = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            '7$present' +
-                            past_weather_data +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
-                        var FourthString = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 00$windData 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 6$rainfalldata' +
-                            duration +
-                            '7$present' +
-                            past_weather_data +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
-
-                        var noraindata4 = 'AAXX ' +
-                            info +
-                            '$date' +
-                            '$data ' +
-                            '67$station ' +
-                            ir +
-                            ix +
-                            '$cloudheight' +
-                            visibility_data +
-                            ' $amount' +
-                            windDirection +
-                            '$speed 00$windData 1$sign' +
-                            newTemp +
-                            ' 2$dewSign' +
-                            newDewPoint +
-                            ' 3$newPressure 4$isobaricValue' +
-                            geoHeight +
-                            ' 7$present' +
-                            past_weather_data +
-                            ' 8$amount' +
-                            lowClouds +
-                            middleClouds +
-                            highClouds;
 
                         // show dialog
                         // checking for availability of past and present weather
@@ -1420,16 +1227,113 @@ class _AddState extends State<Add> {
                           if (data == "3" || data == "4" && windData > 99) {
                             // checking if raindata is included
                             if (ir == '3' || ir == '4') {
+                              var noraindata4 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+
                               _showDialog("Verify Synop", noraindata4, context);
                             } else {
+                              var FourthString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
                               _showDialog(
                                   "Verify Synop", FourthString, context);
                             }
                           } else {
                             // units in m/s either estimated or observed
                             if (ir == '3' || ir == '4') {
+                              var noraindata3 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
                               _showDialog("Verify Synop", noraindata3, context);
                             } else {
+                              var secondString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
                               _showDialog(
                                   "Verify Synop", secondString, context);
                             }
@@ -1438,14 +1342,105 @@ class _AddState extends State<Add> {
                         } else {
                           if (data == "3" || data == "4" && windData > 99) {
                             if (ir == '3' || ir == '4') {
+                              var noraindata2 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+
                               _showDialog('Verify Synop', noraindata2, context);
                             } else {
+                              var thirdString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
                               _showDialog('Verify Synop', thirdString, context);
                             }
                           } else {
                             if (ir == '3' || ir == '4') {
+                              var noraindata1 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
                               _showDialog('Verify Synop', noraindata1, context);
                             } else {
+                              var finalSting = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$data ' +
+                                  '67$station ' +
+                                  ir +
+                                  ix +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds +
+                                  '555 +1$sign' +
+                                  newTemp;
                               _showDialog('Verify Synop', finalSting, context);
                             }
                           }
