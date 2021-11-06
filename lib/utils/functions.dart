@@ -12,6 +12,11 @@ int windUnitsCode(String value){
   }
 }
 
+// int presentAndPastWeather(String value){
+//   if(value == '')
+// }
+
+
 String knotsData(int value,int windInfo){
   if(value == 3 || value == 44 && windInfo > 99){
     return "99";
