@@ -15,6 +15,13 @@ Color disabledBtn = Colors.grey[900];
 TextStyle headline =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30);
 
+List<String> windUnits = [
+ 'm/s (est)',
+  'm/s(anemometer)',
+  'knots(est)',
+  'knots(anemometer)'
+];
+
 List<String> rain_data_availability = [
   'Data included',
   'Precipitation equals 0',

@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    CheckInternet().CheckConnection(context);
+    // CheckInternet().CheckConnection(context);
     fetchData();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
@@ -118,7 +118,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    CheckInternet().listener.cancel();
+    // CheckInternet().listener.cancel();
     super.dispose();
   }
 
@@ -194,6 +194,7 @@ class _HomeState extends State<Home> {
       Text(date.day.toString(),
           style: !isSelectedDate ? normalStyle : selectedStyle),
     ];
+
 
     if (isDateMarked == true) {
       _children.add(getMarkedIndicatorWidget());

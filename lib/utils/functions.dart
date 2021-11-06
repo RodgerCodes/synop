@@ -41,8 +41,8 @@ class PastweatherData {
 }
 
 class WindData {
-  static String windDirection(dynamic value) {
-    if (value == 'calm') {
+  static String windDirection(double value) {
+    if (value == 00) {
       return '00';
     } else if (value >= 5 && value <= 14) {
       return '01';

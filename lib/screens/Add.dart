@@ -127,8 +127,9 @@ class _AddState extends State<Add> {
   TextEditingController presentWeather = TextEditingController();
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
+  
 
-  var data = "m/s(est)", date, past_weather_data;
+  var data = "m/s(est)", date, past_weather_data, windDirection;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1189,17 +1190,21 @@ class _AddState extends State<Add> {
                         // value == 'unknown' ||
                         // value == 'direction indeterminate' ||
                         // value == 'all directions'
-                        // if (direction.toLowerCase() == 'variable' ||
-                        //     direction.toLowerCase() == 'unknown' ||
-                        //     direction.toLowerCase() ==
-                        //         'direction indeterminate' ||
-                        //     direction.toLowerCase() == 'all directions') {
+                        if (direction.toLowerCase() == 'variable' ||
+                            direction.toLowerCase() == 'unknown' ||
+                            direction.toLowerCase() ==
+                                'direction indeterminate' ||
+                            direction.toLowerCase() == 'all directions') {
+                          windDirection = WindData.windDirection(999);
 
-                        // }
+                        } else if(direction.toLowerCase() == 'calm'){
+                          windDirection = WindData.windDirection(00);
+                        } else {
 
-                        // wind direction data
+                          windDirection = WindData.windDirection(double.parse(direction));
+                        }
 
-                        var windDirection = WindData.windDirection(direction);
+
 
                         // rainfall duration
                         var duration =
