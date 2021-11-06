@@ -106,7 +106,7 @@ class _AddState extends State<Add> {
   final _formkey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
   String dropdownvalue = 'm/s(est)';
-  String ir = "Data included", ix = 'Data included';
+  String ir = "Data included", ix = 'Data included', data = 'm/s(est)';
   String rainfallDuration = '6 hours preceding observation';
   String low = 'No clouds', medium = 'No clouds', high = 'No clouds';
   String pastweather = 'Cloud cover 4 oktas or less';
@@ -129,7 +129,7 @@ class _AddState extends State<Add> {
   TextEditingController extraWind = TextEditingController();
   
 
-  var data = "m/s(est)", date, past_weather_data, windDirection;
+  var date, past_weather_data, windDirection;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,12 +239,7 @@ class _AddState extends State<Add> {
                                     data = val;
                                   });
                                 },
-                                items: <String>[
-                                  'm/s(est)',
-                                  'm/s(anemometer)',
-                                  'knots(est)',
-                                  'knots(anemometer)',
-                                ].map<DropdownMenuItem<String>>((String value) {
+                                items: windUnits.map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -1031,45 +1026,18 @@ class _AddState extends State<Add> {
                         var windData = double.parse(speed).round();
 
                         // wind units
-                        if (data == "m/s(est)") {
-                          setState(() {
-                            data = "0";
-                          });
-                        } else if (data == "m/s(anemometer)") {
-                          setState(() {
-                            data = "1";
-                          });
-                        } else if (data == "knots(est)") {
-                          setState(() {
-                            data = "3";
-                          });
-                        } else if (data == "knots(anemometer)") {
-                          setState(() {
-                            data = "4";
-                          });
-                        }
+                       var units = windUnitsCode(data);
 
-                        //windspeed units
-                        if (data == "3" || data == "4" && windData > 99) {
+                        //wind Speed units
+                        if (units == 3 || units == 4 && windData > 99) {
                           setState(() {
                             speed = "99";
                           });
                         }
 
                         //  rainfall data availability
-                        if (ir == 'Data included') {
-                          setState(() {
-                            ir = '1';
-                          });
-                        } else if (ir == 'Precipitation equals 0') {
-                          setState(() {
-                            ir = '3';
-                          });
-                        } else {
-                          setState(() {
-                            ir = "4";
-                          });
-                        }
+                        var RainfallAvailability = rainfallDataAvailability(ir);
+
 
                         // present and past weather data inclusion
                         if (ix == 'Data included') {
@@ -1229,15 +1197,15 @@ class _AddState extends State<Add> {
                         // checking for availability of past and present weather
                         if (ix == '1') {
                           //  checking wind speed units
-                          if (data == "3" || data == "4" && windData > 99) {
-                            // checking if raindata is included
-                            if (ir == '3' || ir == '4') {
-                              var noraindata4 = 'AAXX ' +
+                          if (units == 3 || units == 4 && windData > 99) {
+                            // checking if rain data is included
+                            if (RainfallAvailability == '3' || RainfallAvailability == '4') {
+                              var noRainData4 = 'AAXX ' +
                                   info +
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1256,14 +1224,14 @@ class _AddState extends State<Add> {
                                   middleClouds +
                                   highClouds;
 
-                              _showDialog("Verify Synop", noraindata4, context);
+                              _showDialog("Verify Synop", noRainData4, context);
                             } else {
-                              var FourthString = 'AAXX ' +
+                              var fourthString = 'AAXX ' +
                                   info +
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1284,17 +1252,17 @@ class _AddState extends State<Add> {
                                   middleClouds +
                                   highClouds;
                               _showDialog(
-                                  "Verify Synop", FourthString, context);
+                                  "Verify Synop", fourthString, context);
                             }
                           } else {
                             // units in m/s either estimated or observed
-                            if (ir == '3' || ir == '4') {
+                            if (RainfallAvailability == '3' || RainfallAvailability == '4') {
                               var noraindata3 = 'AAXX ' +
                                   info +
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1319,7 +1287,7 @@ class _AddState extends State<Add> {
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1346,13 +1314,13 @@ class _AddState extends State<Add> {
                           // present and past weather not available
                         } else {
                           if (data == "3" || data == "4" && windData > 99) {
-                            if (ir == '3' || ir == '4') {
+                            if (RainfallAvailability == '3' || RainfallAvailability == '4') {
                               var noraindata2 = 'AAXX ' +
                                   info +
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1376,7 +1344,7 @@ class _AddState extends State<Add> {
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1397,13 +1365,13 @@ class _AddState extends State<Add> {
                               _showDialog('Verify Synop', thirdString, context);
                             }
                           } else {
-                            if (ir == '3' || ir == '4') {
+                            if (RainfallAvailability == '3' || RainfallAvailability == '4') {
                               var noraindata1 = 'AAXX ' +
                                   info +
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +
@@ -1426,7 +1394,7 @@ class _AddState extends State<Add> {
                                   '$date' +
                                   '$data ' +
                                   '67$station ' +
-                                  ir +
+                                  RainfallAvailability +
                                   ix +
                                   '$cloudheight' +
                                   visibility_data +

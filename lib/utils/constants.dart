@@ -11,12 +11,12 @@ Color textColor = Colors.white;
 Color bgPrimary = Colors.blueGrey[900];
 Color disabledBtn = Colors.grey[900];
 
-// textstyles
+// TextStyles
 TextStyle headline =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30);
 
 List<String> windUnits = [
- 'm/s (est)',
+  'm/s(est)',
   'm/s(anemometer)',
   'knots(est)',
   'knots(anemometer)'

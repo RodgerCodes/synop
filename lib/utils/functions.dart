@@ -1,5 +1,36 @@
 import 'package:flutter/painting.dart';
 
+int windUnitsCode(String value){
+  if(value == 'm/s(est)'){
+    return 0;
+  } else if(value == 'm/s(anemometer)'){
+    return 1;
+  }else if(value == 'knots(est)'){
+    return 3;
+  }else{
+    return 4;
+  }
+}
+
+String knotsData(int value,int windInfo){
+  if(value == 3 || value == 44 && windInfo > 99){
+    return "99";
+  } else {
+    return null;
+  }
+}
+
+String rainfallDataAvailability(String value){
+  if(value == 'Data included'){
+    return '1';
+  } else if(value == 'Precipitation equals 0'){
+    return '3';
+  } else {
+    return '4';
+  }
+}
+
+
 class RainDuration {
   static int rain(String value) {
     if (value == '6 hours preceding observation') {
