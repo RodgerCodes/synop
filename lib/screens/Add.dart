@@ -127,7 +127,6 @@ class _AddState extends State<Add> {
   TextEditingController presentWeather = TextEditingController();
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
-  
 
   var date, past_weather_data, windDirection;
   @override
@@ -239,7 +238,8 @@ class _AddState extends State<Add> {
                                     data = val;
                                   });
                                 },
-                                items: windUnits.map<DropdownMenuItem<String>>((String value) {
+                                items: windUnits.map<DropdownMenuItem<String>>(
+                                    (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(
@@ -1026,7 +1026,7 @@ class _AddState extends State<Add> {
                         var windData = double.parse(speed).round();
 
                         // wind units
-                       var units = windUnitsCode(data);
+                        var units = windUnitsCode(data);
 
                         //wind Speed units
                         if (units == 3 || units == 4 && windData > 99) {
@@ -1037,158 +1037,139 @@ class _AddState extends State<Add> {
 
                         //  rainfall data availability
                         var rainfallAvailability = rainfallDataAvailability(ir);
-                        print(rainfallAvailability);
-
+                        // print(rainfallAvailability);
 
                         // present and past weather data inclusion
-                        if (ix == 'Data included') {
+                        var ppInclusion = presentAndPastWeather(ix).toString();
+
+                        // cloud height
+                        if (int.parse(cloud_height.text) >= 0 &&
+                            double.parse(cloud_height.text) < 50) {
                           setState(() {
-                            ix = '1';
+                            cloudheight = 0;
                           });
-                        } else if (ix == 'No significant Phenomena') {
+                        } else if (int.parse(cloud_height.text) >= 50 &&
+                            double.parse(cloud_height.text) < 100) {
                           setState(() {
-                            ix = '2';
+                            cloudheight = 1;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 100 &&
+                            int.parse(cloud_height.text) < 200) {
+                          setState(() {
+                            cloudheight = 2;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 200 &&
+                            int.parse(cloud_height.text) < 300) {
+                          setState(() {
+                            cloudheight = 3;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 300 &&
+                            double.parse(cloud_height.text) < 600) {
+                          setState(() {
+                            cloudheight = 4;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 600 &&
+                            double.parse(cloud_height.text) < 1000) {
+                          setState(() {
+                            cloudheight = 5;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 1000 &&
+                            int.parse(cloud_height.text) < 1500) {
+                          setState(() {
+                            cloudheight = 6;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 1500 &&
+                            double.parse(cloud_height.text) < 2000) {
+                          setState(() {
+                            cloudheight = 7;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 2000 &&
+                            double.parse(cloud_height.text) < 2500) {
+                          setState(() {
+                            cloudheight = 8;
+                          });
+                        } else if (int.parse(cloud_height.text) >= 2500 ||
+                            cloud_height.text == "no clouds") {
+                          setState(() {
+                            cloudheight = 9;
                           });
                         } else {
                           setState(() {
-                            ix = '3';
+                            cloudheight = '/';
                           });
                         }
 
-                        // cloud height
-                        // if (int.parse(cloud_height.text) >= 0 &&
-                        //     double.parse(cloud_height.text) < 50) {
-                        //   setState(() {
-                        //     cloudheight = 0;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 50 &&
-                        //     double.parse(cloud_height.text) < 100) {
-                        //   setState(() {
-                        //     cloudheight = 1;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 100 &&
-                        //     int.parse(cloud_height.text) < 200) {
-                        //   setState(() {
-                        //     cloudheight = 2;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 200 &&
-                        //     int.parse(cloud_height.text) < 300) {
-                        //   setState(() {
-                        //     cloudheight = 3;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 300 &&
-                        //     double.parse(cloud_height.text) < 600) {
-                        //   setState(() {
-                        //     cloudheight = 4;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 600 &&
-                        //     double.parse(cloud_height.text) < 1000) {
-                        //   setState(() {
-                        //     cloudheight = 5;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 1000 &&
-                        //     int.parse(cloud_height.text) < 1500) {
-                        //   setState(() {
-                        //     cloudheight = 6;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 1500 &&
-                        //     double.parse(cloud_height.text) < 2000) {
-                        //   setState(() {
-                        //     cloudheight = 7;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 2000 &&
-                        //     double.parse(cloud_height.text) < 2500) {
-                        //   setState(() {
-                        //     cloudheight = 8;
-                        //   });
-                        // } else if (int.parse(cloud_height.text) >= 2500 ||
-                        //     cloud_height.text == "no clouds") {
-                        //   setState(() {
-                        //     cloudheight = 9;
-                        //   });
-                        // } else {
-                        //   setState(() {
-                        //     cloudheight = '/';
-                        //   });
-                        // }
-
                         // temperature sign
-                        // sign = Tempsign(numtemp);
+                        sign = Tempsign(numtemp);
                         //
                         // // isobaric standard surface
-                        // if (iso == 1000) {
-                        //   setState(() {
-                        //     isobaricValue = 1;
-                        //   });
-                        // } else if (iso == 925) {
-                        //   setState(() {
-                        //     isobaricValue = 2;
-                        //   });
-                        // } else if (iso == 500) {
-                        //   setState(() {
-                        //     isobaricValue = 5;
-                        //   });
-                        // } else if (iso == 700) {
-                        //   setState(() {
-                        //     isobaricValue = 7;
-                        //   });
-                        // } else if (iso == 850) {
-                        //   setState(() {
-                        //     isobaricValue = 8;
-                        //   });
-                        // } else {
-                        //   setState(() {
-                        //     isobaricValue = '/';
-                        //   });
-                        //   Fluttertoast.showToast(msg: "Value does not exit");
-                        // }
+                        if (iso == 1000) {
+                          setState(() {
+                            isobaricValue = 1;
+                          });
+                        } else if (iso == 925) {
+                          setState(() {
+                            isobaricValue = 2;
+                          });
+                        } else if (iso == 500) {
+                          setState(() {
+                            isobaricValue = 5;
+                          });
+                        } else if (iso == 700) {
+                          setState(() {
+                            isobaricValue = 7;
+                          });
+                        } else if (iso == 850) {
+                          setState(() {
+                            isobaricValue = 8;
+                          });
+                        } else {
+                          setState(() {
+                            isobaricValue = '/';
+                          });
+                          Fluttertoast.showToast(msg: "Value does not exit");
+                        }
 
                         // dew point temperature sign
-                        // dewSign = Tempsign(dewPoint);
-                        //
-                        // if (dewPoint > 0 && dewPoint < 10) {
-                        //   setState(() {
-                        //     newDewPoint = '0$newDewPoint';
-                        //   });
-                        // }
+                        dewSign = Tempsign(dewPoint);
 
-                        // var visibility_data =
-                        //     visibilityinfo.visibilityData(int.parse(visible));
-                        // // print(visibility_data);
-                        // //                 value == 'variable' ||
-                        // // value == 'unknown' ||
-                        // // value == 'direction indeterminate' ||
-                        // // value == 'all directions'
-                        // if (direction.toLowerCase() == 'variable' ||
-                        //     direction.toLowerCase() == 'unknown' ||
-                        //     direction.toLowerCase() ==
-                        //         'direction indeterminate' ||
-                        //     direction.toLowerCase() == 'all directions') {
-                        //   windDirection = WindData.windDirection(999);
-                        //
-                        // } else if(direction.toLowerCase() == 'calm'){
-                        //   windDirection = WindData.windDirection(00);
-                        // } else {
-                        //
-                        //   windDirection = WindData.windDirection(double.parse(direction));
-                        // }
-                        //
-                        //
-                        //
+                        if (dewPoint > 0 && dewPoint < 10) {
+                          setState(() {
+                            newDewPoint = '0$newDewPoint';
+                          });
+                        }
+
+                        var visibility_data =
+                            visibilityinfo.visibilityData(int.parse(visible));
+
+                        if (direction.toLowerCase() == 'variable' ||
+                            direction.toLowerCase() == 'unknown' ||
+                            direction.toLowerCase() ==
+                                'direction indeterminate' ||
+                            direction.toLowerCase() == 'all directions') {
+                          windDirection = WindData.windDirection(999);
+                        } else if (direction.toLowerCase() == 'calm') {
+                          windDirection = WindData.windDirection(00);
+                        } else {
+                          windDirection =
+                              WindData.windDirection(double.parse(direction));
+                        }
+
                         // // rainfall duration
-                        // var duration =
-                        //     RainDuration.rain(rainfallDuration).toString();
-                        //
-                        // if (ix == 'Data included') {
-                        //   past_weather_data =
-                        //       PastweatherData.PastWeatherChecker(pastweather)
-                        //           .toString();
-                        // }
-                        //
-                        // var lowClouds = LowClouds.Low(low);
-                        // var middleClouds = MiddleClouds.Middle(medium);
-                        // var highClouds = HighClouds.High(high);
-                        // var rainfalldata = RainfallAmount(rainfall);
+                        var duration =
+                            RainDuration.rain(rainfallDuration).toString();
+                        print(duration);
+
+                        if (ix == 'Data included') {
+                          past_weather_data =
+                              PastweatherData.PastWeatherChecker(pastweather)
+                                  .toString();
+                        }
+
+                        var lowClouds = LowClouds.Low(low);
+                        var middleClouds = MiddleClouds.Middle(medium);
+                        var highClouds = HighClouds.High(high);
+                        var rainfalldata = RainfallAmount(rainfall);
 
                         // TODO:Research how they calculate ten day rainfall total
 
@@ -1196,229 +1177,233 @@ class _AddState extends State<Add> {
 
                         // show dialog
                         // // checking for availability of past and present weather
-                        // if (ix == '1') {
-                        //   //  checking wind speed units
-                        //   if (units == 3 || units == 4 && windData > 99) {
-                        //     // checking if rain data is included
-                        //     if (RainfallAvailability == '3' || RainfallAvailability == '4') {
-                        //       var noRainData4 = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 00$windData 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 7$present' +
-                        //           past_weather_data +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //
-                        //       _showDialog("Verify Synop", noRainData4, context);
-                        //     } else {
-                        //       var fourthString = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 00$windData 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 6$rainfalldata' +
-                        //           duration +
-                        //           '7$present' +
-                        //           past_weather_data +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //       _showDialog(
-                        //           "Verify Synop", fourthString, context);
-                        //     }
-                        //   } else {
-                        //     // units in m/s either estimated or observed
-                        //     if (RainfallAvailability == '3' || RainfallAvailability == '4') {
-                        //       var noraindata3 = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           '7$present' +
-                        //           past_weather_data +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //       _showDialog("Verify Synop", noraindata3, context);
-                        //     } else {
-                        //       var secondString = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 6$rainfalldata' +
-                        //           duration +
-                        //           '7$present' +
-                        //           past_weather_data +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //       _showDialog(
-                        //           "Verify Synop", secondString, context);
-                        //     }
-                        //   }
-                        //   // present and past weather not available
-                        // } else {
-                        //   if (data == "3" || data == "4" && windData > 99) {
-                        //     if (RainfallAvailability == '3' || RainfallAvailability == '4') {
-                        //       var noraindata2 = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 00$windData 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //
-                        //       _showDialog('Verify Synop', noraindata2, context);
-                        //     } else {
-                        //       var thirdString = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 00$windData 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 6$rainfalldata' +
-                        //           duration +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //       _showDialog('Verify Synop', thirdString, context);
-                        //     }
-                        //   } else {
-                        //     if (RainfallAvailability == '3' || RainfallAvailability == '4') {
-                        //       var noraindata1 = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds;
-                        //       _showDialog('Verify Synop', noraindata1, context);
-                        //     } else {
-                        //       var finalSting = 'AAXX ' +
-                        //           info +
-                        //           '$date' +
-                        //           '$data ' +
-                        //           '67$station ' +
-                        //           RainfallAvailability +
-                        //           ix +
-                        //           '$cloudheight' +
-                        //           visibility_data +
-                        //           ' $amount' +
-                        //           windDirection +
-                        //           '$speed 1$sign' +
-                        //           newTemp +
-                        //           ' 2$dewSign' +
-                        //           newDewPoint +
-                        //           ' 3$newPressure 4$isobaricValue' +
-                        //           geoHeight +
-                        //           ' 6$rainfalldata' +
-                        //           duration +
-                        //           ' 8$amount' +
-                        //           lowClouds +
-                        //           middleClouds +
-                        //           highClouds +
-                        //           '555 +1$sign' +
-                        //           newTemp;
-                        //       _showDialog('Verify Synop', finalSting, context);
-                        //     }
-                        //   }
-                        // }
+                        if (int.parse(ppInclusion) == 1) {
+                          //   //  checking wind speed units
+                          if (units == 3 || units == 4 && windData > 99) {
+                            //     // checking if rain data is included
+                            if (rainfallAvailability == '3' ||
+                                rainfallAvailability == '4') {
+                              var noRainData4 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+
+                              _showDialog("Verify Synop", noRainData4, context);
+                            } else {
+                              var fourthString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+                              _showDialog(
+                                  "Verify Synop", fourthString, context);
+                            }
+                          } else {
+                            // units in m/s either estimated or observed
+                            if (rainfallAvailability == '3' ||
+                                rainfallAvailability == '4') {
+                              var noraindata3 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+                              _showDialog("Verify Synop", noraindata3, context);
+                            } else {
+                              var secondString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  '7$present' +
+                                  past_weather_data +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+                              _showDialog(
+                                  "Verify Synop", secondString, context);
+                            }
+                          }
+                          //   // present and past weather not available
+                        } else {
+                          if (data == "3" || data == "4" && windData > 99) {
+                            if (rainfallAvailability == '3' ||
+                                rainfallAvailability == '4') {
+                              var noraindata2 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+
+                              _showDialog('Verify Synop', noraindata2, context);
+                            } else {
+                              var thirdString = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 00$windData 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+                              _showDialog('Verify Synop', thirdString, context);
+                            }
+                          } else {
+                            if (rainfallAvailability == '3' ||
+                                rainfallAvailability == '4') {
+                              var noraindata1 = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds;
+                              _showDialog('Verify Synop', noraindata1, context);
+                            } else {
+                              var finalSting = 'AAXX ' +
+                                  info +
+                                  '$date' +
+                                  '$units ' +
+                                  '67$station ' +
+                                  rainfallAvailability +
+                                  ppInclusion +
+                                  '$cloudheight' +
+                                  visibility_data +
+                                  ' $amount' +
+                                  windDirection +
+                                  '$speed 1$sign' +
+                                  newTemp +
+                                  ' 2$dewSign' +
+                                  newDewPoint +
+                                  ' 3$newPressure 4$isobaricValue' +
+                                  geoHeight +
+                                  ' 6$rainfalldata' +
+                                  duration +
+                                  ' 8$amount' +
+                                  lowClouds +
+                                  middleClouds +
+                                  highClouds +
+                                  ' 555 1$sign' +
+                                  newTemp;
+                              _showDialog('Verify Synop', finalSting, context);
+                            }
+                          }
+                        }
                       }
                     },
                   ),

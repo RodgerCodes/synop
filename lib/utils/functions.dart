@@ -1,40 +1,45 @@
 import 'package:flutter/painting.dart';
 
-int windUnitsCode(String value){
-  if(value == 'm/s(est)'){
+int windUnitsCode(String value) {
+  if (value == 'm/s(est)') {
     return 0;
-  } else if(value == 'm/s(anemometer)'){
+  } else if (value == 'm/s(anemometer)') {
     return 1;
-  }else if(value == 'knots(est)'){
+  } else if (value == 'knots(est)') {
     return 3;
-  }else{
+  } else {
     return 4;
   }
 }
 
-// int presentAndPastWeather(String value){
-//   if(value == '')
-// }
+//
+int presentAndPastWeather(String value) {
+  if (value == 'Data included') {
+    return 1;
+  } else if (value == 'No significant Phenomena') {
+    return 2;
+  } else {
+    return 3;
+  }
+}
 
-
-String knotsData(int value,int windInfo){
-  if(value == 3 || value == 44 && windInfo > 99){
+String knotsData(int value, int windInfo) {
+  if (value == 3 || value == 44 && windInfo > 99) {
     return "99";
   } else {
     return null;
   }
 }
 
-String rainfallDataAvailability(String value){
-  if(value == 'Data included'){
+String rainfallDataAvailability(String value) {
+  if (value == 'Data included') {
     return '1';
-  } else if(value == 'Precipitation equals 0'){
+  } else if (value == 'Precipitation equals 0') {
     return '3';
   } else {
     return '4';
   }
 }
-
 
 class RainDuration {
   static int rain(String value) {
@@ -433,9 +438,9 @@ Color ColorChanger(String option, Color primary, Color secondary) {
 
 String RainfallAmount(double value) {
   if (value < 10 && value >= 1) {
-    return '00' + value.toString();
+    return '00' + value.round().toString();
   } else if (value < 100 && value >= 10) {
-    return '0' + value.toString();
+    return '0' + value.round().toString();
   } else if (value == 0.1) {
     return '991';
   } else if (value == 0.2) {
