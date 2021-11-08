@@ -128,7 +128,7 @@ class _AddState extends State<Add> {
   TextEditingController isobaric = TextEditingController();
   TextEditingController extraWind = TextEditingController();
 
-  var date, past_weather_data, windDirection;
+  var date, past_weather_data, windDirection, rainfall, rainfalldata;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1008,8 +1008,8 @@ class _AddState extends State<Add> {
                             visible = visibility.text,
                             amount = cloud_amount.text,
                             direction = wind_direction.text,
-                            speed = windSpeed.text,
-                            rainfall = double.parse(precipitation.text);
+                            speed = windSpeed.text;
+
                         var sign, dewSign, isobaricValue;
                         var geoHeight = seaPressure.text;
 
@@ -1024,6 +1024,11 @@ class _AddState extends State<Add> {
                         var newDewPoint = (dewPoint * 10).round().toString();
 
                         var windData = double.parse(speed).round();
+
+                        if (precipitation.text.isNotEmpty) {
+                          rainfall = double.parse(precipitation.text);
+                          rainfalldata = RainfallAmount(rainfall);
+                        }
 
                         // wind units
                         var units = windUnitsCode(data);
@@ -1169,7 +1174,6 @@ class _AddState extends State<Add> {
                         var lowClouds = LowClouds.Low(low);
                         var middleClouds = MiddleClouds.Middle(medium);
                         var highClouds = HighClouds.High(high);
-                        var rainfalldata = RainfallAmount(rainfall);
 
                         // TODO:Research how they calculate ten day rainfall total
 
