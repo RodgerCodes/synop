@@ -28,7 +28,8 @@ class _HomeState extends State<Home> {
   Timer timer;
   List code;
   Dio dio = new Dio();
-  var url = "http://10.0.2.2:5000/code";
+  var url = "https://whispering-shelf-45463.herokuapp.com/code";
+  // var url = "http://10.0.2.2:5000/code";
 
   Future fetchData() async {
     try {
@@ -194,7 +195,6 @@ class _HomeState extends State<Home> {
       Text(date.day.toString(),
           style: !isSelectedDate ? normalStyle : selectedStyle),
     ];
-
 
     if (isDateMarked == true) {
       _children.add(getMarkedIndicatorWidget());
